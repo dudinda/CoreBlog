@@ -1,4 +1,6 @@
-﻿using Blog.Models.PostViewModels;
+﻿using Blog.Models.Data;
+using Blog.Models.PostViewModels;
+using Blog.ViewModels;
 using Sakura.AspNetCore;
 using System;
 using System.Collections.Generic;
@@ -8,33 +10,30 @@ using System.Threading.Tasks;
 namespace Blog.Models
 {
     
-    public class PageResult
+    public class Pager
     {
-        public PageResult(BlogContext context, int page, int pageSize = 5)
+        public Pager(ICollection<Post> Posts,  int page = 1, int pageSize = 5)
         {
-            try
-            {
-                TotalPosts = context.Posts.Count();
+
+                TotalPosts = Posts.Count();
                 CurrentPage = page;
                 TotalPages = Math.Ceiling(TotalPosts / pageSize);
-                PostsPerPage = context
-                    .Posts
-                    .OrderBy(x => x.PostedOn)
+                PostsPerPage = Posts
+                    .OrderBy(post => post.PostedOn)
                     .ToList()
                     .Reverse<Post>()
                     .ToPagedList(pageSize, CurrentPage);
-            }
-            catch(ArgumentNullException)
-            {
-                TotalPosts = 0;
-                CurrentPage = 1;
-            }
+                     
+        }
+
+        public Pager()
+        {
+
         }
 
         public PagedList<IEnumerable<Post>, Post> PostsPerPage;
         public double TotalPosts;
         public double TotalPages;
-        public int CurrentPage; 
-
+        public int CurrentPage;  
     }
 }

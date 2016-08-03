@@ -1,0 +1,13 @@
+﻿@using Blog.Models
+@using Blog.ViewModels
+@model Tuple<Pager, SearchViewModel>
+
+
+@using (Html.BeginForm("GetString", "Search", FormMethod.Post))
+{
+    <div class="form-group col-lg-offset-10">
+    @Html.TextBoxFor(option => option.Item2.Text)
+    <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+    </div>
+}
+

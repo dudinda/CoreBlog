@@ -1,6 +1,7 @@
 ﻿using Blog.Models;
 using Blog.Models.Data;
 using Blog.Models.PostViewModels;
+using Blog.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,53 +12,63 @@ using System.Threading.Tasks;
 namespace Blog.Controllers
 {
 
-    public class PostController : Controller
+    sealed public class PostController : Controller
     {
-        private BlogContext _context { get; }
+        private ITagService tagService { get; }
 
-        public PostController(BlogContext context)
+        private IPostService postService { get; }
+
+        public PostController(IPostService repository,
+                              ITagService tagService)
         {
-            _context = context;
+            this.postService = repository;
+            this.tagService = tagService;
         }
 
         [HttpGet("{id}")]
         public IActionResult OpenPost(int id)
         {
-            var post = _context.Posts.Where(opt => opt.Id == id);
-            return View(post.First());
+            var post = postService.FindPostById(id);
+            var result = ModelFactory.Create(post);
+            return View(result);
         }
 
         [Authorize]
         [HttpGet]
         public IActionResult CreatePost()
         {
-            return View();
+            var postCreateViewModel  = new PostCreateViewModel();
+           
+            return View(postCreateViewModel);
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreatePost(PostViewModel viewModel) 
+        public IActionResult CreatePost(PostCreateViewModel viewModel) 
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
+                
  
-                var newPost             = new Post(viewModel);
+                var newPost             = ModelFactory.Create(viewModel);
                     newPost.Author      = User.Identity.Name;
+                    newPost.PostedOn = DateTime.UtcNow;
                     newPost.IsPublished = true;
-                   
-             
 
-                if (newPost.IsPublished == true)
+                
+               
+
+                if (newPost.IsPublished)
                 {
-                    
-                    _context.Add(newPost);
-                    _context.SaveChanges();
+                    tagService.AddTags(newPost.Tags);
+                    postService.AddPost(newPost);
+                    postService.SaveAll();
                 }
 
                 return RedirectToActionPermanent("OpenPost", new { newPost, newPost.Id });
             }
 
-            return BadRequest(new { ModelState = ModelState });
+            return NotFound();
         }
 
     }

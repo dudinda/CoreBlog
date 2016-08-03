@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace Blog.Models
 {
-    public class LoginModel
+    public class Login
     {
-        public LoginModel(LoginViewModel viewModel)
-        {
-            UserName = viewModel.UserName;
-            Password = viewModel.Password;
-        }
-
+        
         public string UserName { get; set; }
         public string Password { get; set; }
     }

@@ -1,11 +1,11 @@
-﻿@model Blog.Models.Post
+﻿@model Blog.ViewModels.PostViewModel
 
 <div class="row">
     <div class="col-lg-10 col-lg-offset-1">
 
         <!-- Blog Post -->
         <!-- Title -->
-        <h1 class="text-center">@Model.Category: @Model.Title</h1>
+        <h1 class="text-center">@Model.Category.Name: @Model.Title</h1>
         <hr>
 
         <!-- Date/Time -->

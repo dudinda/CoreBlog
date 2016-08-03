@@ -1,0 +1,46 @@
+﻿@model Blog.Models.Pager
+
+
+
+<div class="row">
+
+    @foreach (var post in Model.PostsPerPage)
+            {
+        <div class="col-lg-10 col-lg-offset-1">
+
+            <!-- Blog Post -->
+            <!-- Title -->
+            <h1 class="text-center">@post.Category.Name: <a asp-controller="Post" asp-action="OpenPost" asp-route-id="@(post.Id)">@post.Title</a></h1>
+            <hr>
+
+            <!-- Date/Time -->
+            <p>
+                <span class="glyphicon glyphicon-time"></span> Posted on @post.PostedOn by <a text-size="10px">@post.Author</a>
+            </p>
+  
+            @if (post.Tags.Any())
+            {
+            <span class="glyphicon glyphicon-tags"></span>
+                @foreach (var tag in post.Tags)
+                {
+                    <a asp-controller="Tag" asp-action="@tag.Name">@tag.Name</a>
+
+                }
+            }
+
+            <hr>
+
+            <!-- Preview Image -->
+            <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+
+            <hr>
+
+            <!-- Post Content -->
+            <p class="lead">@post.ShortDescription</p>
+            <p>@post.Description</p>
+            <hr>
+        </div>
+    }
+
+
+</div>

@@ -1,5 +1,6 @@
 ﻿using Blog.Models;
 using Blog.Models.Account;
+using Blog.Models.Data;
 using Blog.Models.PostViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -29,6 +30,7 @@ namespace Blog.Controllers
         }
 
         [HttpPost("[controller]/registration")]
+     //   [ValidateAntiForgeryToken]
         public async Task<IActionResult> Registration(RegistrationViewModel viewModel)
         {
 
@@ -54,13 +56,7 @@ namespace Blog.Controllers
                 }
 
 
-                var newUser = new BlogUser()
-                {
-                    UserName = viewModel.Name,
-                    Email = viewModel.Email,
-                    Age = viewModel.Age
-
-                };
+                var newUser = ModelFactory.Create(viewModel);
 
                 var result = await _userManager
                     .CreateAsync(newUser, viewModel.Password);

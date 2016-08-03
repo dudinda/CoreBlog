@@ -8,7 +8,7 @@ using Blog.Models.PostViewModels;
 namespace Blog.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20160728103734_Blog")]
+    [Migration("20160802085503_Blog")]
     partial class Blog
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,9 +74,43 @@ namespace Blog.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("PostId");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("PostId");
+
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Blog.Models.Data.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("PostId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("Blog.Models.Data.UniqueTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Counter");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UniqueTags");
                 });
 
             modelBuilder.Entity("Blog.Models.Post", b =>
@@ -86,44 +120,23 @@ namespace Blog.Migrations
 
                     b.Property<string>("Author");
 
-                    b.Property<int?>("CategoryId");
+                    b.Property<string>("Description");
 
-                    b.Property<string>("Description")
-                        .IsRequired();
+                    b.Property<bool>("IsPublished");
+
+                    b.Property<DateTime?>("Modified");
 
                     b.Property<DateTime>("PostedOn");
 
-                    b.Property<string>("ShortDescription")
-                        .IsRequired();
+                    b.Property<string>("ShortDescription");
 
-                    b.Property<string>("Title")
-                        .IsRequired();
+                    b.Property<string>("Title");
 
                     b.Property<string>("UrlSlug");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Posts");
-                });
-
-            modelBuilder.Entity("Blog.Models.PostViewModels.Tag", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Counter");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int?>("PostId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -233,18 +246,19 @@ namespace Blog.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Blog.Models.Post", b =>
+            modelBuilder.Entity("Blog.Models.Data.Category", b =>
                 {
-                    b.HasOne("Blog.Models.Data.Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
+                    b.HasOne("Blog.Models.Post")
+                        .WithOne()
+                        .HasForeignKey("Blog.Models.Data.Category", "PostId");
                 });
 
-            modelBuilder.Entity("Blog.Models.PostViewModels.Tag", b =>
+            modelBuilder.Entity("Blog.Models.Data.Tag", b =>
                 {
                     b.HasOne("Blog.Models.Post")
                         .WithMany()
-                        .HasForeignKey("PostId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

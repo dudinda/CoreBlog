@@ -9,18 +9,17 @@ using Blog.Models.Account;
 using Sakura.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-
-
+using Blog.Models.Data;
 
 namespace Blog.Controllers
 {
     public class BlogController : Controller
     {
-        private BlogContext _context { get; } 
+        private IPostService postService { get; } 
 
-        public BlogController (BlogContext context)
+        public BlogController (IPostService repository)
         {
-            _context = context;
+            this.postService = repository;
         }
 
         // GET: /<controller>/
@@ -29,27 +28,24 @@ namespace Blog.Controllers
         [HttpGet("")]
         public IActionResult Index()
         {
-            return Pager(1);
+            return Pagination(1);
         }
 
         [HttpGet("[controller]/{page:int?}")]
-        public IActionResult Pager(int page)
+        public IActionResult Pagination(int page)
         {
- 
-             var result = new PageResult(_context, page);             
+            var posts  = postService.GetAll();
+            var result = postService.GetPagedPosts(posts);
+                  
             return View("Index", result);
         }
+
 
         public IActionResult Contact()
         {
             return View();
         }
 
-
-        public IActionResult SuccessContact(ContactViewModel viewModel)
-        {
-            return View(viewModel);
-        }
 
         [HttpPost("[controller]/contact")]
         public IActionResult Contact(ContactViewModel viewModel)
@@ -64,58 +60,5 @@ namespace Blog.Controllers
         }
 
 
-       
-       
-        public IActionResult Create()
-        {
-            var post = new PostViewModel()
-            {
-                Title = "MyPost",
-                ShortDescription = "Hello world",
-                Description = "Hey there!"
-
-            };
-            var newPost = new Post(post);
-            newPost.IsPublished = true;
-            newPost.PostedOn = DateTime.UtcNow;
-            try
-            {
-                _context.Add(newPost);
-                _context.SaveChanges();
-            }
-            catch(Exception e)
-            {
-                return View(e.Message);
-            }
-            return RedirectToAction("Index");
-        }
-
-
-        public IActionResult CreatePost()
-        {
-            return View();
-        }
-
-        public IActionResult Login()
-        {
-            return View();
-        }
-         
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(PostViewModel post)
-        {
-            if(ModelState.IsValid)
-            {
-                var newPost = new Post(post);
-                newPost.IsPublished = true;
-                _context.Posts.Add(newPost);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(post);
-        }
     }
 }

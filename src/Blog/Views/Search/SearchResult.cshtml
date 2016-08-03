@@ -1,0 +1,25 @@
+﻿@using Sakura.AspNetCore;
+
+@model Blog.Models.Pager
+
+    @{
+        ViewBag.Title = "Search results";
+        ViewBag.Controller = "Search";
+    }
+    
+  
+@if (ViewBag.text == null)
+{
+    <h2 class="text-center">Nothing was found! Try again!</h2>
+
+}
+else
+{
+
+    @Html.Partial("_Posts")
+    <div class="container">
+        <div class="row">
+           @Html.Partial("_Pagination")
+        </div>
+    </div> 
+}

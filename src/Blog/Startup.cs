@@ -13,6 +13,9 @@ using Blog.Models;
 using Blog.Models.PostViewModels;
 using Blog.Models.Account;
 using Microsoft.AspNetCore.Mvc;
+using Blog.Models.Data;
+using Blog.ViewModels.Account;
+using Blog.ViewModels;
 
 namespace Blog
 {
@@ -56,12 +59,12 @@ namespace Blog
             })
                 .AddEntityFrameworkStores<BlogContext>();
 
-            
-            services.AddMvc(options => {
-#if !DEBUG
-                options.Filters.Add(new RequireHttpsAttribute());
-#endif
-            });
+            services.AddScoped<IPostService, PostService>();
+            services.AddScoped<ITagService, TagService>();
+            services.AddTransient<BlogInit>();
+
+
+            services.AddMvc();
 
 
 
@@ -70,7 +73,10 @@ namespace Blog
             }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app,
+                              IHostingEnvironment env,
+                              ILoggerFactory loggerFactory,
+                              BlogInit init)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -94,6 +100,14 @@ namespace Blog
 
             app.UseIdentity();
 
+            AutoMapper.Mapper.Initialize(config =>
+            {
+                config.CreateMap<LoginViewModel, Login>();
+                config.CreateMap<Post, PostViewModel>();
+                config.CreateMap<Tag, TagViewModel>().ReverseMap();
+                config.CreateMap<Category, CategoryViewModel>().ReverseMap();
+                config.CreateMap<PostCreateViewModel, Post>();
+            });
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseMvc(routes =>
@@ -102,6 +116,8 @@ namespace Blog
                     name: "default",
                     template: "{controller=Blog}/{action=Index}/{page?}");
             });
+
+           // init.SeedDataAsync().Wait();
 
         }
     }

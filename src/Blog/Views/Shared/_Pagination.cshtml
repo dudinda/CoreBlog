@@ -1,1 +1,24 @@
-﻿
+﻿@model Blog.Models.Pager
+
+<div class="text-center">
+    <ul class="pagination-lg">
+        @{
+            var currentPage = Model.CurrentPage;
+            var lastPage = Model.TotalPages;
+        }
+        @if (currentPage > 1)
+        {
+            <li class="btn btn-default"><a asp-controller="@ViewBag.Controller" asp-action="Pagination" asp-route-page="@(currentPage - 1)">Previous</a></li>
+        }
+        @for (int i = 1; i <= lastPage; ++i)
+        {
+
+            <li class="btn btn-default"><a asp-controller="@ViewBag.Controller" asp-action="Pagination" asp-route-page="@(i)">@i</a></li>
+
+        }
+        @if (currentPage < lastPage)
+        {
+            <li class="btn btn-default"><a asp-controller="@ViewBag.Controller" asp-action="Pagination" asp-route-page="@(currentPage + 1)">Next</a></li>
+        }
+    </ul>
+</div>

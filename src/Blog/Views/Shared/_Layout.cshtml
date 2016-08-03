@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 
 <html>
 
@@ -8,12 +9,17 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet"  href="~/css/style.css" />
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet"  href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @RenderSection("Scripts", false)
     @RenderSection("Styles", false)
 </head>
 
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
+             
+     
+   <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -22,10 +28,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Brand</a>
+                <a class="navbar-brand" asp-controller="Blog" asp-action="Index">AspNetCoreBlog</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                
                 <ul class="nav navbar-nav navbar-right">
                     @if (!(User.Identity.IsAuthenticated))
                     {
@@ -35,7 +42,6 @@
                     else
                     {
 
-                        <li>Hello,<span>@User.Identity.Name</span>!</li>
                         <li><a asp-controller="Post" asp-action="CreatePost">Create new post</a></li>
                         <li><a asp-controller="Auth" asp-action="Logout">Logout</a></li>
 
@@ -43,7 +49,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                             <li class="divider"></li>
+                            <li class="divider"></li>
                             <li><a href="#">About</a></li>
                             <li class="divider"></li>
                             <li><a href="#">Contact</a></li>
@@ -52,27 +58,21 @@
                         </ul>
                     </li>
                     <li>
-                        <form class="navbar-form navbar-right" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search">
-                            </div>
-                            <button type="submit" class="btn btn-default">Submit</button>
-                        </form>
+
                     </li>
                 </ul>
-    
+
             </div>
         </div>
-    </nav>
+    </nav> 
 
         <!-- Site Content -->
         <div id="site_content">
             @RenderBody()
         </div>
-        <script type="text/javascript" src="~/js/site.js"></script>
-        <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-        @RenderSection("Scripts", false);
+    
+  
+       
 
         <!-- Footer -->
         <footer class="modal-footer">

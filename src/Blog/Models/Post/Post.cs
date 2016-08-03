@@ -3,26 +3,13 @@ using Blog.Models.PostViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blog.Models
 {
     public class Post
     {
-        public Post(PostViewModel viewModel)
-        {
-            Id = viewModel.Id;
-            Title = viewModel.Title;
-            ShortDescription = viewModel.ShortDescription;
-            Description = viewModel.Description;
-            UrlSlug = viewModel.Title.Trim();
-            PostedOn = DateTime.UtcNow;
-           
-        }
-
+      
         public Post()
         {
 
@@ -44,11 +31,12 @@ namespace Blog.Models
 
         public virtual DateTime? Modified { get; set; }
 
-        public bool? IsPublished { get; set; }
+        public bool IsPublished { get; set; }
 
         public Category Category { get; set; }
 
-        public ICollection<Tag> Tags { get; set; }
+        public List<Tag> Tags { get; set; }
+       
 
     }
 }

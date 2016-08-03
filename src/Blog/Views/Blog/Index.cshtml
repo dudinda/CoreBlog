@@ -1,84 +1,46 @@
 ﻿@using Sakura.AspNetCore;
+@using Blog.ViewModels
+@using Blog.Models
+@model Blog.Models.Pager
 
-@model Blog.Models.PageResult
 
-@{
-    
-    ViewBag.Title = "Blogs";
-}
 @section Styles {
-     <link rel="stylesheet" href="~/css/BackToTop.css" />
+    <link rel="stylesheet" href="~/css/BackToTop.css" />
 }
 
 @section Scripts {
     <script src="~/js/scrollToTop.js"></script>
 }
 
+<!--<div class="page-header">
+    <h2>Latest posts</h2>
+    <div class="text-left">
+        @Html.Partial("_Search", new Tuple<Pager, SearchViewModel>(Model, new SearchViewModel()))
+    </div>
+</div>-->
+
+
+<div class="container">
+
+    <div class="row">
+
+
+        @if (Model.TotalPosts != 0)
+        {
+            @Html.Partial("_Posts", Model)
+
+        }
+    </div>
+</div>
+
 <p id="back-top">
     <a href="#top"><span></span>Back to top</a>
 </p>
 
-<div class="container">
-    <div class="row">
-       @if (Model.TotalPosts != 0)
-       {
-            @foreach (var post in Model.PostsPerPage)
-            {
-                 <div class="col-lg-10 col-lg-offset-1">
-
-                    <!-- Blog Post -->
-
-                    <!-- Title -->
-                    <h1 class="text-center">@post.Category: <a asp-controller="Post" asp-action="OpenPost" asp-route-post="Model" asp-route-id="@(post.Id)">@post.Title</a></h1>         
-                    <hr>
-
-                    <!-- Date/Time -->
-                    <p><span class="glyphicon glyphicon-time"></span> Posted on @post.PostedOn by <h3>@post.Author</h3> </p> 
-
-                    <hr>
-
-                    <!-- Preview Image -->
-                    <img class="img-responsive" src="http://placehold.it/900x300" alt="">
-
-                    <hr>
-
-                    <!-- Post Content -->
-                    <p class="lead">@post.ShortDescription</p>
-                    <p>@post.Description</p>               
-                    <hr>
-            </div>
-            }
-
-       }
-    </div>
-</div>
-
-
 
 
 <div class="container">
     <div class="row">
-        <div class="text-center">
-            <ul class="pagination-lg">
-                @{
-                    var currentPage = Model.CurrentPage;
-                    var lastPage = Model.TotalPages;
-                }
-                @if (currentPage > 1)
-            {
-                    <li class="btn btn-default"><a asp-controller="Blog" asp-action="Pager" asp-route-page="@(currentPage - 1)">Previous</a></li>
-                }
-                @for (int i = 1; i <= lastPage; ++i)
-            {
-
-                    <li class="btn btn-default"><a asp-controller="Blog" asp-action="Pager" asp-route-page="@(i)">@i</a></li>
-
-                }
-                @if (currentPage < lastPage)
-            {
-                    <li class="btn btn-default"><a asp-controller="Blog" asp-action="Pager" asp-route-page="@(currentPage + 1)">Next</a></li>
-                }
-            </ul>
-        </div>
+        @Html.Partial(@"_Pagination", Model)
     </div>
 </div>

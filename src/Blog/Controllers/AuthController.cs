@@ -1,5 +1,6 @@
 ﻿using Blog.Models;
 using Blog.Models.Account;
+using Blog.Models.Data;
 using Blog.ViewModels.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -34,9 +35,11 @@ namespace Blog.Controllers
             if(ModelState.IsValid)
             {
 
+                var user = ModelFactory.Create(viewModel);
+
                 var signInResult = await _signInManager
-                    .PasswordSignInAsync( viewModel.UserName, 
-                                          viewModel.Password,
+                    .PasswordSignInAsync( user.UserName, 
+                                          user.Password,
                                           true, 
                                           false );
 
