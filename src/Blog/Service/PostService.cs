@@ -15,11 +15,7 @@ namespace Blog.Models.Data
             this.context = context;
         }
 
-        public PostService()
-        {
-
-        }
-
+    
         public void AddPost(Post post)
         {
             context.Add(post);
@@ -32,6 +28,8 @@ namespace Blog.Models.Data
 
         public ICollection<Post> GetAll()
         {
+            //attach tags and category
+
             var result = AttachTags(context.Posts.ToList());
             
             return result;
@@ -57,7 +55,7 @@ namespace Blog.Models.Data
 
         public ICollection<Post> FindPostsByText(string text)
         {
-            //search 
+            //search in title/short description/description
 
             var result = context.Posts
                 .Where(option => option.Description.Contains(text)      ||
@@ -84,10 +82,12 @@ namespace Blog.Models.Data
         public Post AttachTags(Post post)
         {         
 
+            //attach tags to post
                 post.Tags = context.Tags
                     .Where(option => option.PostId == post.Id)
                     .ToList();
 
+            //attach category to post
                 post.Category = context.Categories
                     .Where(option => option.PostId == post.Id)
                     .Single<Category>();
@@ -106,6 +106,8 @@ namespace Blog.Models.Data
                 post.Tags = context.Tags
                     .Where(option => option.PostId == post.Id)
                     .ToList();
+
+                //attach category to each post
 
                 post.Category = context.Categories
                     .Where(option => option.PostId == post.Id)

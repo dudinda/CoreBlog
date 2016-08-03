@@ -16,17 +16,8 @@ namespace Blog.Models.PostViewModels
 
         public DbSet<Post> Posts { get; set; }
         public DbSet<Tag> Tags { get; set; }
-        public DbSet<UniqueTag> UniqueTags { get; set; }
         public DbSet<Category> Categories { get; set; }
       
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-        
-            base.OnModelCreating(modelBuilder);
-        
-
-        }
 
     }
 

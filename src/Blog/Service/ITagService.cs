@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 namespace Blog.Models.Data
 {
     public interface ITagService
-    {
-     
-        UniqueTag GetTag(int id);
-        UniqueTag GetTag(string name);
-        void AddTags(ICollection<Tag> tags);
-        bool DeleteTag(int id);
+    {           
+        void AddTags(ICollection<Tag> tags);       
     }
 }
