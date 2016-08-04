@@ -64,6 +64,7 @@ namespace Blog
             {
                 option.ConfigureDefault();
             });
+            
 
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<ITagService, TagService>();          

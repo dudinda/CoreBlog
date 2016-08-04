@@ -6,6 +6,7 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/BackToTop.css" />
+    <link rel="stylesheet" href="~/css/SearchBar.css" />
 }
 
 @section Scripts {
@@ -27,6 +28,7 @@
         }
     </div>
     <div class="col-lg-3">
+        @Html.Partial("_Search", Model.Search)
         <div class="well">
             <h2>Categories</h2>
             <ul class="list-group">
@@ -48,7 +50,7 @@
     </div>
 </div>
 
-<a href="#" class="scrollToTop">Scroll To Top</a>
+<a href="#" class="scrollToTop"><i class="glyphicon glyphicon-triangle-top"></i></a>
 <div class="container">
     <div class="row">
         @Html.Partial(@"_Pagination", Model)

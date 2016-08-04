@@ -2,10 +2,15 @@
 @using Blog.ViewModels
 @model SearchViewModel
 
+<div id="imaginary_container">
+    <div class="input-group stylish-input-group">
+        <input type="text" class="form-control" placeholder="Search">
+        <span class="input-group-addon">
+            <button type="submit">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+        </span>
+    </div>
+</div>
 
-@using (Html.BeginForm("GetString", "Search", FormMethod.Post))
-{
-    @Html.TextBoxFor(option => option.Text)
-    <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-}
-
+   

@@ -52,7 +52,7 @@ namespace Blog.Controllers
             ViewBag.text = text;
 
             var posts  = postService.FindPostsByText(text);
-
+            PageConfiguration.InitialPage = page;
             var pagedList = PageConfiguration.GetPagedList(posts);
 
             var result = ModelFactory.Create(pagedList);
