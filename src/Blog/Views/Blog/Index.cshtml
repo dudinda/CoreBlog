@@ -13,7 +13,9 @@
 }
 
 
-
+@{ 
+    var latestPosts = Model.PostsPerPage.Where(option => option.PostedOn.Date == DateTime.Today);
+}
 
 <div class="row">
     <div class="col-lg-9">
@@ -37,7 +39,10 @@
         <div class="well">
             <h2>Latest posts</h2>
             <ul class="list-group">
-             <li class="list-group-item"></li>
+                @foreach (var post in latestPosts)
+                {
+                    <li class="list-group-item"><a asp-controller="Post" asp-action="OpenPost" asp-route-id="@(post.Id)"> @post.Title</a></li>
+                }
             </ul>
         </div>
     </div>
