@@ -35,6 +35,7 @@ namespace Blog.Controllers
         [HttpGet("[controller]/{page:int?}")]
         public IActionResult Pagination(int page)
         {
+            PageConfiguration.InitialPage = page;
             var posts = postService.GetAll();
             var pagedList = PageConfiguration.GetPagedList(posts);
             var pageViewModel = ModelFactory.Create(pagedList);           
