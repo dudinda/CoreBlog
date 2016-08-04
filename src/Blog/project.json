@@ -42,6 +42,7 @@
     "bootstrap": "3.3.6",
     "Microsoft.AspNetCore.Mvc.TagHelpers": "1.0.0-rc2-final",
     "Sakura.AspNetCore.PagedList": "2.0.0",
+    "Sakura.AspNetCore.Mvc.PagedList": "2.0.0-rc2",
     "font-awesome": "4.6.1",
     "Bootswatch": "3.3.5+2",
     "System.Linq.Parallel": "4.0.1-rc2-24027",

@@ -1,24 +1,3 @@
 ﻿@model Blog.ViewModels.PageViewModel
 
-<div class="text-center">
-    <ul class="pagination-lg">
-        @{
-            var currentPage = Model.PostsPerPage.PageIndex;
-            var lastPage = Model.PostsPerPage.TotalPage;
-        }
-        @if (Model.PostsPerPage.PageIndex > 1)
-        {
-            <li class="btn btn-default"><a asp-controller="@ViewBag.Controller" asp-action="Pagination" asp-route-page="@(currentPage - 1)">Previous</a></li>
-        }
-        @for (int i = 1; i <= lastPage; ++i)
-        {
-
-            <li class="btn btn-default"><a asp-controller="@ViewBag.Controller" asp-action="Pagination" asp-route-page="@(i)">@i</a></li>
-
-        }
-        @if (currentPage < lastPage)
-        {
-            <li class="btn btn-default"><a asp-controller="@ViewBag.Controller" asp-action="Pagination" asp-route-page="@(currentPage + 1)">Next</a></li>
-        }
-    </ul>
-</div>
+<pager source="Model.PostsPerPage" />

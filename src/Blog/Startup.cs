@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Blog.Models.Data;
 using Blog.ViewModels.Account;
 using Blog.ViewModels;
-using Sakura.AspNetCore;
+using Sakura.AspNetCore.Mvc;
 
 namespace Blog
 {
@@ -59,6 +59,11 @@ namespace Blog
                 options.Password.RequiredLength = 8;
             })
                 .AddEntityFrameworkStores<BlogContext>();
+
+            services.AddBootstrapPagerGenerator(option =>
+            {
+                option.ConfigureDefault();
+            });
 
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<ITagService, TagService>();          
