@@ -11,51 +11,10 @@ namespace Blog.Models.Data
     sealed public class BlogInit
     {
         private UserManager<BlogUser> userManager { get; }
-        private BlogContext context { get; }
 
         public BlogInit(BlogContext context, UserManager<BlogUser> userManager)
         {
-            this.context = context;
             this.userManager = userManager;
-        }
-
-        private void SeedCategories()
-        {
-            if (!context.Categories.Any())
-            {
-                //Add new Data
-
-                var categories = new List<Category>
-                {
-                    new Category()
-                    {
-                        Name = "Development"
-
-                    },
-
-                    new Category()
-                    {
-                        Name = "Design"
-
-                    },
-
-                    new Category()
-                    {
-                        Name = "Other"
-
-                    },
-
-                    new Category()
-                    {
-                        Name = "Management"
-
-                    },
-
-                };
-
-                context.Categories.AddRange(categories);
-                context.SaveChanges();
-            }
         }
 
 
@@ -87,7 +46,6 @@ namespace Blog.Models.Data
 
         public async Task SeedDataAsync()
         {
-            SeedCategories();
             await SeedControlUsersAsync();
         }
 

@@ -117,7 +117,7 @@ namespace Blog
                     template: "{controller=Blog}/{action=Index}/{page?}");
             });
 
-           // init.SeedDataAsync().Wait();
+            init.SeedDataAsync().Wait();
 
         }
     }
