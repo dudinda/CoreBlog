@@ -15,7 +15,7 @@
 
 
 
-    <div class="row" padding-top="100px">
+    <div class="row">
         <div class="col-lg-9">
 
         @if (Model.PostsPerPage.TotalCount != 0)
@@ -34,14 +34,10 @@
                 <li>Other</li>
             </ul>
         </div>
+
     </div>
 
-<p id="back-top">
-    <a href="#top"><span></span>Back to top</a>
-</p>
-
-
-
+<a href="#" class="scrollToTop">Scroll To Top</a>
 <div class="container">
     <div class="row">
         @Html.Partial(@"_Pagination", Model)

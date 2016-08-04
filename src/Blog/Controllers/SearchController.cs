@@ -53,7 +53,9 @@ namespace Blog.Controllers
 
             var posts  = postService.FindPostsByText(text);
 
-            var result = PageConfiguration.GetPagedList(posts);
+            var pagedList = PageConfiguration.GetPagedList(posts);
+
+            var result = ModelFactory.Create(pagedList);
 
             return View("SearchResult", result);
 
