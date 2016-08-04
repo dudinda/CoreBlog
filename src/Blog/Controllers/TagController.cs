@@ -30,9 +30,9 @@ namespace Blog.Controllers
         public IActionResult SearchTags(string text, int page = 1)
         {
             var result = service.GetPostByTag(text);
-            var viewModel = service.GetPagedPosts(result);
+            
 
-            return View("TagsResult", viewModel);
+            return View("TagsResult", result);
         }
     }
 }

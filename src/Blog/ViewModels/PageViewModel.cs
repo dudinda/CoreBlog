@@ -12,8 +12,5 @@ namespace Blog.ViewModels
     {
         public SearchViewModel Search;
         public PagedList<IEnumerable<PostViewModel>, PostViewModel> PostsPerPage;
-        public double TotalPosts;
-        public double TotalPages;
-        public int CurrentPage;
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Blog.Models.PostViewModels;
+using Blog.ViewModels;
+using Sakura.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,8 @@ namespace Blog.Models.Data
     public class PostService : IPostService
     {
         private BlogContext context;
+        public static int PageSize { get; set; } = 5;
+        public static int InitialPage { get; set; } = 1;
 
         public PostService(BlogContext context)
         {
@@ -116,12 +120,5 @@ namespace Blog.Models.Data
 
             return result;
         }
-
-
-        public Pager GetPagedPosts(ICollection<Post> posts, int page = 1, int pageSize = 5)
-        {    
-            return new Pager( posts ,  page, pageSize );
-        }
-      
     }
 }

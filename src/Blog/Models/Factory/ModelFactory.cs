@@ -25,6 +25,11 @@ namespace Blog.Models.Data
 
         }
 
+        public static ICollection<PostViewModel> Create(ICollection<Post> posts)
+        {
+            return Mapper.Map<ICollection<PostViewModel>>(posts);
+        }
+
         public static Login Create(LoginViewModel viewModel)
         {
             return Mapper.Map<Login>(viewModel);
@@ -51,13 +56,13 @@ namespace Blog.Models.Data
             return Mapper.Map<CategoryViewModel>(category);
         }
 
-           public static PageViewModel Create(Pager pager)
-           {
-               var result        = Mapper.Map<PageViewModel>(pager);
-                   result.Search = new SearchViewModel();
-            return result;
-
-           }
-
+        public static PageViewModel Create(PagedList<IEnumerable<PostViewModel>, PostViewModel> pagedList)
+        {
+            return new PageViewModel
+            {
+                PostsPerPage = pagedList,
+                Search = new SearchViewModel()
+            };
+        }
     }
 }

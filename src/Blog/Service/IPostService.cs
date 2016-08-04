@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Blog.ViewModels;
+using Sakura.AspNetCore;
+using System.Collections.Generic;
 
 namespace Blog.Models.Data
 {
@@ -10,7 +12,6 @@ namespace Blog.Models.Data
         ICollection<Post> GetPostByTag(string tagName);
         Post FindPostById(int id);
         Post FindPostBySlug(string slug);
-        Pager GetPagedPosts(ICollection<Post> posts, int page = 1, int pageSize = 5);
         void AddPost(Post post);
         void SaveAll();
     }

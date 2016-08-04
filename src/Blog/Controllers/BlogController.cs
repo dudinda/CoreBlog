@@ -10,6 +10,7 @@ using Sakura.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Blog.Models.Data;
+using Blog.Service;
 
 namespace Blog.Controllers
 {
@@ -34,10 +35,11 @@ namespace Blog.Controllers
         [HttpGet("[controller]/{page:int?}")]
         public IActionResult Pagination(int page)
         {
-            var posts  = postService.GetAll();
-            var result = postService.GetPagedPosts(posts);
+            var posts = postService.GetAll();
+            var pagedList = PageConfiguration.GetPagedList(posts);
+            var pageViewModel = ModelFactory.Create(pagedList);           
                   
-            return View("Index", result);
+            return View("Index", pageViewModel);
         }
 
 

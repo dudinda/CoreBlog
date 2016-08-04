@@ -1,5 +1,6 @@
 ﻿using Blog.Models;
 using Blog.Models.Data;
+using Blog.Service;
 using Blog.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,16 +13,16 @@ namespace Blog.Controllers
     [Route("[controller]/")]
     public class SearchController : Controller
     {
-        private IPostService postService;
+        private IPostService postService { get; }
 
-        public SearchController(IPostService repository)
+        public SearchController(IPostService postService)
         {
-            this.postService = repository;
+            this.postService = postService;
         }
 
         //using prefix Item2 for correct model binding from tuple
         [HttpPost]
-        public IActionResult GetString([Bind(Prefix = "Item2")]SearchViewModel search)
+        public IActionResult GetString(SearchViewModel search)
         {
             if (ModelState.IsValid)
             {
@@ -52,7 +53,7 @@ namespace Blog.Controllers
 
             var posts  = postService.FindPostsByText(text);
 
-            var result = postService.GetPagedPosts(posts, page);
+            var result = PageConfiguration.GetPagedList(posts);
 
             return View("SearchResult", result);
 

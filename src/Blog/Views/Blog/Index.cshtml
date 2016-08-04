@@ -1,7 +1,7 @@
 ﻿@using Sakura.AspNetCore;
 @using Blog.ViewModels
 @using Blog.Models
-@model Blog.Models.Pager
+@model Blog.ViewModels.PageViewModel
 
 
 @section Styles {
@@ -12,26 +12,29 @@
     <script src="~/js/scrollToTop.js"></script>
 }
 
-<!--<div class="page-header">
-    <h2>Latest posts</h2>
-    <div class="text-left">
-        @Html.Partial("_Search", new Tuple<Pager, SearchViewModel>(Model, new SearchViewModel()))
-    </div>
-</div>-->
 
 
-<div class="container">
 
-    <div class="row">
+    <div class="row" padding-top="100px">
+        <div class="col-lg-9">
 
-
-        @if (Model.TotalPosts != 0)
+        @if (Model.PostsPerPage.TotalCount != 0)
         {
             @Html.Partial("_Posts", Model)
 
         }
+        </div>
+        <div class="col-lg-3">
+            <div>@Html.Partial("_Search", Model.Search)</div>
+            <h5>Categories</h5>
+            <ul>               
+                <li>Managment</li>
+                <li>Development</li>
+                <li>Design</li>
+                <li>Other</li>
+            </ul>
+        </div>
     </div>
-</div>
 
 <p id="back-top">
     <a href="#top"><span></span>Back to top</a>

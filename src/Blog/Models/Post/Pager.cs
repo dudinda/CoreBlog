@@ -21,7 +21,6 @@ namespace Blog.Models
                 PostsPerPage = Posts
                     .OrderBy(post => post.PostedOn)
                     .ToList()
-                    .Reverse<Post>()
                     .ToPagedList(pageSize, CurrentPage);
                      
         }

@@ -1,12 +1,12 @@
-﻿@model Blog.Models.Pager
+﻿@model Blog.ViewModels.PageViewModel
 
 <div class="text-center">
     <ul class="pagination-lg">
         @{
-            var currentPage = Model.CurrentPage;
-            var lastPage = Model.TotalPages;
+            var currentPage = Model.PostsPerPage.PageIndex;
+            var lastPage = Model.PostsPerPage.TotalPage;
         }
-        @if (currentPage > 1)
+        @if (Model.PostsPerPage.PageIndex > 1)
         {
             <li class="btn btn-default"><a asp-controller="@ViewBag.Controller" asp-action="Pagination" asp-route-page="@(currentPage - 1)">Previous</a></li>
         }

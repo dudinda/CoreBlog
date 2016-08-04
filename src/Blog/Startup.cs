@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Blog.Models.Data;
 using Blog.ViewModels.Account;
 using Blog.ViewModels;
+using Sakura.AspNetCore;
 
 namespace Blog
 {
@@ -60,7 +61,7 @@ namespace Blog
                 .AddEntityFrameworkStores<BlogContext>();
 
             services.AddScoped<IPostService, PostService>();
-            services.AddScoped<ITagService, TagService>();
+            services.AddScoped<ITagService, TagService>();          
             services.AddTransient<BlogInit>();
 
 
@@ -103,10 +104,11 @@ namespace Blog
             AutoMapper.Mapper.Initialize(config =>
             {
                 config.CreateMap<LoginViewModel, Login>();
-                config.CreateMap<Post, PostViewModel>();
+                config.CreateMap<Post, PostViewModel>().ReverseMap();
                 config.CreateMap<Tag, TagViewModel>().ReverseMap();
                 config.CreateMap<Category, CategoryViewModel>().ReverseMap();
                 config.CreateMap<PostCreateViewModel, Post>();
+                config.CreateMap<Pager, PageViewModel>().ReverseMap();
             });
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
