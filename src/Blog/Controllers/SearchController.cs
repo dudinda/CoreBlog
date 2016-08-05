@@ -13,11 +13,14 @@ namespace Blog.Controllers
     [Route("[controller]/")]
     public class SearchController : Controller
     {
+        private IPageService pageService { get; }
+
         private IPostService postService { get; }
 
-        public SearchController(IPostService postService)
+        public SearchController(IPostService postService, IPageService pageService)
         {
             this.postService = postService;
+            this.pageService = pageService;
         }
 
         //using prefix Item2 for correct model binding from tuple
@@ -49,13 +52,15 @@ namespace Blog.Controllers
                 return RedirectToAction("SearchResult");
             }
 
+            pageService.InitialPage = page;
+
             ViewBag.text = text;
 
             var posts  = postService.FindPostsByText(text);
-            PageConfiguration.InitialPage = page;
-            var pagedList = PageConfiguration.GetPagedList(posts);
-
+            var pagedList = pageService.GetPagedList(posts);
             var result = ModelFactory.Create(pagedList);
+
+            
 
             return View("SearchResult", result);
 

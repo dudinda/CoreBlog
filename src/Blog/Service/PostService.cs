@@ -11,8 +11,6 @@ namespace Blog.Models.Data
     public class PostService : IPostService
     {
         private BlogContext context;
-        public static int PageSize { get; set; } = 5;
-        public static int InitialPage { get; set; } = 1;
 
         public PostService(BlogContext context)
         {

@@ -10,8 +10,19 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
 }
 
+@section Styles {
+    <link rel="stylesheet" href="~/css/style.css" />
+}
+<style>
+
+
+    .tag {
+        width:50px;
+    }
+</style>
 <div class="row">
 <div class="col-md-4 col-md-offset-4">
     <h2>New Post</h2>
@@ -22,30 +33,33 @@
             <input asp-for="Title" class="form-control text-muted" placeholder="Enter your name" />
             <span asp-validation-for="Title" class="text-muted"></span>
         </div>
-        <div class="col-xs-1">
-            <select class="dropdown-menu" asp-for="Category.Name">
+        <div class="form-group">
+            <select asp-for="Category.Name">
                 <option value="Development">Development</option>
                 <option value="Managment">Managment</option>
                 <option value="Design">Design</option>
                 <option value="Other">Other</option>
             </select>
+        </div>
+        <div class="form-group">
+            <label>Tags</label>
             <input class="tag" asp-for="Tags[0].Name" />
             <input class="tag" asp-for="Tags[1].Name" />
             <input class="tag" asp-for="Tags[2].Name" />
             <input class="tag" asp-for="Tags[3].Name" />
             <input class="tag" asp-for="Tags[4].Name" />
-         </div>
+            </div>
         <div class="form group">
             <label asp-for="ShortDescription">Short description</label>
             <input asp-for="ShortDescription" class="form-control" />
             <span asp-validation-for="ShortDescription" class="text-muted"></span>
         </div>
         <div class="form group">
-            <label asp-for="Description">Your post</label>
+            <label asp-for="Description">Description</label>
             <textarea asp-for="Description" class="form-control"></textarea>
             <span asp-validation-for="Description" class="text-muted"></span>
 
-            <a asp-contoller="Blog" asp-action="Index" class="btn btn-default">Cancel</a>
+            <a asp-controller="Blog" asp-action="Index" class="btn btn-default">Cancel</a>
             <input type="submit" value="Post" class="btn btn-success" />
         </div>
 

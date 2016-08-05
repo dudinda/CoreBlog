@@ -16,11 +16,13 @@ namespace Blog.Controllers
 {
     public class BlogController : Controller
     {
+        private IPageService pageService { get; }
         private IPostService postService { get; } 
 
-        public BlogController (IPostService repository)
+        public BlogController (IPostService repository, IPageService pageService)
         {
             this.postService = repository;
+            this.pageService = pageService;
         }
 
         // GET: /<controller>/
@@ -35,12 +37,20 @@ namespace Blog.Controllers
         [HttpGet("[controller]/{page:int?}")]
         public IActionResult Pagination(int page)
         {
-            PageConfiguration.InitialPage = page;
+            //set initial page
+            pageService.InitialPage = page;
+
             var posts = postService.GetAll();
-            var pagedList = PageConfiguration.GetPagedList(posts);
-            var pageViewModel = ModelFactory.Create(pagedList);           
+            var pagedList = pageService.GetPagedList(posts);
+            var pageViewModel = ModelFactory.Create(pagedList);        
                   
             return View("Index", pageViewModel);
+        }
+
+        public IActionResult SetPageSize(int pageSize)
+        {
+            pageService.PageSize = pageSize;
+            return RedirectToActionPermanent("Index");
         }
 
 

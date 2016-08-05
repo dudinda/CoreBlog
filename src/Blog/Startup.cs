@@ -17,6 +17,7 @@ using Blog.Models.Data;
 using Blog.ViewModels.Account;
 using Blog.ViewModels;
 using Sakura.AspNetCore.Mvc;
+using Blog.Service;
 
 namespace Blog
 {
@@ -67,7 +68,8 @@ namespace Blog
             
 
             services.AddScoped<IPostService, PostService>();
-            services.AddScoped<ITagService, TagService>();          
+            services.AddScoped<ITagService, TagService>();
+            services.AddScoped<IPageService, PageService>();      
             services.AddTransient<BlogInit>();
 
 

@@ -9,12 +9,12 @@ using Blog.Models.Data;
 
 namespace Blog.Service
 {
-    public static class PageConfiguration
+    public class PageService : IPageService
     {
-        public static int PageSize { get; set; } = 5;
-        public static int InitialPage { get; set; } = 1;
+        public int PageSize { get; set; } = 5;
+        public int InitialPage { get; set; } = 1;
 
-        public static PagedList<IEnumerable<PostViewModel>, PostViewModel> GetPagedList(ICollection<Post> posts)
+        public PagedList<IEnumerable<PostViewModel>, PostViewModel> GetPagedList(ICollection<Post> posts)
         {
             //passing to the factory all posts with attached tags and category
             var result = ModelFactory.Create(posts)
