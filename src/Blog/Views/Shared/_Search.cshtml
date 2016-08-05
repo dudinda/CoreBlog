@@ -2,13 +2,13 @@
 @using Blog.ViewModels
 @model SearchViewModel
 
-    <div class="input-group stylish-input-group">
-        <input type="text" class="form-control" placeholder="Search">
+    <form class="input-group stylish-input-group" asp-controller="Search" asp-action="GetString">
+        <input type="text" class="form-control" placeholder="Search" asp-for="Text">
         <span class="input-group-addon">
             <button type="submit">
                 <span class="glyphicon glyphicon-search"></span>
             </button>
         </span>
-    </div>
+    </form>
 
    

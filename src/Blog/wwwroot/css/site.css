@@ -22,3 +22,9 @@
     background: #0950E8;
 }
 
+#content {
+    background: black;
+    padding: 0 24px 0 96px;
+    min-height: 100%;
+    box-sizing: border-box;
+}

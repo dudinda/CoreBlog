@@ -18,7 +18,6 @@
 
 <body>
              
-     
    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -65,12 +64,41 @@
             </div>
         </div>
     </nav> 
-
-        <!-- Site Content -->
-        <div class="site_content">
-            @RenderBody()
+    <style>
+        #content {
+    background: #fff;
+    padding: 0 24px 0 96px;
+    min-height: 100%;
+    box-sizing: border-box;
+}
+        #navbar {
+    position: absolute;
+    top: 0;
+    bottom: 29px;
+    width: 71px;
+    z-index: 99991;
+}
+        #navbar .navbar-panel {
+    z-index: 2;
+    background: #f2f2f2;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+    </style>
+    <div id="layout">
+        <div id="navbar">
+            <div class="navbar-panel">
+                <a href="~/images/blogger_4096_black.png"></a>
+            </div>
         </div>
-    
+        <div id="content">
+            <!-- Site Content -->
+            <div class="site_content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
   
        
 
