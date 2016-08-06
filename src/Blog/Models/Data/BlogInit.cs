@@ -23,30 +23,26 @@ namespace Blog.Models.Data
 
         private async Task SeedRolesAsync()
         {
-            
-            var adminRole     = new IdentityRole(roleName: "Admin");
-            var moderatorRole = new IdentityRole(roleName: "Moderator");
-            var userRole      = new IdentityRole(roleName: "User");
+            if (roleManager.Roles.Any()) {
 
-            var userCreateResult      = await roleManager.CreateAsync(userRole);
-            var adminCreateResult     = await roleManager.CreateAsync(adminRole);
-            var moderatorCreateResult = await roleManager.CreateAsync(moderatorRole);
+                var adminRole = new IdentityRole("Admin");
+                var userRole  = new IdentityRole("User");
 
-            //TODO make it with Task.WhenAll()
+                var userCreateResult = await roleManager.CreateAsync(userRole);
 
-            //when all tasks is completed
-     /*       var result = await Task.WhenAll(userCreateResult,
-                                           adminCreateResult,
-                                           moderatorCreateResult);
+                if(!userCreateResult.Succeeded)
+                {
+                    throw new InvalidProgramException("Failed to create new role");
+                }
 
+                var adminCreateResult = await roleManager.CreateAsync(adminRole);
 
-            //check if any task is failed
-            /*if (result.Any(task => !task.Succeeded))
-            {
-                //if it so, throw new exception
-                throw new InvalidProgramException("Failed to create new role");
-            }*/
-         
+                if (!adminCreateResult.Succeeded)
+                {
+                    throw new InvalidProgramException("Failed to create new role");
+                }
+
+            }
         }
 
         private async Task SeedControlUsersAsync()
