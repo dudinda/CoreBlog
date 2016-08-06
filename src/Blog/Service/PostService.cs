@@ -55,11 +55,21 @@ namespace Blog.Models.Data
             return result;
         }
 
+        public ICollection<Post> GetPostsByCategory(string categoryName)
+        {
+            var result = GetAll()
+                .Where(category => category.Category.Name.Equals(categoryName))
+                .ToList<Post>();
+
+            return result;
+                
+        }
+
         public ICollection<Post> FindPostsByText(string text)
         {
             //search in title/short description/description
 
-            var result = context.Posts
+            var result = GetAll()
                 .Where(option => option.Description.Contains(text)      ||
                                  option.ShortDescription.Contains(text) ||
                                  option.Title.Contains(text)            
