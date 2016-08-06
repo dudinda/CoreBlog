@@ -1,6 +1,7 @@
 ﻿using Blog.Models.Account;
 using Blog.Models.PostViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +11,43 @@ namespace Blog.Models.Data
 {
     sealed public class BlogInit
     {
+        private RoleManager<IdentityRole> roleManager { get; }
         private UserManager<BlogUser> userManager { get; }
 
-        public BlogInit(BlogContext context, UserManager<BlogUser> userManager)
+        public BlogInit(UserManager<BlogUser> userManager, RoleManager<IdentityRole> roleManager)
         {
+            this.roleManager = roleManager;
             this.userManager = userManager;
         }
 
+
+        private async Task SeedRolesAsync()
+        {
+            
+            var adminRole     = new IdentityRole(roleName: "Admin");
+            var moderatorRole = new IdentityRole(roleName: "Moderator");
+            var userRole      = new IdentityRole(roleName: "User");
+
+            var userCreateResult      = await roleManager.CreateAsync(userRole);
+            var adminCreateResult     = await roleManager.CreateAsync(adminRole);
+            var moderatorCreateResult = await roleManager.CreateAsync(moderatorRole);
+
+            //TODO make it with Task.WhenAll()
+
+            //when all tasks is completed
+     /*       var result = await Task.WhenAll(userCreateResult,
+                                           adminCreateResult,
+                                           moderatorCreateResult);
+
+
+            //check if any task is failed
+            /*if (result.Any(task => !task.Succeeded))
+            {
+                //if it so, throw new exception
+                throw new InvalidProgramException("Failed to create new role");
+            }*/
+         
+        }
 
         private async Task SeedControlUsersAsync()
         {
@@ -29,15 +60,24 @@ namespace Blog.Models.Data
                 {
                     UserName = "admin",
                     Email = "enragesoft@gmail.com",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    
                 };
 
-                var result = await userManager
+                var createUserResult = await userManager
                     .CreateAsync(adminUser, "+Vd245aasDR4912Fn+");
 
-                if(!result.Succeeded)
+                if (!createUserResult.Succeeded)
                 {
                     throw new InvalidProgramException("Failed to create new user");
+                }
+                                                         
+                var createRoleResult = await userManager
+                    .AddToRoleAsync(adminUser, "Admin");
+
+                if(!createRoleResult.Succeeded)
+                {
+                    throw new InvalidProgramException("Failed to create admin role");
                 }
 
             }
@@ -46,6 +86,7 @@ namespace Blog.Models.Data
 
         public async Task SeedDataAsync()
         {
+            await SeedRolesAsync();
             await SeedControlUsersAsync();
         }
 
