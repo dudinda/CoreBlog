@@ -82,10 +82,10 @@ namespace Blog
             }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app,
-                              IHostingEnvironment env,
-                              ILoggerFactory loggerFactory,
-                              BlogInit init)
+        public async void Configure(IApplicationBuilder app,
+                                    IHostingEnvironment env,
+                                    ILoggerFactory loggerFactory,
+                                    BlogInit init)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -126,7 +126,7 @@ namespace Blog
                     template: "{controller=Blog}/{action=Index}/{page?}");
             });
 
-            init.SeedDataAsync().Wait();
+            await init.SeedDataAsync();
 
         }
     }
