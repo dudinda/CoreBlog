@@ -14,13 +14,13 @@ namespace Blog.Controllers
 {
     public class RegController : Controller
     {
-        private  UserManager<BlogUser> _userManager { get; }
-        private  BlogContext _context { get;}
+        private  UserManager<BlogUser> userManager { get; }
+        private  BlogContext context { get;}
 
         public RegController(BlogContext context, UserManager<BlogUser> userManager)
         {
-            _context = context;
-            _userManager = userManager;
+            this.context = context;
+            this.userManager = userManager;
         }
 
         [HttpGet("[controller]/registration")]
@@ -33,11 +33,11 @@ namespace Blog.Controllers
      //   [ValidateAntiForgeryToken]
         public async Task<IActionResult> Registration(RegistrationViewModel viewModel)
         {
-
+            //TODO attach new role to the user
             if (ModelState.IsValid)
             {         
 
-                var userExist = await _userManager
+                var userExist = await userManager
                     .FindByNameAsync(viewModel.Name);
 
                 if (userExist != null)
@@ -46,7 +46,7 @@ namespace Blog.Controllers
                     return View();
                 }
 
-                var emailExist = await _userManager
+                var emailExist = await userManager
                     .FindByEmailAsync(viewModel.Email);
 
                 if (emailExist != null)
@@ -58,14 +58,23 @@ namespace Blog.Controllers
 
                 var newUser = ModelFactory.Create(viewModel);
 
-                var result = await _userManager
+                var result = await userManager
                     .CreateAsync(newUser, viewModel.Password);
                
                 if (result.Succeeded)
                 {
-                    _context.SaveChanges();
+                    context.SaveChanges();
                     return RedirectToActionPermanent("Index", "Blog");
                 }
+
+                var userRole = await userManager.AddToRoleAsync(newUser, "User");
+
+                if (!userRole.Succeeded)
+                {
+                    throw new InvalidProgramException("Failed to bind user to the role");
+                }
+
+                //TODO make it with Task.WhenAll();
             }
 
             return View(viewModel);
