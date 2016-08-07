@@ -4,6 +4,18 @@
 @model Blog.ViewModels.PageViewModel
 
 
+@{ 
+    @if(Model.PostsPerPage.IsFirstPage())
+    {
+        ViewBag.Title = "Latest posts";
+        ViewBag.PageName = "Latest posts";
+
+    }
+    ViewBag.PageName = "Latest posts";
+    ViewBag.Title = "CoreBlog";
+
+}
+
 @section Styles {
     <link rel="stylesheet" href="~/css/BackToTop.css" />
     <link rel="stylesheet" href="~/css/SearchBar.css" />
@@ -31,12 +43,12 @@
         @Html.Partial("_Search", Model.Search)
         <div class="well">
             <h2>Categories</h2>
-            <ul class="list-group">
-                <li class="list-group-item">Development</li>
-                <li class="list-group-item">Managment</li>
-                <li class="list-group-item">Design</li>
-                <li class="list-group-item">Other</li>
-            </ul>
+            <div class="list-group">
+                <a href="#" class="list-group-item"><span class="badge">@Model.PostsPerPage.Source.Where(opt => opt.Category.Name == "Development").Count()</span>Development</a>
+                <a href="#" class="list-group-item"><span class="badge">@Model.PostsPerPage.Source.Where(opt => opt.Category.Name == "Managment").Count()</span>Managment</a>
+                <a href="#" class="list-group-item"><span class="badge">@Model.PostsPerPage.Source.Where(opt => opt.Category.Name == "Design").Count()</span>Design</a>
+                <a href="#" class="list-group-item"><span class="badge">@Model.PostsPerPage.Source.Where(opt => opt.Category.Name == "Other").Count()</span>Other</a>
+            </div>
         </div>
         <div class="well">
             <h2>Latest posts</h2>
