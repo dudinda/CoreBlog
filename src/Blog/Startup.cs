@@ -18,6 +18,7 @@ using Blog.ViewModels.Account;
 using Blog.ViewModels;
 using Sakura.AspNetCore.Mvc;
 using Blog.Service;
+using Microsoft.AspNetCore.Routing;
 
 namespace Blog
 {
@@ -122,8 +123,15 @@ namespace Blog
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "Home",
+                    template: "{controller}/{page?}",
+                    defaults: new {controller = "Blog", Action="Index"}
+                    );
+
+                routes.MapRoute(
                     name: "default",
-                    template: "{controller=Blog}/{action=Index}/{page?}");
+                    template: "{controller=Search}/{action}/{page?}"
+                    );
             });
 
             await init.SeedDataAsync();

@@ -25,17 +25,15 @@ namespace Blog.Controllers
             this.pageService = pageService;
         }
 
-        // GET: /<controller>/
-       
 
-        [HttpGet("")]
         public IActionResult Index()
         {
-            return Pagination(1);
+           return LocalRedirectPermanent("/Blog/1");
         }
 
+
         [HttpGet("[controller]/{page:int?}")]
-        public IActionResult Pagination(int page)
+        public IActionResult Index(int page = 1)
         {
             //set initial page
             pageService.InitialPage = page;
@@ -44,15 +42,10 @@ namespace Blog.Controllers
             var pagedList = pageService.GetPagedList(posts);
             var pageViewModel = ModelFactory.Create(pagedList);        
                   
-            return View("Index", pageViewModel);
+            return View(pageViewModel);
         }
 
-        public IActionResult SetPageSize(int pageSize)
-        {
-            pageService.PageSize = pageSize;
-            return RedirectToActionPermanent("Index");
-        }
-
+      
 
         public IActionResult Contact()
         {

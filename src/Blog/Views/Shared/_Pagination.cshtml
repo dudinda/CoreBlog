@@ -8,17 +8,17 @@
         }
         @if (currentPage > 1)
         {
-            <li class="btn btn-default"><a asp-controller="@ViewBag.Controller" asp-action="@(currentPage - 1)">Previous</a></li>
+            <li class="btn btn-default"><a asp-controller="@ViewBag.Controller" asp-route-page="@(currentPage - 1)">Previous</a></li>
         }
         @for (int i = 1; i <= lastPage; ++i)
         {
 
-            <li class="btn btn-default"><a asp-controller="@ViewBag.Controller" asp-action="@i">@i</a></li>
+            <li class="btn btn-default"><a asp-controller="@ViewBag.Controller" asp-route-page="@i">@i</a></li>
 
         }
         @if (currentPage < lastPage)
         {
-            <li class="btn btn-default"><a asp-controller="@ViewBag.Controller" asp-action="@(currentPage + 1)" >Next</a></li>
+            <li class="btn btn-default"><a asp-controller="@ViewBag.Controller" asp-route-page="@(currentPage + 1)" >Next</a></li>
         }
     </ul>
 </div>
