@@ -8,7 +8,7 @@
     <title>@ViewBag.Title</title>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet"  href="~/css/style.css" />
+    <link rel="stylesheet"  href="~/css/site.css" />
     <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet"  href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -64,37 +64,11 @@
             </div>
         </div>
     </nav> 
-    <style>
-        #content {
-    background: #fff;
-    padding: 0 24px 0 96px;
-    min-height: 100%;
-    box-sizing: border-box;
-}
-        #navbar {
-    position: absolute;
-    top: 0;
-    bottom: 29px;
-    width: 71px;
-    z-index: 99991;
-}
-        #navbar .navbar-panel {
-    z-index: 2;
-    background: #f2f2f2;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-}
-    </style>
+
     <div id="layout">
-        <div id="navbar">
-            <div class="navbar-panel">
-                <a href="~/images/blogger_4096_black.png"></a>
-            </div>
-        </div>
         <div id="content">
             <!-- Site Content -->
-            <div class="site_content">
+            <div class="content">
                 @RenderBody()
             </div>
         </div>
