@@ -7,19 +7,20 @@
         ViewBag.Controller = "Search";
     }
     
-  
-@if (ViewBag.text == null)
-{
-    <h2 class="text-center">Nothing was found! Try again!</h2>
+<div class="row">
+    @if (ViewBag.text == null)
+    {
+        <h2 class="text-center">Nothing was found! Try again!</h2>
 
-}
-else
-{
+    }
+    else
+    {
 
-    @Html.Partial("_Posts")
-    <div class="container">
-        <div class="row">
-           @Html.Partial("_Pagination")
+        @Html.Partial("_Posts")
+        <div class="container">
+            <div class="row">
+                @Html.Partial("_Pagination")
+            </div>
         </div>
-    </div> 
-}
+    }
+</div>  

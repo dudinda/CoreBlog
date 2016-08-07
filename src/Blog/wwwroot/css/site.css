@@ -23,8 +23,14 @@
 }
 
 #content {
-    background: black;
+    background: #fff;
     padding: 0 24px 0 96px;
     min-height: 100%;
     box-sizing: border-box;
+}
+
+
+body { padding-top: 100px; }
+@media screen and (max-width: 768px) {
+    body { padding-top: 0px; }
 }
