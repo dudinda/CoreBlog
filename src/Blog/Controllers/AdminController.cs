@@ -25,10 +25,7 @@ namespace Blog.Controllers
         public IActionResult Manage()
         {
             //get all unpublished posts
-            var posts = postService.GetAll()
-                .Where(post => post.IsPublished == false)
-                .ToList();
-
+            var posts = postService.GetAll();
             var viewModel = ModelFactory.Create(posts);
 
             return View(viewModel);

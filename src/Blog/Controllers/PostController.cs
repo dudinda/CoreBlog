@@ -29,8 +29,10 @@ namespace Blog.Controllers
         public IActionResult OpenPost(int id)
         {
             var post = postService.FindPostById(id);
-            var result = ModelFactory.Create(post);
-            return View(result);
+
+            var postViewModel = ModelFactory.Create(post);
+
+            return View(postViewModel);
         }
 
         [Authorize]
@@ -53,17 +55,13 @@ namespace Blog.Controllers
                 var newPost             = ModelFactory.Create(viewModel);
                     newPost.Author      = User.Identity.Name;
                     newPost.PostedOn    = DateTime.UtcNow;
-                    newPost.IsPublished = true;
+                    newPost.IsPublished = false;
 
-                
-               
-
-                if (newPost.IsPublished)
-                {
-                    tagService.AddTags(newPost.Tags);
-                    postService.AddPost(newPost);
-                    postService.SaveAll();
-                }
+             
+                tagService.AddTags(newPost.Tags);
+                postService.AddPost(newPost);
+                postService.SaveAll();
+              
 
                 return RedirectToActionPermanent("OpenPost", new { newPost, newPost.Id });
             }
