@@ -37,8 +37,15 @@ namespace Blog.Controllers
         {
             //set initial page
             pageService.InitialPage = page;
-
+            
             var posts = postService.GetAll();
+
+           
+            ViewData["Development"] = posts.Where(option => option.Category.Name == "Development").Count();
+            ViewData["Managment"]   = posts.Where(option => option.Category.Name == "Managment").Count();
+            ViewData["Design"]      = posts.Where(option => option.Category.Name == "Design").Count();
+            ViewData["Other"]       = posts.Where(option => option.Category.Name == "Other").Count();
+
             var pagedList = pageService.GetPagedList(posts);
             var pageViewModel = ModelFactory.Create(pagedList);        
                   

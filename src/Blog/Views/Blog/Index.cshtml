@@ -5,13 +5,7 @@
 
 
 @{ 
-    @if(Model.PostsPerPage.IsFirstPage())
-    {
-        ViewBag.Title = "Latest posts";
-        ViewBag.PageName = "Latest posts";
 
-    }
-    ViewBag.PageName = "Latest posts";
     ViewBag.Title = "CoreBlog";
 
 }
@@ -27,7 +21,8 @@
 
 
 @{ 
-    var latestPosts = Model.PostsPerPage.Where(option => option.PostedOn.Date == DateTime.Today);
+    var latestPosts = Model.PostsPerPage.Source.Where(option => option.PostedOn.Date == DateTime.Today);
+    
 }
 
 <div class="row">
@@ -44,10 +39,10 @@
         <div class="well">
             <h2>Categories</h2>
             <div class="list-group">
-                <a href="#" class="list-group-item"><span class="badge">@Model.PostsPerPage.Source.Where(opt => opt.Category.Name == "Development").Count()</span>Development</a>
-                <a href="#" class="list-group-item"><span class="badge">@Model.PostsPerPage.Source.Where(opt => opt.Category.Name == "Managment").Count()</span>Managment</a>
-                <a href="#" class="list-group-item"><span class="badge">@Model.PostsPerPage.Source.Where(opt => opt.Category.Name == "Design").Count()</span>Design</a>
-                <a href="#" class="list-group-item"><span class="badge">@Model.PostsPerPage.Source.Where(opt => opt.Category.Name == "Other").Count()</span>Other</a>
+                <a asp-controller="Category" class="list-group-item"><span class="badge">@ViewData["Development"]</span>Development</a>
+                <a asp-controller="Category" class="list-group-item"><span class="badge">@ViewData["Managment"]</span>Managment</a>
+                <a asp-controller="Category" class="list-group-item"><span class="badge">@ViewData["Design"]</span>Design</a>
+                <a asp-controller="Category" class="list-group-item"><span class="badge">@ViewData["Other"]</span>Other</a>
             </div>
         </div>
         <div class="well">
