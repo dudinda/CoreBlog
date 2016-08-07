@@ -8,6 +8,7 @@ namespace Blog.Models.Data
     {
         
         ICollection<Post> GetAll();
+        ICollection<Post> GetAllUnpublished();
         ICollection<Post> FindPostsByText(string text);
         ICollection<Post> GetPostByTag(string tagName);
         Post FindPostById(int id);

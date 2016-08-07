@@ -28,10 +28,17 @@ namespace Blog.Models.Data
             context.SaveChanges();
         }
 
+        public ICollection<Post> GetAllUnpublished()
+        {
+            var result = AttachTags(context.Posts
+                                           .Where(post => !post.IsPublished)
+                                           .ToList() );
+            return result;
+        }
+
         public ICollection<Post> GetAll()
         {
             //attach tags and category
-
             var result = AttachTags(context.Posts.ToList());
             
             return result;
@@ -69,20 +76,19 @@ namespace Blog.Models.Data
         {
             //search in title/short description/description
 
-            var result = GetAll()
-                .Where(option => option.Description.Contains(text)      ||
-                                 option.ShortDescription.Contains(text) ||
-                                 option.Title.Contains(text)            
-                                 );
+            var result = GetAll().Where(option => option.Description.Contains(text)      ||
+                                                  option.ShortDescription.Contains(text) ||
+                                                  option.Title.Contains(text)            
+                                       ).ToList<Post>();
 
-            return result.ToList();
+            return result;
                
         }
 
         public ICollection<Post> GetPostByTag(string tagName)
         {
             //get all posts which contain tagName
-            var result = GetAll()
+            var result = GetAll()             
                 .Where( option => option.Tags.All(name => name.Name == tagName) )
                 .ToList<Post>();
 
