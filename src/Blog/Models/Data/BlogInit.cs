@@ -23,7 +23,7 @@ namespace Blog.Models.Data
 
         private async Task SeedRolesAsync()
         {
-            if (roleManager.Roles.Any()) {
+            if (!roleManager.Roles.Any()) {
 
                 var adminRole = new IdentityRole("Admin");
                 var userRole  = new IdentityRole("User");
