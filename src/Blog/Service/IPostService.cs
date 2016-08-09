@@ -11,6 +11,7 @@ namespace Blog.Models.Data
         ICollection<Post> GetAllUnpublished();
         ICollection<Post> FindPostsByText(string text);
         ICollection<Post> GetPostByTag(string tagName);
+        ICollection<Post> GetPostsByCategory(string categoryName);
         Post FindPostById(int id);
         Post FindPostBySlug(string slug);
         void AddPost(Post post);
