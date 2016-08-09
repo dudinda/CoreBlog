@@ -8,10 +8,11 @@
     <title>@ViewBag.Title</title>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet"  href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootswatch/sandstone/bootstrap.min.css" />
     <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <link rel="stylesheet"  href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>   
     @RenderSection("Scripts", false)
     @RenderSection("Styles", false)
 </head>
@@ -27,7 +28,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" asp-controller="Blog" asp-action="Index">AspNetCoreBlog</a>
+                <a class="navbar-brand" asp-controller="Blog" asp-action="Index">CoreBlog</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -79,7 +80,7 @@
         <!-- Footer -->
         <footer class="modal-footer">
             <div class="container">
-                <h4 class="text-muted text-center">@DateTime.Now.Year Blog All Rights Reserved</h4>
+                <h4 class="text-muted text-center"> &copy; @DateTime.Now.Year Daniil Dudin</h4>
             </div>
         </footer>
 </body>
