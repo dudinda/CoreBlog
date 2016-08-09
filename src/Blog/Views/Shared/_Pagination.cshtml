@@ -1,12 +1,10 @@
 ﻿@model Blog.ViewModels.PageViewModel
 
-<div class="text-center">
-    <ul class="pagination">
-        @{
+@{
             var currentPage = Model.PostsPerPage.PageIndex;
             var lastPage = Model.PostsPerPage.TotalPage;
             var frameSize = 5; // display 5 pages
-            var startPage = currentPage - frameSize; //set start page 
+            var startPage = currentPage - frameSize; //set start page
             var endPage = currentPage + frameSize - 1; //set endpage
 
             if (startPage <= 0) //if we have less then 5 pages
@@ -18,22 +16,26 @@
 
             if (endPage > lastPage) //if end page overcome last page
             {
-                endPage = lastPage; // set end page to very last page
+                endPage = lastPage; // set end page to the very last page
                 if (endPage > frameSize)
                 {
                     startPage = endPage - frameSize;
 
                 }
             }
-        }
+}
+
+<div class="text-center">
+    <script src="~/js/pagination.js"></script>
+    <ul class="pagination">
         @if (currentPage > 1)
         {
             <li><a asp-controller="@ViewBag.Controller" asp-route-page="@(currentPage - 1)">Previous</a></li>
         }
-        @for (int i = startPage; i <= endPage; ++i)
+        @for (int page = startPage; page <= endPage; ++page)
         {
 
-            <li><a asp-controller="@ViewBag.Controller" asp-route-page="@i">@i</a></li>
+            <li><a asp-controller="@ViewBag.Controller" asp-route-page="@page">@page</a></li>
 
         }
         @if (currentPage < lastPage)
