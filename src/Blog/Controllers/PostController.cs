@@ -25,7 +25,7 @@ namespace Blog.Controllers
             this.tagService = tagService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("Open/{id}")]
         public IActionResult OpenPost(int id)
         {
             var post = postService.FindPostById(id);

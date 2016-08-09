@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Controllers
 {
-    public class AuthController : Controller
+    sealed public class AuthController : Controller
     {
         private SignInManager<BlogUser> _signInManager { get; }
 

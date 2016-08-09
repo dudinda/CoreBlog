@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Blog.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class AdminController : Controller
+    sealed public class AdminController : Controller
     {
         private UserManager<BlogUser> userManager { get; }
         private IPostService postService { get; }

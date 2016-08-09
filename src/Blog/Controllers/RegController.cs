@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Controllers
 {
-    public class RegController : Controller
+    sealed public class RegController : Controller
     {
         private  UserManager<BlogUser> userManager { get; }
         private  BlogContext context { get;}

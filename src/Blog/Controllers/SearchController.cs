@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Blog.Controllers
 {
     [Route("[controller]/")]
-    public class SearchController : Controller
+    sealed public class SearchController : Controller
     {
         private IPageService pageService { get; }
         private IPostService postService { get; }
