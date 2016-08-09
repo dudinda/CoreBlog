@@ -40,11 +40,14 @@ namespace Blog.Controllers
             
             var posts = postService.GetAll();
 
-           
+            //get a counter for each categoty
             ViewData["Development"] = posts.Where(option => option.Category.Name == "Development").Count();
             ViewData["Managment"]   = posts.Where(option => option.Category.Name == "Managment").Count();
             ViewData["Design"]      = posts.Where(option => option.Category.Name == "Design").Count();
             ViewData["Other"]       = posts.Where(option => option.Category.Name == "Other").Count();
+
+            //get latest posts
+            ViewData["Latest"] = ModelFactory.Create( posts.Take(5).ToList() );
 
             var pagedList = pageService.GetPagedList(posts);
             var pageViewModel = ModelFactory.Create(pagedList);        
