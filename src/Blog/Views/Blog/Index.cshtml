@@ -39,10 +39,10 @@
         <div class="well">
             <h2>Categories</h2>
             <div class="list-group">
-                <a asp-controller="Category" class="list-group-item"><span class="badge">@ViewData["Development"]</span>Development</a>
-                <a asp-controller="Category" class="list-group-item"><span class="badge">@ViewData["Managment"]</span>Managment</a>
-                <a asp-controller="Category" class="list-group-item"><span class="badge">@ViewData["Design"]</span>Design</a>
-                <a asp-controller="Category" class="list-group-item"><span class="badge">@ViewData["Other"]</span>Other</a>
+                <a asp-controller="Category" asp-action="Development" class="list-group-item"><span class="badge">@ViewData["Development"]</span>Development</a>
+                <a asp-controller="Category" asp-action="Managment"   class="list-group-item"><span class="badge">@ViewData["Managment"]</span>Managment</a>
+                <a asp-controller="Category" asp-action="Design"      class="list-group-item"><span class="badge">@ViewData["Design"]</span>Design</a>
+                <a asp-controller="Category" asp-action="Other"       class="list-group-item"><span class="badge">@ViewData["Other"]</span>Other</a>
             </div>
         </div>
         <div class="well">

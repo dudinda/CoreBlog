@@ -39,6 +39,7 @@
                     <p class="lead">@post.ShortDescription</p>
                     <p style="white-space:normal; word-wrap:break-word">@post.Description</p>
                     <hr>
+                    <a asp-controller="Post" asp-action="OpenPost" asp-route-id="@post.Id" class="btn btn-default">Open</a>
                 </div>
         </div>
     }
