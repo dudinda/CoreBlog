@@ -19,10 +19,10 @@
                     </p>
 
                     @if (post.Tags.Any())
-                {
+                    {
                         <span class="glyphicon glyphicon-tags"></span>
                         @foreach (var tag in post.Tags)
-                    {
+                        {
                             <a asp-controller="Tag" asp-action="@tag.Name">@tag.Name</a>
 
                         }
