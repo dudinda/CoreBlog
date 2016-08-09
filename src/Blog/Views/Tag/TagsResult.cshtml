@@ -1,6 +1,6 @@
 ﻿@using Sakura.AspNetCore;
 
-@model Blog.Models.Pager
+@model Blog.ViewModels.PageViewModel
 
 @{
     ViewBag.Title = "Search results";
@@ -18,9 +18,9 @@
 
 
 @Html.Partial("_Posts")
+
 <div class="container">
     <div class="row">
         @Html.Partial("_Pagination")
     </div>
 </div>
-y

@@ -89,7 +89,7 @@ namespace Blog.Models.Data
         {
             //get all posts which contain tagName
             var result = GetAll()             
-                .Where( option => option.Tags.All(name => name.Name == tagName) )
+                .Where( option => option.Tags.Any(name => name.Name == tagName) )
                 .ToList<Post>();
 
             return result;

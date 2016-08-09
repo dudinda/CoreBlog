@@ -12,14 +12,13 @@ namespace Blog.Service
     public class PageService : IPageService
     {
         public int PageSize { get; set; } = 5;
-        public int InitialPage { get; set; } = 1;
-
-        public PagedList<IEnumerable<PostViewModel>, PostViewModel> GetPagedList(ICollection<Post> posts)
+      
+        public PagedList<IEnumerable<PostViewModel>, PostViewModel> GetPagedList(ICollection<Post> posts, int pageIndex)
         {
             //passing to the factory all posts with attached tags and category
             var result = ModelFactory.Create(posts)
                 .OrderByDescending(time => time.PostedOn)
-                .ToPagedList(PageSize, InitialPage);
+                .ToPagedList(PageSize, pageIndex);
 
             return result;
         }

@@ -35,10 +35,9 @@ namespace Blog.Controllers
         [HttpGet("[controller]/{page:int?}")]
         public IActionResult Index(int page = 1)
         {
-            //set initial page
-            pageService.InitialPage = page;
-            
-            var posts = postService.GetAll();
+               
+            var posts     = postService.GetAll();
+            var pagedList = pageService.GetPagedList(posts, page);
 
             //get a counter for each categoty
             ViewData["Development"] = posts.Where(option => option.Category.Name == "Development").Count();
@@ -49,7 +48,7 @@ namespace Blog.Controllers
             //get latest posts
             ViewData["Latest"] = ModelFactory.Create( posts.Take(5).ToList() );
 
-            var pagedList = pageService.GetPagedList(posts);
+            
             var pageViewModel = ModelFactory.Create(pagedList);        
                   
             return View(pageViewModel);

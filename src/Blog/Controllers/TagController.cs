@@ -4,18 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Blog.Models.Data;
+using Blog.Service;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Blog.Controllers
 {
+    [Route("[controller]/")]
     public class TagController : Controller
     {
-        private IPostService service;
+        private IPageService pageService { get; }
+        private IPostService postService { get; }
 
-        public TagController(IPostService service)
+        public TagController(IPostService postService, IPageService pageService)
         {
-            this.service = service;
+            this.postService = postService;
+            this.pageService = pageService;
         }
 
 
@@ -26,13 +30,15 @@ namespace Blog.Controllers
         }
 
         // GET: /<controller>/
-        [HttpGet("[controller]/{text}/{page:int}")]
+        [HttpGet("{text}/{page:int?}")]
         public IActionResult SearchTags(string text, int page = 1)
         {
-            var result = service.GetPostByTag(text);
-            
+            var posts     = postService.GetPostByTag(text);
+            var pagedList = pageService.GetPagedList(posts, page);
 
-            return View("TagsResult", result);
+            var pageViewModel = ModelFactory.Create(pagedList);
+            
+            return View("TagsResult", pageViewModel);
         }
     }
 }

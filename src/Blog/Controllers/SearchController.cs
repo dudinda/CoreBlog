@@ -14,7 +14,6 @@ namespace Blog.Controllers
     public class SearchController : Controller
     {
         private IPageService pageService { get; }
-
         private IPostService postService { get; }
 
         public SearchController(IPostService postService, IPageService pageService)
@@ -50,19 +49,19 @@ namespace Blog.Controllers
             {
                 ViewBag.text = null;
                 return RedirectToAction("SearchResult");
-            }
-
-            pageService.InitialPage = page;
+            } 
 
             ViewBag.text = text;
 
-            var posts  = postService.FindPostsByText(text);
-            var pagedList = pageService.GetPagedList(posts);
-            var result = ModelFactory.Create(pagedList);
+            var posts     = postService.FindPostsByText(text);
+            var pagedList = pageService.GetPagedList(posts, page);
+
+      
+            var pageViewModel = ModelFactory.Create(pagedList);
 
             
 
-            return View("SearchResult", result);
+            return View("SearchResult", pageViewModel);
 
         }
 
