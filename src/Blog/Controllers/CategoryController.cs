@@ -22,21 +22,23 @@ namespace Blog.Controllers
 
 
         [HttpGet]
-        public IActionResult SearchResult()
+        public IActionResult CategoryResult()
         {
             return View();
         }
 
         // GET: /<controller>/
         [HttpGet("{text}/{page:int?}")]
-        public IActionResult SearchTags(string text, int page = 1)
+        public IActionResult SearchCategory(string text, int page = 1)
         {
-            var posts = postService.GetPostsByCategory(text);
+            var posts     = postService.GetPostsByCategory(text);
             var pagedList = pageService.GetPagedList(posts, page);
+
+            ViewBag.Controller = "Category";
 
             var pageViewModel = ModelFactory.Create(pagedList);
 
-            return RedirectToActionPermanent("SearchResult", pageViewModel);
+            return View("../Search/SearchResult", pageViewModel);
         }
     }
 }

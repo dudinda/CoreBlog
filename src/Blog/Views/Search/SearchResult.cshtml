@@ -2,25 +2,12 @@
 
 @model Blog.ViewModels.PageViewModel
 
-    @{
-        ViewBag.Title = "Search results";
-        ViewBag.Controller = "Search";
-    }
     
 <div class="row">
-    @if (ViewBag.text == null)
-    {
-        <h2 class="text-center">Nothing was found! Try again!</h2>
-
-    }
-    else
-    {
-
         @Html.Partial("_Posts")
         <div class="container">
             <div class="row">
                 @Html.Partial("_Pagination")
             </div>
         </div>
-    }
 </div>  

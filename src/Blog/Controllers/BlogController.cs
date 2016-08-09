@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using System.Linq;
 using Blog.Models.PostViewModels;
-using Blog.Models;
-using Blog.Models.Account;
-using Sakura.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using Blog.Models.Data;
 using Blog.Service;
 
 namespace Blog.Controllers
 {
-    public class BlogController : Controller
+    public sealed class BlogController : Controller
     {
         private IPageService pageService { get; }
         private IPostService postService { get; } 
@@ -46,7 +38,7 @@ namespace Blog.Controllers
             ViewData["Other"]       = posts.Where(option => option.Category.Name == "Other").Count();
 
             //get latest posts
-            ViewData["Latest"] = ModelFactory.Create( posts.Take(5).ToList() );
+            ViewData["Latest"] = ModelFactory.Create( posts.Skip(posts.Count - 5).ToList() );
 
             
             var pageViewModel = ModelFactory.Create(pagedList);        

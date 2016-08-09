@@ -1,0 +1,26 @@
+﻿@using Sakura.AspNetCore;
+
+@model Blog.ViewModels.PageViewModel
+
+@{
+    ViewBag.Title = Model.PostsPerPage.First().Category.Name;
+    ViewBag.Controller = "Category";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/BackToTop.css" />
+}
+
+@section Scripts {
+    <script src="~/js/scrollToTop.js"></script>
+}
+
+
+
+@Html.Partial("_Posts")
+
+<div class="container">
+    <div class="row">
+        @Html.Partial("_Pagination")
+    </div>
+</div>

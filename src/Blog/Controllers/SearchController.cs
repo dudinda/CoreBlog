@@ -45,17 +45,18 @@ namespace Blog.Controllers
         public IActionResult Pagination(string text = null, int page = 1)
         {
 
-            if(string.IsNullOrEmpty(text))
+           /* if(string.IsNullOrEmpty(text))
             {
                 ViewBag.text = null;
                 return RedirectToAction("SearchResult");
             } 
 
-            ViewBag.text = text;
+            ViewBag.text = text;*/
 
             var posts     = postService.FindPostsByText(text);
             var pagedList = pageService.GetPagedList(posts, page);
 
+            ViewBag.Controller = "Search";
       
             var pageViewModel = ModelFactory.Create(pagedList);
 

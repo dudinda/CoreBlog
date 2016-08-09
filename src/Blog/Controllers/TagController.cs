@@ -36,9 +36,11 @@ namespace Blog.Controllers
             var posts     = postService.GetPostByTag(text);
             var pagedList = pageService.GetPagedList(posts, page);
 
+            ViewBag.Controller = "Tag";
+  
             var pageViewModel = ModelFactory.Create(pagedList);
-            
-            return View("TagsResult", pageViewModel);
+
+            return View("../Search/SearchResult", pageViewModel);
         }
     }
 }

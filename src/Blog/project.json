@@ -46,7 +46,8 @@
     "font-awesome": "4.6.1",
     "Bootswatch": "3.3.5+2",
     "System.Linq.Parallel": "4.0.1-rc2-24027",
-    "AutoMapper": "4.2.1"
+    "AutoMapper": "4.2.1",
+    "MoreLinq.Source.MoreEnumerable.TakeLast": "1.0.3"
   },
   
 

@@ -7,6 +7,7 @@
 /// <reference path="js/lib/jquery-validation/dist/additional-methods.js" />
 /// <reference path="js/lib/jquery-validation/dist/jquery.validate.js" />
 /// <reference path="js/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" />
+/// <reference path="js/pagination.js" />
 /// <reference path="js/scrolltotop.js" />
 /// <reference path="lib/bootstrap/dist/js/bootstrap.js" />
 /// <reference path="lib/jquery/dist/jquery.js" />
