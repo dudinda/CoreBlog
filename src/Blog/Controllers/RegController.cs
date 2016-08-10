@@ -29,7 +29,6 @@ namespace Blog.Controllers
      //   [ValidateAntiForgeryToken]
         public async Task<IActionResult> Registration(RegistrationViewModel viewModel)
         {
-            //TODO attach new role to the user
             if (ModelState.IsValid)
             {         
 
@@ -56,21 +55,22 @@ namespace Blog.Controllers
 
                 var result = await userManager
                     .CreateAsync(newUser, viewModel.Password);
-               
-                if (result.Succeeded)
-                {
-                    context.SaveChanges();
-                    return RedirectToActionPermanent("Index", "Blog");
-                }
+
 
                 var userRole = await userManager.AddToRoleAsync(newUser, "User");
+
 
                 if (!userRole.Succeeded)
                 {
                     throw new InvalidProgramException("Failed to bind user to the role");
                 }
 
-                //TODO make it with Task.WhenAll();
+                if (result.Succeeded)
+                {
+                    context.SaveChanges();
+                    return RedirectToActionPermanent("Index", "Blog");
+                }
+              
             }
 
             return View(viewModel);
