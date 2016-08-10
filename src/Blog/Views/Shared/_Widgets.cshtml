@@ -1,6 +1,8 @@
 ﻿@model Blog.ViewModels.PageViewModel 
-
-   @Html.Partial("_Search", Model.Search)
+     @{ 
+         ViewBag.Controller = "Search";
+     }
+     @Html.Partial("_Search", Model.Search)
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Categories</h3>
