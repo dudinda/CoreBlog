@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Blog.Models.Data;
 using Blog.Service;
+using Blog.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,6 +23,17 @@ namespace Blog.Controllers
             this.pageService = pageService;
         }
 
+
+        [HttpPost]
+        public IActionResult GetString(SearchViewModel search)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectPermanent($"Tag/{search.Text}");
+            }
+
+            return new BadRequestResult();
+        }
 
         [HttpGet]
         public IActionResult TagsResult()

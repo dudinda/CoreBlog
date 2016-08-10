@@ -1,5 +1,6 @@
 ﻿using Blog.Models.Data;
 using Blog.Service;
+using Blog.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,17 @@ namespace Blog.Controllers
         {
             this.postService = postService;
             this.pageService = pageService;
+        }
+
+        [HttpPost]
+        public IActionResult GetString(SearchViewModel search)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectPermanent($"Category/{search.Text}");
+            }
+
+            return new BadRequestResult();
         }
 
 
