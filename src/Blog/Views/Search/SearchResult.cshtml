@@ -2,12 +2,33 @@
 
 @model Blog.ViewModels.PageViewModel
 
-    
-<div class="row">
+@{
+    ViewBag.Title = Model.Search.Text + " - search results";
+    var totalCount = Model.PostsPerPage.TotalCount;
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/BackToTop.css" />
+    <link rel="stylesheet" href="~/css/SearchBar.css" />
+}
+
+@section Scripts {
+    <script src="~/js/scrollToTop.js"></script>
+}
+
+<div class="container-fluid">
+    @Html.Partial("_Search", Model.Search)
+    @if (totalCount > 0)
+    {
         @Html.Partial("_Posts")
         <div class="container">
             <div class="row">
                 @Html.Partial("_Pagination")
             </div>
         </div>
-</div>  
+    }
+    else
+    {
+        <h2 class="text-center">Nothing was found! Try again!</h2>
+
+    }
+</div>
