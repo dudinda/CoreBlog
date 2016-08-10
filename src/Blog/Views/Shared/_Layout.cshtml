@@ -4,7 +4,8 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width" />
+
+    <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
 
     <!-- Stylesheets -->
@@ -12,61 +13,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootswatch/sandstone/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
-    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>   
-    @RenderSection("Scripts", false)
     @RenderSection("Styles", false)
 </head>
 
 <body>
-             
-   <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" asp-controller="Blog" asp-action="Index" asp-route-page="1">CoreBlog</a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                
-                <ul class="nav navbar-nav navbar-right">
-                    @if (!(User.Identity.IsAuthenticated))
-                    {
-                        <li><a asp-controller="Auth" asp-action="Login">Login<span class="sr-only">(current)</span></a></li>
-                        <li><a asp-controller="Reg" asp-action="Registration">Register</a></li>
-                    }
-                    else
-                    {
-
-                        <li><a asp-controller="Post" asp-action="CreatePost">Create new post</a></li>
-                        <li><a asp-controller="Auth" asp-action="Logout">Logout</a></li>
-
-                    }
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li class="divider"></li>
-                            <li><a href="#">About</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Contact</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#"></a></li>
-                        </ul>
-                    </li>
-                    <li>
-
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-    </nav> 
-
+      @Html.Partial("_NavBar")       
     <div id="layout">
         <div id="content">
             <!-- Site Content -->
@@ -85,5 +36,8 @@
                 <h6 class="text-center">powered by <a href="https://github.com/Softenraged/CoreBlog">CoreBlog</a></h6>
             </div>
         </footer>
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>   
+    @RenderSection("Scripts", false)
 </body>
 </html>
