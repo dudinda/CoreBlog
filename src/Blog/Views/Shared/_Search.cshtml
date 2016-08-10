@@ -2,7 +2,7 @@
 @using Blog.ViewModels
 @model SearchViewModel
 
-    <form class="input-group stylish-input-group" asp-controller="Search" asp-action="GetString">
+    <form class="input-group stylish-input-group" asp-controller="@ViewBag.Controller" asp-action="GetString">
         <input type="text" class="form-control" placeholder="Search" asp-for="Text">
         <span class="input-group-addon">
             <button type="submit">
