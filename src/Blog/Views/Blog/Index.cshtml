@@ -1,12 +1,10 @@
-﻿@using Sakura.AspNetCore;
-@using Blog.ViewModels
-@using Blog.Models
-@model Blog.ViewModels.PageViewModel
+﻿@model Blog.ViewModels.PageViewModel
 
 
 @{ 
 
     ViewBag.Title = "CoreBlog";
+    var totalCount = Model.PostsPerPage.TotalCount;
 
 }
 
@@ -27,47 +25,22 @@
 
 <div class="row">
     <div class="col-lg-9">
-
-        @if (Model.PostsPerPage.TotalCount != 0)
+        @if (totalCount > 0)
         {
             @Html.Partial("_Posts", Model)
 
         }
     </div>
     <div class="col-lg-3">
-        @Html.Partial("_Search", Model.Search)
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Categories</h3>
-            </div>
-            <div class="panel-body">
-                <div class="list-group">
-                    <a asp-controller="Category" asp-action="Development" class="list-group-item"><span class="badge">@ViewData["Development"]</span>Development</a>
-                    <a asp-controller="Category" asp-action="Managment" class="list-group-item"><span class="badge">@ViewData["Managment"]</span>Managment</a>
-                    <a asp-controller="Category" asp-action="Design" class="list-group-item"><span class="badge">@ViewData["Design"]</span>Design</a>
-                    <a asp-controller="Category" asp-action="Other" class="list-group-item"><span class="badge">@ViewData["Other"]</span>Other</a>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Latest posts</h3>
-            </div>
-            <div class="panel-body">
-                <div class="list-group">
-                    @foreach (var post in (IEnumerable<PostViewModel>)ViewData["Latest"])
-                    {
-                        <a asp-controller="Post" asp-action="OpenPost" asp-route-id="@(post.Id)" class="list-group-item"> @post.Title</a>
-                    }
-                </div>
-            </div>
-        </div>         
-      </div>
-   </div>
-
-<a href="#" class="scrollToTop"><i class="fa fa-long-arrow-up" style="font-size:44px"></i></a>
-<div class="container">
-    <div class="row">
-        @Html.Partial(@"_Pagination", Model)
+       @Html.Partial("_Widgets", Model)
     </div>
 </div>
+
+<a href="#" class="scrollToTop"><i class="fa fa-long-arrow-up" style="font-size:44px"></i></a>
+@if (totalCount > 5) {
+    <div class="container">
+        <div class="row">
+            @Html.Partial(@"_Pagination", Model)
+        </div>
+    </div>
+}
