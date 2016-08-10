@@ -32,14 +32,7 @@ namespace Blog.Controllers
             return new BadRequestResult();
         }
 
-
-        [HttpGet]
-        public IActionResult CategoryResult()
-        {
-            return View();
-        }
-
-        // GET: /<controller>/
+    
         [HttpGet("{text}/{page:int?}")]
         public IActionResult SearchCategory(string text, int page = 1)
         {

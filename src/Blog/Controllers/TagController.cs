@@ -35,13 +35,6 @@ namespace Blog.Controllers
             return new BadRequestResult();
         }
 
-        [HttpGet]
-        public IActionResult TagsResult()
-        {
-            return View();
-        }
-
-        // GET: /<controller>/
         [HttpGet("{text}/{page:int?}")]
         public IActionResult SearchTags(string text, int page = 1)
         {
