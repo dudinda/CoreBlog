@@ -3,6 +3,7 @@ using Blog.Models.PostViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Blog.Models.Data;
 using Blog.Service;
+using Blog.Models.Factory;
 
 namespace Blog.Controllers
 {
@@ -28,8 +29,9 @@ namespace Blog.Controllers
         public IActionResult Index(int page = 1)
         {
                
-            var posts     = postService.GetAll();
-            var pagedList = pageService.GetPagedList(posts, page);
+            var posts       = postService.GetAll();
+            var latestposts = postService.GetLatest(ref posts, 5);
+            var pagedList   = pageService.GetPagedList(posts, page);
 
             //get a counter for each categoty
             ViewData["Development"] = posts.Where(option => option.Category.Name == "Development").Count();
@@ -38,10 +40,9 @@ namespace Blog.Controllers
             ViewData["Other"]       = posts.Where(option => option.Category.Name == "Other").Count();
 
             //get latest posts
-            ViewData["Latest"] = ModelFactory.Create( posts.Skip(posts.Count - 5).ToList() );
+            ViewData["Latest"] = ModelFactory.Create( latestposts );
 
-            
-            var pageViewModel = ModelFactory.Create(pagedList);        
+            var pageViewModel = ModelFactory.Create( pagedList );        
                   
             return View(pageViewModel);
         }

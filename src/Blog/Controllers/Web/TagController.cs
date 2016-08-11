@@ -38,7 +38,7 @@ namespace Blog.Controllers
         [HttpGet("{text}/{page:int?}")]
         public IActionResult SearchTags(string text, int page = 1)
         {
-            var posts     = postService.GetPostByTag(text);
+            var posts     = postService.GetPostsByTag(text);
             var pagedList = pageService.GetPagedList(posts, page);
 
             ViewBag.Controller = "Tag";

@@ -24,7 +24,7 @@ namespace Blog.Controllers
         [HttpGet("Open/{id}")]
         public IActionResult OpenPost(int id)
         {
-            var post = postService.FindPostById(id);
+            var post = postService.GetPostById(id);
 
             var postViewModel = ModelFactory.Create(post);
 

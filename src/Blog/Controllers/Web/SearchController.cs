@@ -28,6 +28,7 @@ namespace Blog.Controllers
         {
             if (ModelState.IsValid)
             {
+                ViewBag.Title = search.Text + " - search results";
                 return RedirectPermanent($"Search/{search.Text}");
             }
 
@@ -53,7 +54,7 @@ namespace Blog.Controllers
 
             ViewBag.text = text;*/
 
-            var posts     = postService.FindPostsByText(text);
+            var posts     = postService.GetPostsByText(text);
             var pagedList = pageService.GetPagedList(posts, page);
 
             ViewBag.Controller = "Search";
