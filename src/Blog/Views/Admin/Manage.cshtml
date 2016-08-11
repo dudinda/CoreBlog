@@ -18,14 +18,25 @@
 <div class="tab-content" ng-app="personApp">
     <div id="home" class="tab-pane fade in active" ng-controller="personController as vm">
         <div class="text-danger" ng-show="vm.error">{{vm.error}}</div>
-        <table class="table">
-            <tr ng-repeat="post in vm.posts">
-                <td>{{post.title}}</td>
-                <td>{{post.author}}</td>
-                <td>{{post.postedOn | date: 'MM-dd-yyyy'}}</td>
-                <td>{{post.isPublished}}</td>
-            </tr>                     
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Date</th>
+                    <th>Is published</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="post in vm.posts">
+                    <td>{{post.title}}</td>
+                    <td>{{post.author}}</td>
+                    <td>{{post.postedOn | date: 'MM-dd-yyyy'}}</td>
+                    <td>{{post.isPublished}}</td>
+                </tr>
+            </tbody>               
         </table>
+        <button ng-click="vm.sortByName()">Sort</button>
     </div>
     <div id="menu1" class="tab-pane fade">
         <h3>Menu 1</h3>
