@@ -11,5 +11,9 @@
         }, function (error) {
             vm.error = "Failed to load data" + error;
         });
+
+        sortByName = function () {
+            posts.sort();
+        };
     })
 })();

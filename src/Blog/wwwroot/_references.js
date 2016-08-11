@@ -9,6 +9,7 @@
 /// <reference path="js/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" />
 /// <reference path="js/pagination.js" />
 /// <reference path="js/personapp.js" />
+/// <reference path="js/personcontroller.js" />
 /// <reference path="js/scrolltotop.js" />
 /// <reference path="lib/bootstrap/dist/js/bootstrap.js" />
 /// <reference path="lib/jquery/dist/jquery.js" />
