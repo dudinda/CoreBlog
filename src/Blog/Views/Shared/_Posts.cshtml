@@ -5,7 +5,7 @@
 <div class="container">
     @foreach (var post in Model.PostsPerPage)
     {
-        <div class="well">
+        <div class="well" style="background-color:#fff">
             <!-- Blog Post -->
             <!-- Title -->
             <h1 class="text-center">@post.Category.Name: <a asp-controller="Post" asp-action="OpenPost" asp-route-id="@(post.Id)">@post.Title</a></h1>
