@@ -1,4 +1,5 @@
-﻿using Blog.Models.PostViewModels;
+﻿using Blog.Models.Factory;
+using Blog.Models.PostViewModels;
 using Blog.ViewModels;
 using Sakura.AspNetCore;
 using System;
@@ -43,8 +44,18 @@ namespace Blog.Models.Data
             
             return result;
         }
-   
-        public Post FindPostById(int id)
+
+        public ICollection<Post> GetLatest(ref ICollection<Post> posts, int count)
+        {
+            var result = posts.TakeLast(5)
+                        .OrderByDescending(post => post.PostedOn)
+                        .ToList();
+
+            return result;
+        }
+            
+
+        public Post GetPostById(int id)
         {
             var result = context.Posts
                 .Where(option => option.Id == id)
@@ -53,7 +64,7 @@ namespace Blog.Models.Data
             return AttachTags(result);
         }
 
-        public Post FindPostBySlug(string slug)
+        public Post GetPostBySlug(string slug)
         {
             var result = context.Posts
                 .Where(option => option.UrlSlug == slug)
@@ -72,7 +83,7 @@ namespace Blog.Models.Data
                 
         }
 
-        public ICollection<Post> FindPostsByText(string text)
+        public ICollection<Post> GetPostsByText(string text)
         {
             //search in title/short description/description
 
@@ -85,7 +96,7 @@ namespace Blog.Models.Data
                
         }
 
-        public ICollection<Post> GetPostByTag(string tagName)
+        public ICollection<Post> GetPostsByTag(string tagName)
         {
             //get all posts which contain tagName
             var result = GetAll()             
@@ -97,7 +108,7 @@ namespace Blog.Models.Data
         }
 
 
-        public Post AttachTags(Post post)
+        private Post AttachTags(Post post)
         {         
 
             //attach tags to post
@@ -112,8 +123,9 @@ namespace Blog.Models.Data
 
             return post;
         }
+    
 
-        public ICollection<Post> AttachTags(ICollection<Post> posts)
+        private ICollection<Post> AttachTags(ICollection<Post> posts)
         {
             var result = posts;
 

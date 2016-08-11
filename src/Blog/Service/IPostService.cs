@@ -8,13 +8,17 @@ namespace Blog.Models.Data
     {
         
         ICollection<Post> GetAll();
+        ICollection<Post> GetLatest(ref ICollection<Post> posts, int count);
         ICollection<Post> GetAllUnpublished();
-        ICollection<Post> FindPostsByText(string text);
-        ICollection<Post> GetPostByTag(string tagName);
+
+        ICollection<Post> GetPostsByText(string text);
+        ICollection<Post> GetPostsByTag(string tagName);
         ICollection<Post> GetPostsByCategory(string categoryName);
-        Post FindPostById(int id);
-        Post FindPostBySlug(string slug);
+
+        Post GetPostById(int id);
+        Post GetPostBySlug(string slug);
         void AddPost(Post post);
         void SaveAll();
+        
     }
 }
