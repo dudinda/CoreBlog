@@ -29,7 +29,9 @@ namespace Blog.Models.Factory
             }
 
             foreach (var item in queue)
+            {
                 yield return item;
+            }
         }
     }
 }
