@@ -19,6 +19,7 @@ using Blog.ViewModels;
 using Sakura.AspNetCore.Mvc;
 using Blog.Service;
 using Microsoft.AspNetCore.Routing;
+using Newtonsoft.Json.Serialization;
 
 namespace Blog
 {
@@ -74,7 +75,11 @@ namespace Blog
             services.AddTransient<BlogInit>();
 
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(option =>
+                {
+                    option.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
 
 
 

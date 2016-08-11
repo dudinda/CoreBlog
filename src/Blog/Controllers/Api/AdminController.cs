@@ -1,4 +1,5 @@
-﻿using Blog.Models.Account;
+﻿using Blog.Models;
+using Blog.Models.Account;
 using Blog.Models.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Controllers
 {
-    [Authorize(Roles = "Admin")]
+
     sealed public class AdminController : Controller
     {
         private UserManager<BlogUser> userManager { get; }
@@ -29,6 +30,15 @@ namespace Blog.Controllers
             var viewModel = ModelFactory.Create(posts);
 
             return View(viewModel);
+        }
+
+        [HttpGet("api/admin")]
+        public JsonResult Get()
+        {
+            //get all unpublished posts
+            var posts = postService.GetAll();
+     
+            return Json(posts);
         }
 
     }

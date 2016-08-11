@@ -3,6 +3,11 @@
     ViewBag.Title = "Manage panel";
 }
 
+@section Scripts{
+    <script src="~/lib/angular/angular.js"></script>
+    <script src="~/js/personApp.js"></script>
+    <script src="~/js/personController.js"></script>
+}
 
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home">New posts</a></li>
@@ -10,18 +15,16 @@
     <li><a data-toggle="tab" href="#menu2">Suspended Users</a></li>
 </ul>
 
-<div class="tab-content">
-    <div id="home" class="tab-pane fade in active">
+<div class="tab-content" ng-app="personApp">
+    <div id="home" class="tab-pane fade in active" ng-controller="personController as vm">
+        <div class="text-danger" ng-show="vm.error">{{vm.error}}</div>
         <table class="table">
-            @foreach (var post in Model)
-            {
-                <tr>
-                    <td>@post.Title</td>
-                    <td>@post.PostedOn</td>
-                    <td>@post.Author</td>
-               </tr>
-
-            }
+            <tr ng-repeat="post in vm.posts">
+                <td>{{post.title}}</td>
+                <td>{{post.author}}</td>
+                <td>{{post.postedOn | date: 'MM-dd-yyyy'}}</td>
+                <td>{{post.isPublished}}</td>
+            </tr>                     
         </table>
     </div>
     <div id="menu1" class="tab-pane fade">
