@@ -22,17 +22,16 @@ namespace Blog.Controllers
             this.pageService = pageService;
         }
 
-        //using prefix Item2 for correct model binding from tuple
+
         [HttpPost]
         public IActionResult GetString(SearchViewModel search)
         {
             if (ModelState.IsValid)
             {
-                ViewBag.Title = search.Text + " - search results";
-                return RedirectPermanent($"Search/{search.Text}");
+                return RedirectToAction("SearchResult", new { text = search.Text });
             }
-
-            return new BadRequestResult();
+           
+            return BadRequest();
         }
 
         [HttpGet]
@@ -43,17 +42,9 @@ namespace Blog.Controllers
 
   
         [HttpGet("{text}/{page:int?}")]
-        public IActionResult Pagination(string text = null, int page = 1)
+        public IActionResult SearchResult(string text = null, int page = 1)
         {
-
-           /* if(string.IsNullOrEmpty(text))
-            {
-                ViewBag.text = null;
-                return RedirectToAction("SearchResult");
-            } 
-
-            ViewBag.text = text;*/
-
+           
             var posts     = postService.GetPostsByText(text);
             var pagedList = pageService.GetPagedList(posts, page);
 
