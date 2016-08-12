@@ -6,6 +6,7 @@ using Blog.ViewModels.ControlPanelViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,16 @@ namespace Blog.Controllers
         public IActionResult Manage()
         {           
             return View();
+        }
+
+
+        [HttpGet("api/admin/users")]
+        public JsonResult GetUsers()
+        {
+            //get all users
+            var users = userManager.Users.ToList();
+            
+            return Json(users);
         }
 
         [HttpPost("api/admin")]
