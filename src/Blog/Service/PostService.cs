@@ -24,9 +24,14 @@ namespace Blog.Models.Data
             context.Add(post);
         }
 
-        public void SaveAll()
+        public void RemovePost(Post post)
         {
-            context.SaveChanges();
+            context.Remove(post);
+        } 
+
+        public bool SaveAll()
+        {
+            return context.SaveChanges() > 0;
         }
 
         public ICollection<Post> GetAllUnpublished()
@@ -40,11 +45,16 @@ namespace Blog.Models.Data
         public ICollection<Post> GetAll()
         {
             //attach tags and category
-            var result = AttachTags(context.Posts.ToList());
+            var result = AttachTags(context.Posts.Where(post => post.IsPublished).ToList());
             
             return result;
         }
 
+        public void UpdatePost(Post post)
+        {
+            context.Update(post);
+        }
+ 
         public ICollection<Post> GetLatest(ref ICollection<Post> posts, int count)
         {
             var result = posts.TakeLast(5)

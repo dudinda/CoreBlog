@@ -17,8 +17,12 @@ namespace Blog.Models.Data
 
         Post GetPostById(int id);
         Post GetPostBySlug(string slug);
+
         void AddPost(Post post);
-        void SaveAll();
+        void UpdatePost(Post post);
+        void RemovePost(Post post);
+
+        bool SaveAll();
         
     }
 }
