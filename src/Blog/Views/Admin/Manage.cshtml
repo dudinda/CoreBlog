@@ -18,25 +18,25 @@
 <div class="tab-content" ng-app="personApp">
     <div id="home" class="tab-pane fade in active" ng-controller="personController as vm">
         <div class="text-danger" ng-show="vm.error">{{vm.error}}</div>
+        <div class="text-left" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i>Loading...</div>
         <table class="table table-bordered table-striped">
-            <thead>
+            <thead class="table-responsive">
                 <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Date</th>
-                    <th>Is published</th>
+                    <th><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('title')">Title</a></th>
+                    <th><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('author')">Author</a></th>
+                    <th><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('postedOn')">Date</a></th>
+                    <th><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('isPublished')">Is published</a></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="post in vm.posts">
+                <tr ng-repeat="post in posts | orderBy:vm.predicate:vm.reverse">
                     <td>{{post.title}}</td>
                     <td>{{post.author}}</td>
                     <td>{{post.postedOn | date: 'MM-dd-yyyy'}}</td>
-                    <td>{{post.isPublished}}</td>
+                    <td><button ng-click="approve(post, true)"><i class="glyphicon glyphicon-ok"></i></button><button ng-clcik="approve(post, false)"><i class="glyphicon glyphicon-remove"></i></button></td>
                 </tr>
             </tbody>               
         </table>
-        <button ng-click="vm.sortByName()">Sort</button>
     </div>
     <div id="menu1" class="tab-pane fade">
         <h3>Menu 1</h3>
