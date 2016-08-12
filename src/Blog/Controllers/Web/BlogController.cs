@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Blog.Models.Data;
 using Blog.Service;
 using Blog.Models.Factory;
+using Blog.ViewModels;
 
 namespace Blog.Controllers
 {
@@ -40,7 +41,7 @@ namespace Blog.Controllers
             ViewData["Other"]       = posts.Where(option => option.Category.Name == "Other").Count();
 
             //get latest posts
-            ViewData["Latest"] = ModelFactory.Create( latestposts );
+            ViewData["Latest"] = ModelFactory.Create<PostViewModel>( latestposts );
 
             var pageViewModel = ModelFactory.Create( pagedList );        
                   

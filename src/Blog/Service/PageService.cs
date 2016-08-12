@@ -16,7 +16,7 @@ namespace Blog.Service
         public PagedList<IEnumerable<PostViewModel>, PostViewModel> GetPagedList(ICollection<Post> posts, int pageIndex)
         {
             //passing to the factory all posts with attached tags and category
-            var result = ModelFactory.Create(posts)
+            var result = ModelFactory.Create<PostViewModel>(posts)
                 .OrderByDescending(time => time.PostedOn)
                 .ToPagedList(PageSize, pageIndex);
 
