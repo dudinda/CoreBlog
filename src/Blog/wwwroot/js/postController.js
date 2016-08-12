@@ -1,6 +1,6 @@
 ﻿(function() {
 
-    personApp.controller('personController', function ($scope, $http) {
+    blogApp.controller('postController', function ($scope, $http) {
         var vm = this;
      
         $scope.posts = [];

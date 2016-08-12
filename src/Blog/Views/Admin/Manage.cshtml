@@ -5,8 +5,8 @@
 
 @section Scripts{
     <script src="~/lib/angular/angular.js"></script>
-    <script src="~/js/personApp.js"></script>
-    <script src="~/js/personController.js"></script>
+    <script src="~/js/blogApp.js"></script>
+    <script src="~/js/postController.js"></script>
 }
 
 <ul class="nav nav-tabs">
@@ -15,8 +15,8 @@
     <li><a data-toggle="tab" href="#menu2">Suspended Users</a></li>
 </ul>
 
-<div class="tab-content" ng-app="personApp">
-    <div id="home" class="tab-pane fade in active" ng-controller="personController as vm">
+<div class="tab-content" ng-app="blogApp">
+    <div id="home" class="tab-pane fade in active" ng-controller="postController as vm">
         <div class="text-danger" ng-show="vm.error">{{vm.error}}</div>
         <div class="text-left" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i>Loading...</div>
         <table class="table table-bordered table-striped">
@@ -33,7 +33,7 @@
                     <td>{{post.title}}</td>
                     <td>{{post.author}}</td>
                     <td>{{post.postedOn | date: 'MM-dd-yyyy'}}</td>
-                    <td><button ng-click="approve(post, true)"><i class="glyphicon glyphicon-ok"></i></button><button ng-clcik="approve(post, false)"><i class="glyphicon glyphicon-remove"></i></button></td>
+                    <td><button ng-click="approve(post, true)"><i class="glyphicon glyphicon-ok"></i></button><button ng-click="approve(post, false)"><i class="glyphicon glyphicon-remove"></i></button></td>
                 </tr>
             </tbody>               
         </table>
