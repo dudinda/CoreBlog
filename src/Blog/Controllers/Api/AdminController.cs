@@ -1,6 +1,8 @@
 ﻿using Blog.Models;
 using Blog.Models.Account;
 using Blog.Models.Data;
+using Blog.ViewModels;
+using Blog.ViewModels.ControlPanelViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,21 +26,48 @@ namespace Blog.Controllers
         }
 
         public IActionResult Manage()
-        {
-            //get all unpublished posts
-            var posts = postService.GetAll();
-            var viewModel = ModelFactory.Create(posts);
+        {           
+            return View();
+        }
 
-            return View(viewModel);
+        [HttpPost("api/admin")]
+        public IActionResult ApprovePost([FromBody]PostControlPanelViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                //get an existing post then set status
+                var post             = postService.GetPostById(viewModel.Id);                    
+                    post.IsPublished = viewModel.IsPublished;
+  
+                if (post.IsPublished)
+                {
+                    //if it was approved
+                    post.Modified = DateTime.UtcNow;
+                    postService.UpdatePost(post);
+                }
+                else
+                {
+                    //else remove it from the database
+                    postService.RemovePost(post);
+                }
+
+                if (postService.SaveAll())
+                {
+                    return View("Manage");
+                }
+            }
+            return BadRequest();
         }
 
         [HttpGet("api/admin")]
-        public JsonResult Get()
+        public JsonResult GetUnpublished()
         {
             //get all unpublished posts
-            var posts = postService.GetAll();
-     
-            return Json(posts);
+            var posts = postService.GetAllUnpublished();
+
+            var controlViewModel = ModelFactory.Create<PostControlPanelViewModel>(posts);
+
+            return Json(controlViewModel);
         }
 
     }
