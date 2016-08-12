@@ -7,6 +7,7 @@
     <script src="~/lib/angular/angular.js"></script>
     <script src="~/js/blogApp.js"></script>
     <script src="~/js/postController.js"></script>
+    <script src="~/js/userController.js"></script>
 }
 
 <ul class="nav nav-tabs">
@@ -19,13 +20,14 @@
     <div id="home" class="tab-pane fade in active" ng-controller="postController as vm">
         <div class="text-danger" ng-show="vm.error">{{vm.error}}</div>
         <div class="text-left" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i>Loading...</div>
-        <table class="table table-bordered table-striped">
-            <thead class="table-responsive">
+        <button ng-click="getPosts();">Get</button>
+        <table style="width: auto;" class="table table-hover">
+            <thead>
                 <tr>
-                    <th><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('title')">Title</a></th>
-                    <th><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('author')">Author</a></th>
-                    <th><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('postedOn')">Date</a></th>
-                    <th><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('isPublished')">Is published</a></th>
+                    <th class="col-md-1"><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('title')">Title</a></th>
+                    <th class="col-md-3"><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('author')">Author</a></th>
+                    <th class="col-md-3"><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('postedOn')">Date</a></th>
+                    <th class="col-md-2">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,14 +35,34 @@
                     <td>{{post.title}}</td>
                     <td>{{post.author}}</td>
                     <td>{{post.postedOn | date: 'MM-dd-yyyy'}}</td>
-                    <td><button ng-click="approve(post, true)"><i class="glyphicon glyphicon-ok"></i></button><button ng-click="approve(post, false)"><i class="glyphicon glyphicon-remove"></i></button></td>
+                    <td class="btn-group">
+                        <a class="btn" href="#" ng-click="approve(post, true)"><i class="fa fa-check">Approve</i></a>
+                        <a class="btn" href="#" ng-click="approve(post, false)"><i class="fa fa-close">Delete</i></a>
+                    </td>
                 </tr>
             </tbody>               
         </table>
     </div>
-    <div id="menu1" class="tab-pane fade">
-        <h3>Menu 1</h3>
-        <p>Some content in menu 1.</p>
+    <div id="menu1" class="tab-pane fade" ng-controller="userController as uservm" >
+        <div class="text-danger" ng-show="uservm.error">{{uservm.error}}</div>
+        <div class="text-left" ng-show="uservm.isBusy"><i class="fa fa-spinner fa-spin"></i>Loading...</div>
+        <button ng-click="getUsers();">Get</button>
+        <table style="width: auto;" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in users">
+                    <td>{{user.userName}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.emailConfirmed}}</td>              
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div id="menu2" class="tab-pane fade">
         <h3>Menu 2</h3>
