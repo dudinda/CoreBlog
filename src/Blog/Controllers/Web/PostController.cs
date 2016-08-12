@@ -1,5 +1,7 @@
-﻿using Blog.Models.Data;
+﻿using Blog.Models;
+using Blog.Models.Data;
 using Blog.Models.PostViewModels;
+using Blog.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
