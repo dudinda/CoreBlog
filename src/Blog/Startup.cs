@@ -20,6 +20,7 @@ using Sakura.AspNetCore.Mvc;
 using Blog.Service;
 using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json.Serialization;
+using Blog.ViewModels.ControlPanelViewModels;
 
 namespace Blog
 {
@@ -122,6 +123,7 @@ namespace Blog
                 config.CreateMap<Tag, TagViewModel>().ReverseMap();
                 config.CreateMap<Category, CategoryViewModel>().ReverseMap();
                 config.CreateMap<PostCreateViewModel, Post>();
+                config.CreateMap<Post, PostControlPanelViewModel>().ReverseMap();
             });
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
