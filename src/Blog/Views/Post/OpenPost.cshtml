@@ -1,7 +1,7 @@
 ﻿@model Blog.ViewModels.PostViewModel
 
-<div class="row">
-    <div class="col-lg-10 col-lg-offset-1">
+
+    <div class="container">
 
         <!-- Blog Post -->
         <!-- Title -->
@@ -9,12 +9,14 @@
         <hr>
 
         <!-- Date/Time -->
-        <p><span class="glyphicon glyphicon-time"></span> Posted on @Model.PostedOn by <h3>@Model.Author</h3> </p>
+        <p>
+            <span class="glyphicon glyphicon-time"></span> Posted on @Model.PostedOn by <a text-size="10px">@Model.Author</a>
+        </p>
 
         <hr>
 
         <!-- Preview Image -->
-        <img class="img-responsive" src="http://placehold.it/900x300" alt="@Model.Title">
+        <img class="text-center" src="http://placehold.it/900x300" alt="@Model.Title">
 
         <hr>
 
@@ -23,4 +25,3 @@
         <p>@Model.Description</p>
         <hr>
     </div>
-</div>
