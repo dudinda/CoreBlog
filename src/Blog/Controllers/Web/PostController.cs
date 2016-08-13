@@ -33,7 +33,7 @@ namespace Blog.Controllers
             return View(postViewModel);
         }
 
-        [Authorize]
+        [Authorize(Roles ="Admin, User")]
         [HttpGet]
         public IActionResult CreatePost()
         {
@@ -42,7 +42,7 @@ namespace Blog.Controllers
             return View(postCreateViewModel);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin, User")]
         [HttpPost]
         public IActionResult CreatePost(PostCreateViewModel viewModel) 
         {

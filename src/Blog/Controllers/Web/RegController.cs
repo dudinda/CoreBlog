@@ -50,7 +50,7 @@ namespace Blog.Controllers
                     return View();
                 }
 
-
+                
                 var newUser = ModelFactory.Create(viewModel);
 
                 var result = await userManager
@@ -70,10 +70,9 @@ namespace Blog.Controllers
                     context.SaveChanges();
                     return RedirectToActionPermanent("Index", "Blog");
                 }
-              
             }
 
-            return View(viewModel);
+            return BadRequest();
         }
     }
 }
