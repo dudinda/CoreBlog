@@ -13,11 +13,13 @@ namespace Blog.Controllers
 {
     sealed public class AuthController : Controller
     {
-        private SignInManager<BlogUser> _signInManager { get; }
+        private UserManager<BlogUser> userManager { get; }
+        private SignInManager<BlogUser> signInManager { get; }
 
-        public AuthController(SignInManager<BlogUser> signInManager)
+        public AuthController(SignInManager<BlogUser> signInManager, UserManager<BlogUser> userManager)
         {
-            _signInManager = signInManager;
+            this.signInManager = signInManager;
+            this.userManager   = userManager;
         }
 
         public IActionResult Login()
@@ -32,27 +34,42 @@ namespace Blog.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel viewModel) 
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
+                //get an existing user by name or email
+                var user  = await userManager.FindByNameAsync(viewModel.UserName);
+                    user  = await userManager.FindByEmailAsync(viewModel.UserName); 
 
-                var user = ModelFactory.Create(viewModel);
+                //if user exist
+                if (user != null) {
 
-                var signInResult = await _signInManager
-                    .PasswordSignInAsync( user.UserName, 
-                                          user.Password,
-                                          true, 
-                                          false );
+                    if (user.isBanned)
+                    {
+                        ModelState.AddModelError("", $"Your account has been temporarily suspended until {user.LockoutEnd}");
+                        return View();
+                    }
 
-                if ( signInResult.Succeeded )
-                {
-                    return RedirectToAction("Index", "Blog");
+                    var signInResult = await signInManager
+                        .PasswordSignInAsync(user,
+                                             viewModel.Password,
+                                             viewModel.RememberMe,
+                                             false);
+
+                    if (signInResult.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Blog");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Password is incorrect");
+                        return View();
+                    }
+
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Username or password incorrect");
-                }
-
             }
+
+            ModelState.AddModelError("", "Username or email incorrect");
+       
             return View();
         }
 
@@ -60,7 +77,7 @@ namespace Blog.Controllers
         {
             if(User.Identity.IsAuthenticated)
             {
-                await _signInManager.SignOutAsync();
+                await signInManager.SignOutAsync();
             }
             return RedirectToActionPermanent("Index", "Blog");
         }
