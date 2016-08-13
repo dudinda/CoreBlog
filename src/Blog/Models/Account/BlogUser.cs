@@ -9,6 +9,6 @@ namespace Blog.Models.Account
     public class BlogUser : IdentityUser
     {
         public int Age { set; get; }
-        //public ICollection<Post> UserPosts { get; set; }
+        public bool isBanned { get; set; } = false;
     }
 }

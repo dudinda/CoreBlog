@@ -8,8 +8,8 @@ using Blog.Models.PostViewModels;
 namespace Blog.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20160804130314_newModel")]
-    partial class newModel
+    [Migration("20160813155934_NewModel")]
+    partial class NewModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,6 +55,8 @@ namespace Blog.Migrations
 
                     b.Property<string>("UserName")
                         .HasAnnotation("MaxLength", 256);
+
+                    b.Property<bool>("isBanned");
 
                     b.HasKey("Id");
 

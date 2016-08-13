@@ -55,6 +55,8 @@ namespace Blog.Migrations
                     b.Property<string>("UserName")
                         .HasAnnotation("MaxLength", 256);
 
+                    b.Property<bool>("isBanned");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")

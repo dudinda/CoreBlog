@@ -25,8 +25,9 @@ namespace Blog.Models.Data
         {
             if (!roleManager.Roles.Any()) {
 
-                var adminRole = new IdentityRole("Admin");
-                var userRole  = new IdentityRole("User");
+                var adminRole  = new IdentityRole("Admin");
+                var userRole   = new IdentityRole("User");
+                var bannedRole = new IdentityRole("Banned");
 
                 var userCreateResult = await roleManager.CreateAsync(userRole);
 
@@ -36,6 +37,13 @@ namespace Blog.Models.Data
                 }
 
                 var adminCreateResult = await roleManager.CreateAsync(adminRole);
+
+                if (!adminCreateResult.Succeeded)
+                {
+                    throw new InvalidProgramException("Failed to create new role");
+                }
+
+                var bannedCreateResult = await roleManager.CreateAsync(bannedRole);
 
                 if (!adminCreateResult.Succeeded)
                 {
@@ -65,16 +73,16 @@ namespace Blog.Models.Data
 
                 if (!createUserResult.Succeeded)
                 {
-                    throw new InvalidProgramException("Failed to create new user");
+                    throw new InvalidProgramException("Failed to create user role");
                 }
                                                          
-                var createRoleResult = await userManager
+                var createAdminResult = await userManager
                     .AddToRoleAsync(adminUser, "Admin");
 
-                if(!createRoleResult.Succeeded)
+                if(!createAdminResult.Succeeded)
                 {
                     throw new InvalidProgramException("Failed to create admin role");
-                }
+                }  
 
             }
          
