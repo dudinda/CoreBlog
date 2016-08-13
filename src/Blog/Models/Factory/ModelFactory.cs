@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Blog.Controllers;
 using Blog.Models.Account;
 using Blog.Models.PostViewModels;
 using Blog.ViewModels;
@@ -23,6 +24,16 @@ namespace Blog.Models.Data
 
         }
 
+        public static BlogUser Create(UserControlPanelViewModel viewModel)
+        {
+            return Mapper.Map<BlogUser>(viewModel);
+        }
+
+        public static UserControlPanelViewModel Create(BlogUser user)
+        {
+            return Mapper.Map<UserControlPanelViewModel>(user);
+        }
+
         public static Post Create<T>(T viewModel)
         {
             return Mapper.Map<Post>(viewModel);
@@ -39,9 +50,14 @@ namespace Blog.Models.Data
         }
 
       
+        public static ICollection<UserControlPanelViewModel> Create(List<BlogUser> blogUser)
+        {
+            return Mapper.Map<ICollection<UserControlPanelViewModel>>(blogUser);
+        }
 
         public static BlogUser Create(RegistrationViewModel viewModel)
         {
+            
             return new BlogUser
             {
                 UserName = viewModel.Name,

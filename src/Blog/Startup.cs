@@ -21,6 +21,7 @@ using Blog.Service;
 using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json.Serialization;
 using Blog.ViewModels.ControlPanelViewModels;
+using Blog.Controllers;
 
 namespace Blog
 {
@@ -124,8 +125,9 @@ namespace Blog
                 config.CreateMap<Category, CategoryViewModel>().ReverseMap();
                 config.CreateMap<PostCreateViewModel, Post>();
                 config.CreateMap<Post, PostControlPanelViewModel>().ReverseMap();
+                config.CreateMap<BlogUser, UserControlPanelViewModel>().ReverseMap();
             });
-            // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
+           
 
             app.UseMvc(routes =>
             {
@@ -137,7 +139,7 @@ namespace Blog
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Search}/{action}/{page?}"
+                    template: "{controller}/{action}/{page?}"
                     );
             });
 
