@@ -46,17 +46,38 @@ namespace Blog.Controllers
 
 
         [HttpPost("api/admin/unban")]
-        public async Task UnbanAsync([FromBody]UserControlPanelViewModel viewModel)
+        public async Task<IActionResult> UnbanAsync([FromBody]UserControlPanelViewModel viewModel)
         {
-            var user = await userManager.FindByNameAsync(viewModel.UserName);
-
-            if ( await userManager.IsInRoleAsync(user, "Banned") )
+            if (ModelState.IsValid)
             {
+                var user = await userManager.FindByNameAsync(viewModel.UserName);
 
-                var addToBannedResult    = await userManager.AddToRoleAsync(user, "User");
-                var removeFromUserResult = await userManager.RemoveFromRoleAsync(user, "Banned");
+                //if user exists
+                if (user != null)
+                {
+                    user.isBanned = false;
 
+                    var updateUserResult = await userManager.UpdateAsync(user);
+
+                    if (updateUserResult.Succeeded)
+                    {
+
+                        if (await userManager.IsInRoleAsync(user, "Banned"))
+                        {
+
+                            var addToBannedResult    = await userManager.AddToRoleAsync(user, "User");
+                            var removeFromUserResult = await userManager.RemoveFromRoleAsync(user, "Banned");
+
+                            var controlViewModel = ModelFactory.Create(user);
+
+                            return Json(controlViewModel);
+
+                        }
+                    }
+                }
             }
+
+            return BadRequest();
         }
 
         [HttpPost("api/admin/ban")]
@@ -80,7 +101,7 @@ namespace Blog.Controllers
                         if (await userManager.IsInRoleAsync(user, "User"))
                         {
 
-                            var addToBannedResult = await userManager.AddToRoleAsync(user, "Banned");
+                            var addToBannedResult    = await userManager.AddToRoleAsync(user, "Banned");
                             var removeFromUserResult = await userManager.RemoveFromRoleAsync(user, "User");
 
                             var controlViewModel = ModelFactory.Create(user);

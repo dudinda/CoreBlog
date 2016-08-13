@@ -12,15 +12,15 @@
         vm.reverse = true;
         vm.currentPage = 1;
 
-        $scope.getPosts = function () {
-            $http.get("/api/admin").then(function (response) {
-                angular.copy(response.data, $scope.posts);
-            }, function (error) {
-                vm.error = "Failed to load data" + error;
-            }).finally(function () {
-                vm.isBusy = false;
-            });
-        };
+      
+        $http.get("/api/admin/unpublished").then(function (response) {
+            angular.copy(response.data, $scope.posts);
+        }, function (error) {
+            vm.error = "Failed to load data" + error;
+        }).finally(function () {
+            vm.isBusy = false;
+        });
+       
 
         vm.order = function (predicate) {
             vm.reverse = (vm.predicate === predicate) ? !vm.reverse : false;

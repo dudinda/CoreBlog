@@ -20,7 +20,7 @@
     <div id="home" class="tab-pane fade in active" ng-controller="postController as vm">
         <div class="text-danger" ng-show="vm.error">{{vm.error}}</div>
         <div class="text-left" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i>Loading...</div>
-        <button ng-click="getPosts();">Get</button>
+        
         <table style="width: auto;" class="table table-hover">
             <thead>
                 <tr>
@@ -33,7 +33,7 @@
             <tbody>
                 <tr ng-repeat="post in posts | orderBy:vm.predicate:vm.reverse">
                     <td>{{post.title}}</td>
-                    <td>{{post.author}}</td>
+                    <td>{{post.author}}<a class="btn" ng-click="approve(post, true)"><i class="fa fa-ban">Suspend</i></a></td>
                     <td>{{post.postedOn | date: 'MM-dd-yyyy'}}</td>
                     <td class="btn-group">
                         <a class="btn" href="#" ng-click="approve(post, true)"><i class="fa fa-check">Approve</i></a>
@@ -46,20 +46,26 @@
     <div id="menu1" class="tab-pane fade" ng-controller="userController as uservm" >
         <div class="text-danger" ng-show="uservm.error">{{uservm.error}}</div>
         <div class="text-left" ng-show="uservm.isBusy"><i class="fa fa-spinner fa-spin"></i>Loading...</div>
-        <button ng-click="getUsers();">Get</button>
+ 
         <table style="width: auto;" class="table table-hover">
             <thead>
                 <tr>
                     <th>Username</th>
                     <th>Email</th>
                     <th>Status</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="user in users">
                     <td>{{user.userName}}</td>
                     <td>{{user.email}}</td>
-                    <td>{{user.emailConfirmed}}</td>              
+                    <td>{{user.isBanned ? 'Banned' : 'Active'}}</td>
+                    <td class="btn group">
+                        <a class="btn" ng-click="user.isBanned? unban(user) : ban(user)">
+                            <i ng-class="user.isBanned ? 'fa fa-ban' : 'fa fa-check'">{{user.isBanned ? 'Unban' : 'Ban'}}</i>
+                        </a>
+                    </td>
                 </tr>
             </tbody>
         </table>
