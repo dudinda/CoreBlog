@@ -5,6 +5,7 @@ using Blog.ViewModels;
 using Blog.ViewModels.ControlPanelViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -17,6 +18,7 @@ namespace Blog.Controllers
 
     sealed public class AdminController : Controller
     {
+  
         private UserManager<BlogUser> userManager { get; }
         private IPostService postService { get; }
 
@@ -37,8 +39,60 @@ namespace Blog.Controllers
         {
             //get all users
             var users = userManager.Users.ToList();
+            var controlViewModel = ModelFactory.Create(users);
             
-            return Json(users);
+            return Json(controlViewModel);
+        }
+
+
+        [HttpPost("api/admin/unban")]
+        public async Task UnbanAsync([FromBody]UserControlPanelViewModel viewModel)
+        {
+            var user = await userManager.FindByNameAsync(viewModel.UserName);
+
+            if ( await userManager.IsInRoleAsync(user, "Banned") )
+            {
+
+                var addToBannedResult    = await userManager.AddToRoleAsync(user, "User");
+                var removeFromUserResult = await userManager.RemoveFromRoleAsync(user, "Banned");
+
+            }
+        }
+
+        [HttpPost("api/admin/ban")]
+        public async Task<IActionResult> BanAsync([FromBody]UserControlPanelViewModel viewModel)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.FindByNameAsync(viewModel.UserName);
+              
+                //if user exists
+                if (user != null)
+                {
+                    user.isBanned = true;
+
+                    var updateUserResult = await userManager.UpdateAsync(user);
+
+                    if (updateUserResult.Succeeded)
+                    {
+
+                        if (await userManager.IsInRoleAsync(user, "User"))
+                        {
+
+                            var addToBannedResult = await userManager.AddToRoleAsync(user, "Banned");
+                            var removeFromUserResult = await userManager.RemoveFromRoleAsync(user, "User");
+
+                            var controlViewModel = ModelFactory.Create(user);
+
+                            return Json(controlViewModel);
+
+                        }
+                    }                
+                }
+            }
+
+            return BadRequest();
         }
 
         [HttpPost("api/admin")]
@@ -70,7 +124,18 @@ namespace Blog.Controllers
             return BadRequest();
         }
 
-        [HttpGet("api/admin")]
+        [HttpGet("api/admin/published")]
+        public JsonResult GetAll()
+        {
+            //get all unpublished posts
+            var posts = postService.GetAll();
+
+            var controlViewModel = ModelFactory.Create<PostControlPanelViewModel>(posts);
+
+            return Json(controlViewModel);
+        }
+
+        [HttpGet("api/admin/unpublished")]
         public JsonResult GetUnpublished()
         {
             //get all unpublished posts
