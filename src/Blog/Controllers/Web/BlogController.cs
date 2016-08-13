@@ -33,8 +33,8 @@ namespace Blog.Controllers
             var posts       = postService.GetAll();
             var latestposts = postService.GetLatest(ref posts, 5);
             var pagedList   = pageService.GetPagedList(posts, page);
-
-            //get a counter for each categoty
+           
+            //get a counter for each category
             ViewData["Development"] = posts.Where(option => option.Category.Name == "Development").Count();
             ViewData["Managment"]   = posts.Where(option => option.Category.Name == "Managment").Count();
             ViewData["Design"]      = posts.Where(option => option.Category.Name == "Design").Count();
