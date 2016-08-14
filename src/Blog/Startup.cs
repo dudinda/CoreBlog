@@ -14,7 +14,6 @@ using Blog.Models.PostViewModels;
 using Blog.Models.Account;
 using Microsoft.AspNetCore.Mvc;
 using Blog.Models.Data;
-using Blog.ViewModels.Account;
 using Blog.ViewModels;
 using Sakura.AspNetCore.Mvc;
 using Blog.Service;
@@ -22,6 +21,7 @@ using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json.Serialization;
 using Blog.ViewModels.ControlPanelViewModels;
 using Blog.Controllers;
+using Blog.Models.AccountViewModels;
 
 namespace Blog
 {
@@ -73,7 +73,8 @@ namespace Blog
 
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<ITagService, TagService>();
-            services.AddScoped<IPageService, PageService>();      
+            services.AddScoped<IPageService, PageService>();
+            services.AddScoped<IMailService, MailService>();
             services.AddTransient<BlogInit>();
 
 
@@ -119,7 +120,7 @@ namespace Blog
 
             AutoMapper.Mapper.Initialize(config =>
             {
-                config.CreateMap<LoginViewModel, Login>();
+                config.CreateMap<RegistrationViewModel, BlogUser>();
                 config.CreateMap<Post, PostViewModel>().ReverseMap();
                 config.CreateMap<Tag, TagViewModel>().ReverseMap();
                 config.CreateMap<Category, CategoryViewModel>().ReverseMap();

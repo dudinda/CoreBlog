@@ -1,0 +1,35 @@
+﻿@model Blog.Models.AccountViewModels.ContactViewModel
+
+ <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h2>Contact us</h2>
+
+            <form method="post">
+                <div asp-validation-summary="ModelOnly"></div>
+                <div class="form group">
+                    <label asp-for="Name">Username</label>
+                    <input asp-for="Name" class="form-control text-muted" placeholder="Enter your name" />
+                    <span asp-validation-for="Name" class="text-muted"></span>
+                </div>
+                <div class="form group">
+                    <label asp-for="Email">Email</label>
+                    <input type="email" asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-muted"></span>
+                </div>
+                <div class="form group">
+                    <label asp-for="Subject">Subject</label>
+                    <input asp-for="Subject" class="form-control" />
+                    <span asp-validation-for="Subject" class="text-muted"></span>
+                </div>
+                <div class="form group">
+                    <label asp-for="Message">Your message</label>
+                    <textarea asp-for="Message" class="form-control"></textarea>
+                    <span asp-validation-for="Message" class="text-muted"></span>
+                </div>
+                <div class="list-group">
+                    <button type="submit" class="list-group-item" style="text-align:center;">Send</button>
+                    <a asp-contoller="Home" asp-action="Index" class="list-group-item" style="text-align:center;">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
