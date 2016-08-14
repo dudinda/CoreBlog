@@ -32,7 +32,7 @@ namespace Blog.Controllers
                 return RedirectPermanent($"Tag/{search.Text}");
             }
 
-            return new BadRequestResult();
+            return BadRequest();
         }
 
         [HttpGet("{text}/{page:int?}")]

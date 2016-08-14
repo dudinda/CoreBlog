@@ -29,7 +29,7 @@ namespace Blog.Controllers
                 return RedirectPermanent($"Category/{search.Text}");
             }
 
-            return new BadRequestResult();
+            return BadRequest();
         }
 
     
