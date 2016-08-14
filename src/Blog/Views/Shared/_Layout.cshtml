@@ -17,27 +17,25 @@
 </head>
 
 <body>
-      @Html.Partial("_NavBar")       
-    <div id="layout">
-        <div id="content">
-            <!-- Site Content -->
-            <div class="content">
-                @RenderBody()
-            </div>
-        </div>
-    </div>
-  
-       
 
-        <!-- Footer -->
-        <footer class="modal-footer">
+    <div class="layout">
+        <div>
+            @Html.Partial("_NavBar")
+        </div>
+        <div class="content">
+            @RenderBody()
+        </div>
+        <div class="footer">
             <div class="container">
                 <h4 class="text-muted text-center"> &copy; @DateTime.Now.Year Daniil Dudin</h4>
                 <h6 class="text-center">powered by <a href="https://github.com/Softenraged/CoreBlog">CoreBlog</a></h6>
             </div>
-        </footer>
+        </div>
+    </div>
+
+
     <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>   
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     @RenderSection("Scripts", false)
 </body>
 </html>

@@ -29,8 +29,29 @@
     box-sizing: border-box;
 }
 
+body {
+  position: relative;
+  margin: 0;
+  padding-bottom: 7rem;
+  min-height: 100%;
+}
 
-body { padding-top: 100px; }
-@media screen and (max-width: 768px) {
-    body { padding-top: 0px; }
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #fff;
+  text-align: center;
+}
+
+
+body {
+    padding-top: 100px;
 }
