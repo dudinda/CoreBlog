@@ -1,4 +1,5 @@
 ﻿using Blog.Models.Account;
+using Blog.Models.AccountViewModels;
 using Blog.Models.Data;
 using Blog.Models.PostViewModels;
 using Microsoft.AspNetCore.Identity;

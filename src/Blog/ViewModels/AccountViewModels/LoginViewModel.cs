@@ -4,7 +4,7 @@ using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
-namespace Blog.ViewModels.Account
+namespace Blog.ViewModels.AccountViewModels
 {
     public class LoginViewModel
     {
@@ -13,5 +13,7 @@ namespace Blog.ViewModels.Account
 
         [Required]
         public string Password { get; set; }
+
+        public bool RememberMe { get; set; }
     }
 }

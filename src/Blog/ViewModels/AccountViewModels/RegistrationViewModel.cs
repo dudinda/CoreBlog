@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blog.Models.Account
+namespace Blog.Models.AccountViewModels
 {
     public class RegistrationViewModel
     {

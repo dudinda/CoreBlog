@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Blog.Controllers;
 using Blog.Models.Account;
+using Blog.Models.AccountViewModels;
 using Blog.Models.PostViewModels;
 using Blog.ViewModels;
-using Blog.ViewModels.Account;
+using Blog.ViewModels.AccountViewModels;
 using Blog.ViewModels.ControlPanelViewModels;
 using Sakura.AspNetCore;
 using System;
@@ -15,8 +16,6 @@ namespace Blog.Models.Data
 {
     public static class ModelFactory
     {
-
-       
 
         public static PostViewModel Create(Post post)
         {
@@ -44,12 +43,6 @@ namespace Blog.Models.Data
             return Mapper.Map<ICollection<T>>(posts);
         }
 
-        public static Login Create(LoginViewModel viewModel)
-        {
-            return Mapper.Map<Login>(viewModel);
-        }
-
-      
         public static ICollection<UserControlPanelViewModel> Create(List<BlogUser> blogUser)
         {
             return Mapper.Map<ICollection<UserControlPanelViewModel>>(blogUser);
@@ -57,13 +50,7 @@ namespace Blog.Models.Data
 
         public static BlogUser Create(RegistrationViewModel viewModel)
         {
-            
-            return new BlogUser
-            {
-                UserName = viewModel.Name,
-                Age = viewModel.Age,
-                Email = viewModel.Email
-            };
+            return Mapper.Map<BlogUser>(viewModel);
         }
 
         public static ICollection<TagViewModel> Create(ICollection<Tag> tags)

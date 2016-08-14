@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blog.Models.PostViewModels
+namespace Blog.Models.AccountViewModels
 {
     public class ContactViewModel
     {
+
         [Required]
         public string Name { get; set; }
         
@@ -16,10 +17,11 @@ namespace Blog.Models.PostViewModels
         public string Email { get; set; }
 
         [Required]
-        public string Message { get; set; }
+        [StringLength(32)]
+        public string Subject { get; set; }
 
         [Required]
-        [StringLength(10)]
-        public string Subject { get; set; }
+        public string Message { get; set; }
+     
     }
 }

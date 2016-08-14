@@ -1,7 +1,7 @@
 ﻿using Blog.Models;
 using Blog.Models.Account;
 using Blog.Models.Data;
-using Blog.ViewModels.Account;
+using Blog.ViewModels.AccountViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
