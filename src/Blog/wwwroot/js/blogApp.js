@@ -1,3 +1,4 @@
-﻿var blogApp = angular.module('blogApp', []);
-
-
+﻿(function () {
+    'use strict';
+    var app = angular.module('blogApp', []);
+})();

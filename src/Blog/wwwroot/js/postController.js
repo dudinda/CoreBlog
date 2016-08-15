@@ -1,6 +1,11 @@
 ﻿(function() {
 
-    blogApp.controller('postController', function ($scope, $http) {
+   
+
+    angular.module('blogApp')
+        .controller('postController', ['$scope', 'controlPanelFactory', postController]);
+
+    function postController($scope, controlPanelFactory) {
         var vm = this;
      
         $scope.posts = [];
@@ -12,31 +17,28 @@
         vm.reverse = true;
         vm.currentPage = 1;
 
-      
-        $http.get("/api/admin/unpublished").then(function (response) {
-            angular.copy(response.data, $scope.posts);
-        }, function (error) {
-            vm.error = "Failed to load data" + error;
-        }).finally(function () {
-            vm.isBusy = false;
-        });
-       
+        controlPanelFactory
+            .getUnpublishedPosts().success(function (response) {
+                angular.copy(response, $scope.posts);
+                vm.isBusy = false;
+            }).error(function (error) {
+                vm.error = "Failed to get data";
+            });
 
         vm.order = function (predicate) {
             vm.reverse = (vm.predicate === predicate) ? !vm.reverse : false;
             vm.predicate = predicate;
         };
-
     
         $scope.approve = function (post, isPublished) {
-            post.isPublished = isPublished;
-            $http.post("/api/admin", post).then(function (response) {
-                $scope.posts.pop(post);
-            }, function (error) {
-                vm.error = "Failed to update the post: " + error;
-            }).finally(function () {
-                vm.isBusy = false;
-            });
+            vm.isBusy = true;
+            controlPanelFactory
+                .approvePost(post, isPublished).success(function (response) {
+                    $scope.posts.pop(response);
+                    vm.isBusy = false;
+                }).error(function (error) {
+                    vm.error = "Failed to approve the post";
+                });
         };
-    })
+    };
 })();

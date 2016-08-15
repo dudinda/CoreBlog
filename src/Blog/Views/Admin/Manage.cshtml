@@ -3,13 +3,6 @@
     ViewBag.Title = "Manage panel";
 }
 
-@section Scripts{
-    <script src="~/lib/angular/angular.js"></script>
-    <script src="~/js/blogApp.js"></script>
-    <script src="~/js/postController.js"></script>
-    <script src="~/js/userController.js"></script>
-}
-
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home">New posts</a></li>
     <li><a data-toggle="tab" href="#menu1">Users</a></li>
@@ -17,10 +10,7 @@
 </ul>
 
 <div class="tab-content" ng-app="blogApp">
-    <div id="home" class="tab-pane fade in active" ng-controller="postController as vm">
-        <div class="text-danger" ng-show="vm.error">{{vm.error}}</div>
-        <div class="text-left" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i>Loading...</div>
-        
+    <div id="home" class="tab-pane fade in active" ng-controller="postController as vm" >       
         <table style="width: auto;" class="table table-hover">
             <thead>
                 <tr>
@@ -42,11 +32,10 @@
                 </tr>
             </tbody>               
         </table>
+        <div class="text-danger" ng-show="vm.error">{{vm.error}}</div>
+        <div class="text-left" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i>Loading...</div>
     </div>
-    <div id="menu1" class="tab-pane fade" ng-controller="userController as uservm" >
-        <div class="text-danger" ng-show="uservm.error">{{uservm.error}}</div>
-        <div class="text-left" ng-show="uservm.isBusy"><i class="fa fa-spinner fa-spin"></i>Loading...</div>
- 
+    <div id="menu1" class="tab-pane fade" ng-controller="userController as uservm" >        
         <table style="width: auto;" class="table table-hover">
             <thead>
                 <tr>
@@ -62,16 +51,26 @@
                     <td>{{user.email}}</td>
                     <td>{{user.isBanned ? 'Banned' : 'Active'}}</td>
                     <td class="btn group">
-                        <a class="btn" ng-click="user.isBanned? unban(user) : ban(user)">
+                        <button class="btn" ng-disabled="vm.isBusy" ng-click="user.isBanned? unban(user) : ban(user)">
                             <i ng-class="user.isBanned ? 'fa fa-ban' : 'fa fa-check'">{{user.isBanned ? 'Unban' : 'Ban'}}</i>
-                        </a>
+                        </button>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <div class="text-left" ng-show="uservm.isBusy"><i class="fa fa-spinner fa-spin"></i>Loading...</div>
+        <div class="text-danger" ng-show="uservm.error">{{uservm.error}}</div>
     </div>
     <div id="menu2" class="tab-pane fade">
         <h3>Menu 2</h3>
         <p>Some content in menu 2.</p>
     </div>
 </div>
+
+@section Scripts{
+    <script src="~/lib/angular/angular.js"></script>
+    <script src="~/js/blogApp.js"></script>
+    <script src="~/js/controlPanelFactory.js"></script>
+    <script src="~/js/postController.js"></script>
+    <script src="~/js/userController.js"></script>
+}
