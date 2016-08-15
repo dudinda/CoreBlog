@@ -25,6 +25,7 @@
         {
             @Html.Partial("_Posts", Model)
         }
+
     </div>
 
     <div class="col-lg-3">       
@@ -34,10 +35,10 @@
 <div id="scroll">
     <a href="#" class="scrollToTop"><i class="fa fa-long-arrow-up" style="font-size:44px"></i></a>
 </div>
-@if (totalCount > 5) {
-    <div class="container">
-        <div class="row">
+ <div class="container">
+    <div class="row">
             @Html.Partial("_Pagination", Model)
-        </div>
     </div>
-}
+</div>
+
+

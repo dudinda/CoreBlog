@@ -32,12 +32,16 @@
 body {
   position: relative;
   margin: 0;
+  overflow:auto;
   padding-bottom: 7rem;
   min-height: 100%;
+  padding-left:50px;
+  padding-right:50px;
 }
 
 html {
   height: 100%;
+  overflow:auto;
   box-sizing: border-box;
 }
 
@@ -46,6 +50,7 @@ html {
   right: 0;
   bottom: 0;
   left: 0;
+  width:auto;
   padding: 1rem;
   background-color: #fff;
   text-align: center;
