@@ -33,18 +33,26 @@ namespace Blog.Controllers
             return View(postViewModel);
         }
 
-        [Authorize(Roles ="Admin, User")]
-        [HttpGet]
+
+        [Authorize(Roles = "Admin, User")]
         public IActionResult CreatePost()
+        {
+            return View();
+        }
+
+        [Authorize(Roles ="Admin, User")]
+        [HttpGet("api/post/create")]
+        public IActionResult GetPostForm()
         {
             var postCreateViewModel  = new PostCreateViewModel();
            
-            return View(postCreateViewModel);
+            return Json(postCreateViewModel);
         }
 
+
         [Authorize(Roles = "Admin, User")]
-        [HttpPost]
-        public IActionResult CreatePost(PostCreateViewModel viewModel) 
+        [HttpPost("api/post/submit")]
+        public IActionResult GetnewPost([FromBody]PostCreateViewModel viewModel) 
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +72,7 @@ namespace Blog.Controllers
                 return RedirectToActionPermanent("OpenPost", new { newPost, newPost.Id });
             }
 
-            return NotFound();
+            return BadRequest();
         }
 
     }
