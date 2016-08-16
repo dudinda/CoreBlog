@@ -11,19 +11,7 @@ using System.Threading.Tasks;
 namespace Blog.Models.PostViewModels
 {
     public class PostCreateViewModel
-    {
-        public PostCreateViewModel()
-        {
-            this.Tags = new List<TagViewModel>()
-            {
-                new TagViewModel(),
-                new TagViewModel(),
-                new TagViewModel(),
-                new TagViewModel(),
-                new TagViewModel()
-            };
-        }
-        
+    {    
         [Required]
         public string Title { get; set; }
 
@@ -33,9 +21,9 @@ namespace Blog.Models.PostViewModels
         [Required]    
         public  string Description { get; set; }
 
-        
+        [Required]
         public CategoryViewModel Category { get; set; }
 
-        public IList<TagViewModel> Tags { get; set; }
+        public List<TagViewModel> Tags { get; set; } = new List<TagViewModel>();
     }
 }
