@@ -27,8 +27,10 @@
                 $scope.newPost.tags.push({
                     name: ''
                 });
-            } else {
-                isFull = true;
+            } 
+
+            if($scope.newPost.tags.length === 5) {
+                vm.isFull = true;
             }
         };
         
