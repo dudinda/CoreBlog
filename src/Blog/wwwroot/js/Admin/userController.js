@@ -22,11 +22,12 @@
         $scope.unban = function (user) {
 
             uservm.isBusy = true;
-            user.isBanned = false;
+ 
             controlPanelFactory
-                .unbanUser(user).error(function (error) {
+                .unbanUser(user).success(function(response){
+                    user.isBanned = response;
+                }).error(function (error) {
                     uservm.error = "Failed to unban the user";
-                    user.isBanned = true;
                 }).finally(function () {
                     uservm.isBusy = false;
                 });
@@ -36,11 +37,12 @@
         $scope.ban = function (user) {
 
             uservm.isBusy = true;
-            user.isBanned = true;
+  
             controlPanelFactory
-                .banUser(user).error(function (error) {
+                .banUser(user).success(function(response){
+                    user.isBanned = response;
+                }).error(function (error) {
                     uservm.error = "Failed to ban the user";
-                    user.isBanned = false;
                 }).finally(function () {
                     uservm.isBusy = false;
                 });

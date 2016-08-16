@@ -45,6 +45,8 @@ namespace Blog.Controllers
         }
 
 
+    
+
         [HttpPost("api/admin/unban")]
         public async Task<IActionResult> UnbanAsync([FromBody]UserControlPanelViewModel viewModel)
         {
@@ -68,9 +70,7 @@ namespace Blog.Controllers
                             var addToBannedResult    = await userManager.AddToRoleAsync(user, "User");
                             var removeFromUserResult = await userManager.RemoveFromRoleAsync(user, "Banned");
 
-                            var controlViewModel = ModelFactory.Create(user);
-
-                            return Json(controlViewModel);
+                            return Json(user.isBanned);
 
                         }
                     }
@@ -104,9 +104,7 @@ namespace Blog.Controllers
                             var addToBannedResult    = await userManager.AddToRoleAsync(user, "Banned");
                             var removeFromUserResult = await userManager.RemoveFromRoleAsync(user, "User");
 
-                            var controlViewModel = ModelFactory.Create(user);
-
-                            return Json(controlViewModel);
+                            return Json(user.isBanned);
 
                         }
                     }                
@@ -116,7 +114,7 @@ namespace Blog.Controllers
             return BadRequest();
         }
 
-        [HttpPost("api/admin")]
+        [HttpPost("api/admin/approve")]
         public IActionResult ApprovePost([FromBody]PostControlPanelViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -139,7 +137,7 @@ namespace Blog.Controllers
 
                 if (postService.SaveAll())
                 {
-                    return View("Manage");
+                    return Json(viewModel);
                 }
             }
             return BadRequest();
