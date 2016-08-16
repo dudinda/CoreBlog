@@ -10,10 +10,9 @@ using System;
 namespace Blog.Controllers
 {
 
-    sealed public class PostController : Controller
+    public sealed partial class PostController : Controller
     {
         private ITagService tagService { get; }
-
         private IPostService postService { get; }
 
         public PostController(IPostService repository,
@@ -39,41 +38,5 @@ namespace Blog.Controllers
         {
             return View();
         }
-
-        [Authorize(Roles ="Admin, User")]
-        [HttpGet("api/post/create")]
-        public IActionResult GetPostForm()
-        {
-            var postCreateViewModel  = new PostCreateViewModel();
-           
-            return Json(postCreateViewModel);
-        }
-
-
-        [Authorize(Roles = "Admin, User")]
-        [HttpPost("api/post/submit")]
-        public IActionResult GetnewPost([FromBody]PostCreateViewModel viewModel) 
-        {
-            if (ModelState.IsValid)
-            {
-                
- 
-                var newPost             = ModelFactory.Create(viewModel);
-                    newPost.Author      = User.Identity.Name;
-                    newPost.PostedOn    = DateTime.UtcNow;
-                    newPost.IsPublished = false;
-
-             
-                tagService.AddTags(newPost.Tags);
-                postService.AddPost(newPost);
-                postService.SaveAll();
-              
-
-                return RedirectToActionPermanent("OpenPost", new { newPost, newPost.Id });
-            }
-
-            return BadRequest();
-        }
-
     }
 }

@@ -16,24 +16,9 @@ using System.Threading.Tasks;
 namespace Blog.Controllers
 {
 
-    sealed public class AdminController : Controller
+    public sealed partial class AdminController
     {
   
-        private UserManager<BlogUser> userManager { get; }
-        private IPostService postService { get; }
-
-        public AdminController(IPostService postService, UserManager<BlogUser> userManager)
-        {
-            this.userManager = userManager;
-            this.postService = postService;
-        }
-
-        public IActionResult Manage()
-        {           
-            return View();
-        }
-
-
         [HttpGet("api/admin/users")]
         public JsonResult GetUsers()
         {
