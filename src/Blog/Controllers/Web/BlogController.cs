@@ -7,6 +7,7 @@ using Blog.Models.AccountViewModels;
 
 namespace Blog.Controllers
 {
+    [ResponseCache(CacheProfileName = "Default")]
     public sealed class BlogController : Controller
     {
         private IMailService mailService { get; }
@@ -36,10 +37,10 @@ namespace Blog.Controllers
             var pagedList   = pageService.GetPagedList(posts, page);
 
             //get a counter for each category
-            ViewData["Development"] = postService.GetCategoryCounter("Development");
-            ViewData["Managment"]   = postService.GetCategoryCounter("Managment");
-            ViewData["Design"]      = postService.GetCategoryCounter("Design");
-            ViewData["Other"]       = postService.GetCategoryCounter("Other");
+            ViewData["Development"] = postService.GetCategoryCounter(posts, "Development");
+            ViewData["Managment"]   = postService.GetCategoryCounter(posts, "Managment");
+            ViewData["Design"]      = postService.GetCategoryCounter(posts, "Design");
+            ViewData["Other"]       = postService.GetCategoryCounter(posts, "Other");
 
             //get latest posts
             ViewData["Latest"] = ModelFactory.Create<PostViewModel>( latestposts );

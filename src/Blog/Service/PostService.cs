@@ -55,7 +55,7 @@ namespace Blog.Models.Data
             context.Update(post);
         }
  
-        public ICollection<Post> GetLatest(ref ICollection<Post> posts, int count)
+        public ICollection<Post> GetLatest(ICollection<Post> posts, int count)
         {
             var result = posts.TakeLast(5)
                         .OrderByDescending(post => post.PostedOn)
@@ -91,6 +91,11 @@ namespace Blog.Models.Data
 
             return result;
                 
+        }
+
+        public int GetCategoryCounter(ICollection<Post> collection, string categoryName)
+        {
+            return collection.Where(post => post.Category.Name == categoryName).Count();
         }
 
         public ICollection<Post> GetPostsByText(string text)

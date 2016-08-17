@@ -8,12 +8,14 @@ namespace Blog.Models.Data
     {
         
         ICollection<Post> GetAll();
-        ICollection<Post> GetLatest(ref ICollection<Post> posts, int count);
+        ICollection<Post> GetLatest(ICollection<Post> posts, int count);
         ICollection<Post> GetAllUnpublished();
 
         ICollection<Post> GetPostsByText(string text);
         ICollection<Post> GetPostsByTag(string tagName);
         ICollection<Post> GetPostsByCategory(string categoryName);
+
+        int GetCategoryCounter(ICollection<Post> collection, string categoryName);
 
         Post GetPostById(int id);
         Post GetPostBySlug(string slug);
