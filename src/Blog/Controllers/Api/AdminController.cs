@@ -19,7 +19,7 @@ namespace Blog.Controllers
     public sealed partial class AdminController
     {
   
-        [HttpGet("api/admin/users")]
+        [HttpGet("/api/admin/users")]
         public JsonResult GetUsers()
         {
             //get all users
@@ -32,7 +32,7 @@ namespace Blog.Controllers
 
     
 
-        [HttpPost("api/admin/unban")]
+        [HttpPost("/api/admin/unban")]
         public async Task<IActionResult> UnbanAsync([FromBody]UserControlPanelViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -65,7 +65,7 @@ namespace Blog.Controllers
             return BadRequest();
         }
 
-        [HttpPost("api/admin/ban")]
+        [HttpPost("/api/admin/ban")]
         public async Task<IActionResult> BanAsync([FromBody]UserControlPanelViewModel viewModel)
         {
             
@@ -99,7 +99,7 @@ namespace Blog.Controllers
             return BadRequest();
         }
 
-        [HttpPost("api/admin/approve")]
+        [HttpPost("/api/admin/approve")]
         public IActionResult ApprovePost([FromBody]PostControlPanelViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -128,7 +128,7 @@ namespace Blog.Controllers
             return BadRequest();
         }
 
-        [HttpGet("api/admin/published")]
+        [HttpGet("/api/admin/published")]
         public JsonResult GetAll()
         {
             //get all unpublished posts
@@ -139,7 +139,7 @@ namespace Blog.Controllers
             return Json(controlViewModel);
         }
 
-        [HttpGet("api/admin/unpublished")]
+        [HttpGet("/api/admin/unpublished")]
         public JsonResult GetUnpublished()
         {
             //get all unpublished posts

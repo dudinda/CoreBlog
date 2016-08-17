@@ -12,7 +12,7 @@ namespace Blog.Controllers
     public sealed partial class PostController
     {
         [Authorize(Roles = "Admin, User")]
-        [HttpGet("api/post/create")]
+        [HttpGet("/api/post/create")]
         public IActionResult GetPostForm()
         {
             var postCreateViewModel = new PostCreateViewModel();
@@ -22,8 +22,8 @@ namespace Blog.Controllers
 
 
         [Authorize(Roles = "Admin, User")]
-        [HttpPost("api/post/submit")]
-        public IActionResult GetnewPost([FromBody]PostCreateViewModel viewModel)
+        [HttpPost("/api/post/submit")]
+        public IActionResult GetNewPost([FromBody]PostCreateViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
