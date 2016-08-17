@@ -9,12 +9,6 @@ namespace Blog.Models
 {
     public class Post
     {
-      
-        public Post()
-        {
-
-        }
-
         public int Id { get; set; }
        
         public string Title { get; set; }
@@ -35,8 +29,6 @@ namespace Blog.Models
 
         public Category Category { get; set; }
 
-        public List<Tag> Tags { get; set; }
-       
-
+        public List<Tag> Tags { get; set; }     
     }
 }
