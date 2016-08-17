@@ -59,17 +59,11 @@ namespace Blog.Controllers
                     if (signInResult.Succeeded)
                     {
                         return RedirectToAction("Index", "Blog");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Password is incorrect");
-                        return View();
-                    }
-
+                    }         
                 }
             }
 
-            ModelState.AddModelError("", "Username or email incorrect");
+            ModelState.AddModelError("", "Login name or password is incorrect");
        
             return View();
         }
