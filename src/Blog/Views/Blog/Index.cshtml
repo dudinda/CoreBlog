@@ -18,30 +18,23 @@
     <div class="col-lg-9">
         @if (totalCount > 0)
         {
-            @Html.Partial("_Posts", Model)
+            @Html.Partial("_Posts")
+
         }
-
     </div>
-
     <div class="col-lg-3">       
-           @Html.Partial("_Widgets", Model)
+           @Html.Partial("_Widgets")
     </div>
+   
+    
 </div>
-<div id="scroll">
-    <a href="#" class="scrollToTop"><i class="fa fa-long-arrow-up" style="font-size:44px"></i></a>
-</div>
- <div class="container">
-    <div class="row">
-            @Html.Partial("_Pagination", Model)
-    </div>
-</div>
-
-
+<a href="#" class="scrollToTop"><i class="fa fa-long-arrow-up" style="font-size:44px"></i></a>
+@Html.Partial("_Pagination")
+    
 
 @section Scripts {
     <script src="~/js/JqueryScripts/scrollToTop.js"></script>
 }
-
 
 
 
