@@ -34,13 +34,13 @@ namespace Blog.Controllers
                 newPost.PostedOn = DateTime.UtcNow;
                 newPost.IsPublished = false;
 
-
-                tagService.AddTags(newPost.Tags);
                 postService.AddPost(newPost);
-                postService.SaveAll();
 
-
-                return RedirectToActionPermanent("OpenPost", new { newPost, newPost.Id });
+                if(postService.SaveAll())
+                {
+                    ViewBag.Message = "Thanks for joining us!";
+                    return Ok();
+                }
             }
 
             return BadRequest();

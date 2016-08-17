@@ -13,14 +13,11 @@ namespace Blog.Controllers
     [Route("[controller]")]
     public sealed partial class PostController : Controller
     {
-        private ITagService tagService { get; }
         private IPostService postService { get; }
 
-        public PostController(IPostService repository,
-                              ITagService tagService)
+        public PostController(IPostService postService)
         {
-            this.postService = repository;
-            this.tagService = tagService;
+            this.postService = postService;
         }
 
         [HttpGet]
