@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Models.Factory
 {
-    public static class ExtensionUtility
+    public static class LinqExtension
     {
         public static IEnumerable<T> TakeLast<T>(this IEnumerable<T> source, int count)
         {
