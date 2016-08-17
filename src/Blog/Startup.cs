@@ -52,7 +52,7 @@ namespace Blog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
+          
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddDbContext<BlogContext>(options =>
@@ -78,15 +78,17 @@ namespace Blog
             services.AddTransient<BlogInit>();
 
 
-            services.AddMvc()
+            services.AddMvc(option => {
+                option.CacheProfiles.Add("Default",
+                    new CacheProfile()
+                    {
+                       NoStore = true            
+                    });
+                })
                 .AddJsonOptions(option =>
                 {
                     option.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
-
-
-
-                // Add application services.
 
             }
 
@@ -142,6 +144,7 @@ namespace Blog
                     name: "default",
                     template: "{controller}/{action}/{page?}"
                     );
+
             });
 
             await init.SeedDataAsync();

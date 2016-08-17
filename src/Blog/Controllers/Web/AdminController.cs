@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Controllers
 {
+    [ResponseCache(CacheProfileName = "Default")]
     public sealed partial class AdminController : Controller
     {
 

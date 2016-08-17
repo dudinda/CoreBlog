@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace Blog.Controllers
 {
     [Route("[controller]/")]
+    [ResponseCache(CacheProfileName = "Default")]
     sealed public class SearchController : Controller
     {
         private IPageService pageService { get; }

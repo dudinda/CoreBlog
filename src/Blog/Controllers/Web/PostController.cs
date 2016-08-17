@@ -9,7 +9,8 @@ using System;
 
 namespace Blog.Controllers
 {
-
+    [ResponseCache(CacheProfileName = "Default")]
+    [Route("[controller]")]
     public sealed partial class PostController : Controller
     {
         private ITagService tagService { get; }
@@ -22,7 +23,8 @@ namespace Blog.Controllers
             this.tagService = tagService;
         }
 
-        [HttpGet("Open/{id}")]
+        [HttpGet]
+        [Route("Open/{id}")]
         public IActionResult OpenPost(int id)
         {
             var post = postService.GetPostById(id);
@@ -34,6 +36,7 @@ namespace Blog.Controllers
 
 
         [Authorize(Roles = "Admin, User")]
+        [Route("Create")]
         public IActionResult CreatePost()
         {
             return View();

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Controllers
 {
+    [ResponseCache(CacheProfileName = "Default")]
     sealed public class AuthController : Controller
     {
         private UserManager<BlogUser> userManager { get; }

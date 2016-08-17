@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Controllers
 {
+    [ResponseCache(CacheProfileName = "Default")]
     sealed public class RegController : Controller
     {
         private  UserManager<BlogUser> userManager { get; }
