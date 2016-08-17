@@ -20,7 +20,6 @@ namespace Blog.Models.Data
         public static PostViewModel Create(Post post)
         {
             return Mapper.Map<PostViewModel>(post);
-
         }
 
         public static BlogUser Create(UserControlPanelViewModel viewModel)
@@ -33,7 +32,12 @@ namespace Blog.Models.Data
             return Mapper.Map<UserControlPanelViewModel>(user);
         }
 
-        public static Post Create<T>(T viewModel)
+        public static Post Create(PostCreateViewModel viewModel)
+        {
+            return Mapper.Map<Post>(viewModel);
+        }
+
+        public static Post Create(PostViewModel viewModel)
         {
             return Mapper.Map<Post>(viewModel);
         }
