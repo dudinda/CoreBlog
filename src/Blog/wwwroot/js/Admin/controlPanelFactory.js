@@ -2,7 +2,7 @@
     'use strict';
 
     
-    angular.module('blogApp')
+    angular.module('adminApp')
         .factory('controlPanelFactory', ['$http', controlPanelFactory]);
 
     function controlPanelFactory($http) {

@@ -2,46 +2,50 @@
     'use strict';
 
     angular
-        .module('blogApp')
-        .controller('postCreateController', ['$scope', 'postCreateFactory', postCreateController]);
+        .module('postCreateApp')
+        .controller('postCreateController', ['postCreateFactory', postCreateController]);
 
-    function postCreateController($scope, postCreateFactory) {
+    function postCreateController(postCreateFactory) {
 
         var vm = this;
+        
         vm.error = "";
-
-        $scope.newPost = {};
+        vm.isReady = false;
+    
+        vm.newPost = {};
 
         vm.isFull = false;
 
         postCreateFactory
             .getPostCreateForm().success(function (response) {
-                angular.copy(response, $scope.newPost);
+                angular.copy(response, vm.newPost);
             }).error(function () {
                 vm.error = "Oops. Something went wrong. Try again later!";
             });
 
 
-        $scope.addTag = function () {
-            if ($scope.newPost.tags.length < 5) {
-                $scope.newPost.tags.push({
+        vm.addTag = function () {
+            if (vm.newPost.tags.length < 5) {
+                vm.newPost.tags.push({
                     name: ''
                 });
             } 
 
-            if($scope.newPost.tags.length === 5) {
+            if(vm.newPost.tags.length === 5) {
                 vm.isFull = true;
             }
         };
         
-        $scope.removeTag = function (index) {
+        vm.removeTag = function (index) {
             vm.isFull = false;
-            $scope.newPost.tags.splice(index, 1);
+            vm.newPost.tags.splice(index, 1);
         };
 
         vm.approve = function () {
             postCreateFactory
-                .sendNewPost($scope.newPost).error(function () {
+                .sendNewPost(vm.newPost).success(function () {
+                    vm.isReady = true;
+                }).error(function () {
                     vm.error = "Oops. Something went wrong. Try again later!";
                 });
         };

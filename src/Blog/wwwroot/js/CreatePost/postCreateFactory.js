@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('blogApp')
+        .module('postCreateApp')
         .factory('postCreateFactory', ['$http', postCreateFactory]);
 
 

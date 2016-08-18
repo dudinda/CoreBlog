@@ -3,6 +3,7 @@
 /// <reference path="js/admin/blogapp.js" />
 /// <reference path="js/admin/controlpanelfactory.js" />
 /// <reference path="js/admin/postcontroller.js" />
+/// <reference path="js/admin/tabscontroller.js" />
 /// <reference path="js/admin/usercontroller.js" />
 /// <reference path="js/createpost/createpostapp.js" />
 /// <reference path="js/createpost/postcreatecontroller.js" />

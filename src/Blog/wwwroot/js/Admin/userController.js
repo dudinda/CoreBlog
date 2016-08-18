@@ -1,50 +1,50 @@
 ﻿(function () {
  
-    angular.module('blogApp')
-        .controller('userController', ['$scope', '$http', 'controlPanelFactory', userController]);
+    angular.module('adminApp')
+        .controller('userController', ['$http', 'controlPanelFactory', userController]);
 
-    function userController($scope, $http, controlPanelFactory) {
+    function userController($http, controlPanelFactory) {
 
-        uservm = this;
-        $scope.users = [];
-        uservm.error = "";
-        uservm.isBusy = true;
+        var vm = this;
+        vm.users = [];
+        vm.error = "";
+        vm.isBusy = true;
 
         controlPanelFactory
             .getUsers().success(function (response) {
-                angular.copy(response, $scope.users)
-                uservm.isBusy = false;
+                angular.copy(response, vm.users)
+                vm.isBusy = false;
             }).error(function (error) {
-                uservm.error = "Failed to get users";
+                vm.error = "Failed to get users";
             });
-
+        
     
-        $scope.unban = function (user) {
-
-            uservm.isBusy = true;
+        vm.unban = function (user) {
+     
+            vm.isBusy = true;
  
             controlPanelFactory
                 .unbanUser(user).success(function(response){
                     user.isBanned = response;
                 }).error(function (error) {
-                    uservm.error = "Failed to unban the user";
+                    vm.error = "Failed to unban the user: " + user.userName;
                 }).finally(function () {
-                    uservm.isBusy = false;
+                    vm.isBusy = false;
                 });
         };
 
 
-        $scope.ban = function (user) {
+        vm.ban = function (user) {
 
-            uservm.isBusy = true;
+            vm.isBusy = true;
   
             controlPanelFactory
                 .banUser(user).success(function(response){
                     user.isBanned = response;
                 }).error(function (error) {
-                    uservm.error = "Failed to ban the user";
+                    vm.error = "Failed to ban the user" + user.userName;
                 }).finally(function () {
-                    uservm.isBusy = false;
+                    vm.isBusy = false;
                 });
         };
     };

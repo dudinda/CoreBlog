@@ -2,13 +2,13 @@
 
    
 
-    angular.module('blogApp')
-        .controller('postController', ['$scope', 'controlPanelFactory', postController]);
+    angular.module('adminApp')
+        .controller('postController', ['controlPanelFactory', postController]);
 
-    function postController($scope, controlPanelFactory) {
+    function postController(controlPanelFactory) {
         var vm = this;
      
-        $scope.posts = [];
+        vm.posts = [];
 
         vm.error = "";
         vm.isBusy = true;
@@ -17,24 +17,38 @@
         vm.reverse = true;
         vm.currentPage = 1;
 
-        controlPanelFactory
-            .getUnpublishedPosts().success(function (response) {
-                angular.copy(response, $scope.posts);
-                vm.isBusy = false;
-            }).error(function (error) {
-                vm.error = "Failed to get data";
-            });
+        vm.getUnpublished = function () {
+            vm.isBusy = true;
+            controlPanelFactory
+                .getUnpublishedPosts().success(function (response) {
+                    angular.copy(response, vm.posts);
+                    vm.isBusy = false;
+                }).error(function (error) {
+                    vm.error = "Failed to get data";
+                })
+        };
+
+        vm.getPublished = function () {
+            vm.isBusy = true;
+            controlPanelFactory
+                .getPublishedPosts().success(function (response) {
+                    angular.copy(response, vm.posts);
+                    vm.isBusy = false;
+                }).error(function (error) {
+                    vm.error = "Failed to get data";
+                })
+        };
 
         vm.order = function (predicate) {
             vm.reverse = (vm.predicate === predicate) ? !vm.reverse : false;
             vm.predicate = predicate;
         };
     
-        $scope.approve = function (post, isPublished) {
+        vm.approve = function (post, isPublished) {
             vm.isBusy = true;
             controlPanelFactory
                 .approvePost(post, isPublished).success(function (response) {
-                    $scope.posts.pop(response);
+                    vm.posts.pop(response);
                     vm.isBusy = false;
                 }).error(function (error) {
                     vm.error = "Failed to approve the post";
