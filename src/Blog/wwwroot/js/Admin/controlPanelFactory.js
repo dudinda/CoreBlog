@@ -19,6 +19,10 @@
             return $http.get("/api/admin/users");
         }
 
+        function getPost(id) {
+            return $http.get("/api/admin/post/" + id);
+        }
+
         function approvePost(post, isPublished) {
             //set isPublished status
             post.isPublished = isPublished;
@@ -40,10 +44,10 @@
             getUsers: getUsers,
             approvePost: approvePost,
             banUser: banUser,
-            unbanUser: unbanUser
-        };
-
+            unbanUser: unbanUser,
+            getPost: getPost
+        }
+  
         return service;
-    };
-
+    }; 
 })();
