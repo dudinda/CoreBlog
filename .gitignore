@@ -243,3 +243,7 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+#libraries
+**/wwwroot/lib/
+**/wwwroot/img/media/
