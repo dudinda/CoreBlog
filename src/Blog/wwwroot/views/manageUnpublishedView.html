@@ -1,0 +1,31 @@
+﻿<div ng-init="vm.getUnpublished()">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="col-md-1"><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('title')">Title</a></th>
+                <th class="col-md-3"><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('author')">Author</a></th>
+                <th class="col-md-3"><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('postedOn')">Date</a></th>
+                <th class="col-md-2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="post in vm.posts | orderBy:vm.predicate:vm.reverse">
+                <td>{{post.title}}</td>
+                <td>{{post.author}}<a class="btn" ng-click="vm.approve(post, true)"><i class="fa fa-ban">Suspend</i></a></td>
+                <td>{{post.postedOn | date: 'MM-dd-yyyy'}}</td>
+                <td class="btn-group">
+                    <a class="btn" href="#" ng-click="vm.approve(post, true)"><i class="fa fa-check">Approve</i></a>
+                    <a class="btn" href="#" ng-click="vm.approve(post, false)"><i class="fa fa-close">Delete</i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-danger" ng-show="vm.error">
+        {{vm.error}}
+    </div>
+    <div class="text-left" ng-show="vm.isBusy">
+        <i class="fa fa-spinner fa-spin">
+        </i>Loading...
+    </div>
+</div>

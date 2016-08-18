@@ -1,0 +1,53 @@
+﻿<h2>New Post</h2>
+<form method="post" name="newPostForm">
+    <div class="form group">
+        <label for="title">Title</label>
+        <input ng-model="vm.newPost.title" ng-required="vm.newPost.title" ng-minlength="5" name="title" id="title" type="text" class="form-control text-muted" placeholder="Title" />
+        <span ng-show="CreateNewPost.title.$error.required" class="text-warning">Title is required.</span>
+        <span ng-show="CreateNewPost.title.$error.minlength" class="text-warning">Title must be at least 5 characters.</span>
+    </div>
+    <div class="form group">
+        <label for="shortDescription">Short Description</label>
+        <input ng-model="vm.newPost.shortDescription" required ng-minlength="5" name="shortDescription" id="shortDescription" type="text" class="form-control text-muted" placeholder="Short description" />
+        <span ng-show="CreateNewPost.shortDescription.$error.required" class="text-warning">Title is required.</span>
+        <span ng-show="CreateNewPost.shortDescription.$error.minlength" class="text-warning">Title must be at least 5 characters.</span>
+    </div>
+    <div class="form-group">
+        <label>Tags</label>
+        <div>
+            <button ng-disabled="vm.isFull" class="btn" ng-click="vm.addTag()"><i class="fa fa-plus"></i></button>
+            <span class="fa fa-tag" ng-repeat="tag in vm.newPost.tags track by $index" ng-model="vm.newPost.tags[$index]">
+                <label>
+                    <input class="tag" type="text" ng-model="tag.name" />
+                    <a class="btn" ng-click="vm.removeTag($index)">
+                        <i class="fa fa-remove" style="color:red">
+                        </i>
+                    </a>
+                </label>
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Category</label>
+        <div>
+            <select ng-model="vm.newPost.category.name" class="form-control">
+                <option value="Development">Development</option>
+                <option value="Managment">Managment</option>
+                <option value="Design">Design</option>
+                <option value="Other" selected="selected">Other</option>
+            </select>
+        </div>
+    </div>
+    <div class="form group">
+        <label for="description">Description</label>
+        <textarea ng-model="vm.newPost.description" name="description" id="description" type="text" class="form-control text-muted"></textarea>
+        <span ng-show="CreateNewPost.description.$error.required" class="text-warning">Description is required.</span>
+    </div>
+    <div class="list-group">
+        <a ng-disabled="newPostForm.$invalid" ng-click="vm.approve()" class="btn btn-success list-group-item">Post!</a>
+        <a asp-controller="Blog" asp-action="Index" class="btn list-group-item">Cancel</a>
+    </div>
+    
+</form>
+
+<div class="text-danger" ng-show="vm.error">{{vm.error}}</div>
