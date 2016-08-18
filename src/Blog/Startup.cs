@@ -62,17 +62,16 @@ namespace Blog
             {
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequiredLength = 8;
-            })
-                .AddEntityFrameworkStores<BlogContext>();
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
 
-            services.AddBootstrapPagerGenerator(option =>
-            {
-                option.ConfigureDefault();
-            });
-            
+            })
+            .AddEntityFrameworkStores<BlogContext>();
+
+    
 
             services.AddScoped<IPostService, PostService>();
-            services.AddScoped<ITagService, TagService>();
             services.AddScoped<IPageService, PageService>();
             services.AddScoped<IMailService, MailService>();
             services.AddTransient<BlogInit>();

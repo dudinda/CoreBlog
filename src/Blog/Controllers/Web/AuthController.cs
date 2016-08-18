@@ -46,7 +46,7 @@ namespace Blog.Controllers
 
                     if (user.isBanned)
                     {
-                        ModelState.AddModelError("", $"Your account has been temporarily suspended until {user.LockoutEnd}");
+                        ModelState.AddModelError("", $"Your account has been temporarily suspended until {user.LockoutEnd}.");
                         return View();
                     }
 
@@ -63,7 +63,7 @@ namespace Blog.Controllers
                 }
             }
 
-            ModelState.AddModelError("", "Login name or password is incorrect");
+            ModelState.AddModelError("", "Login or password is incorrect.");
        
             return View();
         }
