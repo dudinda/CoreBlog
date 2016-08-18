@@ -33,9 +33,20 @@ namespace Blog.Controllers
         [HttpGet("/api/admin/post/{id:int}")]
         public IActionResult GetPost(int id)
         {
-            var post = postService.GetPostById(id);
+            try
+            {
+     
+                var post = postService.GetPostById(id);
 
-            return Json(ModelFactory.Create(post));
+                var controlViewModel = ModelFactory.Create(post);
+
+                return Json(controlViewModel);
+            }
+            catch(Exception)
+            {
+                //no such id
+                return BadRequest();
+            }
         }
 
 
