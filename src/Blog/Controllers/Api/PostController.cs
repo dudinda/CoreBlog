@@ -3,9 +3,6 @@ using Blog.Models.PostViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blog.Controllers
 {
@@ -15,15 +12,15 @@ namespace Blog.Controllers
         [HttpGet("/api/post/create")]
         public IActionResult GetPostForm()
         {
-            var postCreateViewModel = new PostCreateViewModel();
+            var createPostViewModel = new CreatePostViewModel();
 
-            return Json(postCreateViewModel);
+            return Json(createPostViewModel);
         }
 
 
         [Authorize(Roles = "Admin, User")]
         [HttpPost("/api/post/submit")]
-        public IActionResult GetNewPost([FromBody]PostCreateViewModel viewModel)
+        public IActionResult GetNewPost([FromBody]CreatePostViewModel viewModel)
         {
             if (ModelState.IsValid)
             {

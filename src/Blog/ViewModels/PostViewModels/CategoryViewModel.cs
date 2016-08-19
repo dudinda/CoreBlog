@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Blog.Models.PostViewModels
+﻿namespace Blog.Models.PostViewModels
 {
     public class CategoryViewModel
     {

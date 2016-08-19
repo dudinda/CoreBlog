@@ -9,10 +9,10 @@ namespace Blog.Service
         public void SendEmail(ContactViewModel viewModel)
         {
             var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress($"{viewModel.Name}", $"{viewModel.Email}"));
-            emailMessage.To.Add(new MailboxAddress("Dan", "enragesoft@gmail.com"));
-            emailMessage.Subject = viewModel.Subject;
-            emailMessage.Body = new TextPart("plain") { Text = viewModel.Message };
+                emailMessage.From.Add(new MailboxAddress($"{viewModel.Name}", $"{viewModel.Email}"));
+                emailMessage.To.Add(new MailboxAddress("Dan", "enragesoft@gmail.com"));
+                emailMessage.Subject = viewModel.Subject;
+                emailMessage.Body = new TextPart("plain") { Text = viewModel.Message };
 
             using (var client = new SmtpClient())
             {

@@ -1,6 +1,4 @@
-﻿using Blog.ViewModels;
-using Sakura.AspNetCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Blog.Models.Data
 {

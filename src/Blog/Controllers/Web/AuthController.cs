@@ -1,12 +1,7 @@
-﻿using Blog.Models;
-using Blog.Models.Account;
-using Blog.Models.Data;
+﻿using Blog.Models.Account;
 using Blog.ViewModels.AccountViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blog.Controllers

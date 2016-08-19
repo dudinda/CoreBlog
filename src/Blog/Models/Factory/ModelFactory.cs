@@ -4,13 +4,8 @@ using Blog.Models.Account;
 using Blog.Models.AccountViewModels;
 using Blog.Models.PostViewModels;
 using Blog.ViewModels;
-using Blog.ViewModels.AccountViewModels;
-using Blog.ViewModels.ControlPanelViewModels;
 using Sakura.AspNetCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blog.Models.Data
 {
@@ -32,7 +27,7 @@ namespace Blog.Models.Data
             return Mapper.Map<UserControlPanelViewModel>(user);
         }
 
-        public static Post Create(PostCreateViewModel viewModel)
+        public static Post Create(CreatePostViewModel viewModel)
         {
             return Mapper.Map<Post>(viewModel);
         }
@@ -69,11 +64,7 @@ namespace Blog.Models.Data
 
         public static PageViewModel Create(PagedList<IEnumerable<PostViewModel>, PostViewModel> pagedList)
         {
-            return new PageViewModel
-            {
-                PostsPerPage = pagedList,
-                Search = new SearchViewModel()
-            };
+            return new PageViewModel { PostsPerPage = pagedList };
         }
     }
 }

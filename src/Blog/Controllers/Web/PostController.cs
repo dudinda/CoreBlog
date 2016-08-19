@@ -1,10 +1,7 @@
-﻿using Blog.Models;
-using Blog.Models.Data;
-using Blog.Models.PostViewModels;
-using Blog.ViewModels;
+﻿using Blog.Models.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
+
 
 
 namespace Blog.Controllers

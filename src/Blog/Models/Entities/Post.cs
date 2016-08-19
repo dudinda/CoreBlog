@@ -1,9 +1,7 @@
 ﻿using Blog.Models.Data;
-using Blog.Models.PostViewModels;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+
 
 namespace Blog.Models
 {

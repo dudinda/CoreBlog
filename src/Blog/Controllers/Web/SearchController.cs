@@ -1,12 +1,8 @@
-﻿using Blog.Models;
-using Blog.Models.Data;
+﻿using Blog.Models.Data;
 using Blog.Service;
 using Blog.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace Blog.Controllers
 {

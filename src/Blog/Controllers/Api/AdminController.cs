@@ -1,15 +1,7 @@
-﻿using Blog.Models;
-using Blog.Models.Account;
-using Blog.Models.Data;
-using Blog.ViewModels;
+﻿using Blog.Models.Data;
 using Blog.ViewModels.ControlPanelViewModels;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 

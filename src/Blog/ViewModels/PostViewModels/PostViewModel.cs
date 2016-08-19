@@ -1,5 +1,4 @@
-﻿using Blog.Models.Data;
-using Blog.Models.PostViewModels;
+﻿using Blog.Models.PostViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -29,6 +28,6 @@ namespace Blog.ViewModels
 
         public CategoryViewModel Category { get; set; }
 
-        public List<TagViewModel> Tags { get; set; }
+        public IEnumerable<TagViewModel> Tags { get; set; }
     }
 }

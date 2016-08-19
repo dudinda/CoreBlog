@@ -1,16 +1,12 @@
-﻿using Blog.Models;
-using Blog.Models.PostViewModels;
-using Sakura.AspNetCore;
-using System;
+﻿using Sakura.AspNetCore;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blog.ViewModels
 {
     public class PageViewModel
     {
-        public SearchViewModel Search;
-        public PagedList<IEnumerable<PostViewModel>, PostViewModel> PostsPerPage;
+        public PagedList<IEnumerable<PostViewModel>, PostViewModel> PostsPerPage { get; set; }
+        public SearchViewModel Search { get; set; } = new SearchViewModel();
+        
     }
 }
