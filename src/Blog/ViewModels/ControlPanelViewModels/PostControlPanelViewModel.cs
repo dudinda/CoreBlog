@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blog.Models.PostViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,5 +13,7 @@ namespace Blog.ViewModels.ControlPanelViewModels
         public string Title { get; set; }
         public DateTime PostedOn { get; set; }
         public bool IsPublished { get; set; }
+        public CategoryViewModel Category { get; set; }
+        public List<TagViewModel> Tags { get; set; }
     }
 }
