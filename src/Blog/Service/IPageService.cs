@@ -9,6 +9,6 @@ namespace Blog.Service
     {
 
         int PageSize { get; set; }
-        PagedList<IEnumerable<PostViewModel>, PostViewModel> GetPagedList(ICollection<Post> posts, int pageIndex);
+        PagedList<IEnumerable<PostViewModel>, PostViewModel> GetPagedList(IEnumerable<Post> posts, int pageIndex);
     }
 }

@@ -42,14 +42,14 @@ namespace Blog.Models.Data
             return Mapper.Map<Post>(viewModel);
         }
 
-        public static ICollection<T> Create<T>(ICollection<Post> posts)
+        public static IEnumerable<T> Create<T>(IEnumerable<Post> posts)
         {
-            return Mapper.Map<ICollection<T>>(posts);
+            return Mapper.Map<IEnumerable<T>>(posts);
         }
 
-        public static ICollection<UserControlPanelViewModel> Create(List<BlogUser> blogUser)
+        public static IEnumerable<UserControlPanelViewModel> Create(List<BlogUser> blogUser)
         {
-            return Mapper.Map<ICollection<UserControlPanelViewModel>>(blogUser);
+            return Mapper.Map<IEnumerable<UserControlPanelViewModel>>(blogUser);
         }
 
         public static BlogUser Create(RegistrationViewModel viewModel)
@@ -57,9 +57,9 @@ namespace Blog.Models.Data
             return Mapper.Map<BlogUser>(viewModel);
         }
 
-        public static ICollection<TagViewModel> Create(ICollection<Tag> tags)
+        public static IEnumerable<TagViewModel> Create(IEnumerable<Tag> tags)
         {
-            return Mapper.Map<ICollection<TagViewModel>>(tags);
+            return Mapper.Map<IEnumerable<TagViewModel>>(tags);
         }
 
         public static CategoryViewModel Create(Category category)

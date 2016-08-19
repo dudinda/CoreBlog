@@ -34,20 +34,15 @@ namespace Blog.Models.Data
             return context.SaveChanges() > 0;
         }
 
-        public ICollection<Post> GetAllUnpublished()
+        public IEnumerable<Post> GetAllUnpublished()
         {
-            var result = AttachTags(context.Posts
-                                           .Where(post => !post.IsPublished)
-                                           .ToList() );
-            return result;
+            return Attach(context.Posts.Where(post => !post.IsPublished));
         }
 
-        public ICollection<Post> GetAll()
+        public IEnumerable<Post> GetAll()
         {
             //attach tags and category
-            var result = AttachTags(context.Posts.Where(post => post.IsPublished).ToList());
-            
-            return result;
+            return Attach(context.Posts.Where(post => post.IsPublished));
         }
 
         public void UpdatePost(Post post)
@@ -55,23 +50,19 @@ namespace Blog.Models.Data
             context.Update(post);
         }
  
-        public ICollection<Post> GetLatest(ICollection<Post> posts, int count)
+        public IEnumerable<Post> GetLatest(IEnumerable<Post> posts, int count)
         {
-            var result = posts.TakeLast(5)
-                        .OrderByDescending(post => post.PostedOn)
-                        .ToList();
-
-            return result;
+            return posts.TakeLast(5).OrderByDescending(post => post.PostedOn);
         }
             
 
         public Post GetPostById(int id)
         {
             var result = context.Posts
-                .Where(option => option.Id == id)
+                .Where(option => option.Id == id)?
                 .Single<Post>();
                 
-            return AttachTags(result);
+            return Attach(result);
         }
 
         public Post GetPostBySlug(string slug)
@@ -83,47 +74,38 @@ namespace Blog.Models.Data
             return result;
         }
 
-        public ICollection<Post> GetPostsByCategory(string categoryName)
-        {
-            var result = GetAll()
-                .Where(category => category.Category.Name.Equals(categoryName))
-                .ToList<Post>();
-
-            return result;
-                
+        public IEnumerable<Post> GetPostsByCategory(string categoryName)
+        {           
+            return GetAll().Where(category => category.Category.Name.Equals(categoryName));                
         }
 
-        public int GetCategoryCounter(ICollection<Post> collection, string categoryName)
+        public int GetCategoryCounter(IEnumerable<Post> collection, string categoryName)
         {
             return collection.Where(post => post.Category.Name == categoryName).Count();
         }
 
-        public ICollection<Post> GetPostsByText(string text)
+        public IEnumerable<Post> GetPostsByText(string text)
         {
             //search in title/short description/description
 
             var result = GetAll().Where(option => option.Description.Contains(text)      ||
                                                   option.ShortDescription.Contains(text) ||
-                                                  option.Title.Contains(text)            
-                                       ).ToList<Post>();
+                                                  option.Title.Contains(text)
+                                       );
 
             return result;
                
         }
 
-        public ICollection<Post> GetPostsByTag(string tagName)
+        public IEnumerable<Post> GetPostsByTag(string tagName)
         {
             //get all posts which contain tagName
-            var result = GetAll()             
-                .Where( option => option.Tags.Any(name => name.Name == tagName) )
-                .ToList<Post>();
-
-            return result;
+            return GetAll().Where(option => option.Tags.Any(name => name.Name == tagName));
             
         }
 
 
-        private Post AttachTags(Post post)
+        private Post Attach(Post post)
         {         
 
             //attach tags to post
@@ -140,7 +122,7 @@ namespace Blog.Models.Data
         }
     
 
-        private ICollection<Post> AttachTags(ICollection<Post> posts)
+        private IEnumerable<Post> Attach(IEnumerable<Post> posts)
         {
             var result = posts;
 
@@ -148,9 +130,8 @@ namespace Blog.Models.Data
             {
                 //attach tags to posts
 
-                post.Tags = context.Tags
-                    .Where(option => option.PostId == post.Id)
-                    .ToList();
+                post.Tags = context.Tags.Where(option => option.PostId == post.Id).ToList();
+              
 
                 //attach category to each post
 

@@ -6,16 +6,16 @@ namespace Blog.Models.Data
 {
     public interface IPostService
     {
-        
-        ICollection<Post> GetAll();
-        ICollection<Post> GetLatest(ICollection<Post> posts, int count);
-        ICollection<Post> GetAllUnpublished();
 
-        ICollection<Post> GetPostsByText(string text);
-        ICollection<Post> GetPostsByTag(string tagName);
-        ICollection<Post> GetPostsByCategory(string categoryName);
+        IEnumerable<Post> GetAll();
+        IEnumerable<Post> GetLatest(IEnumerable<Post> posts, int count);
+        IEnumerable<Post> GetAllUnpublished();
 
-        int GetCategoryCounter(ICollection<Post> collection, string categoryName);
+        IEnumerable<Post> GetPostsByText(string text);
+        IEnumerable<Post> GetPostsByTag(string tagName);
+        IEnumerable<Post> GetPostsByCategory(string categoryName);
+
+        int GetCategoryCounter(IEnumerable<Post> collection, string categoryName);
 
         Post GetPostById(int id);
         Post GetPostBySlug(string slug);
