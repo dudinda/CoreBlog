@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Blog.Models.PostViewModels;
 
 namespace Blog.Migrations
@@ -74,7 +75,7 @@ namespace Blog.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("PostId");
+                    b.Property<int>("PostId");
 
                     b.HasKey("Id");
 
@@ -97,6 +98,28 @@ namespace Blog.Migrations
                     b.HasIndex("PostId");
 
                     b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("Blog.Models.Entities.Image", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Base64");
+
+                    b.Property<string>("Filename");
+
+                    b.Property<int>("Filesize");
+
+                    b.Property<string>("Filetype");
+
+                    b.Property<int>("PostId");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("Blog.Models.Post", b =>
@@ -236,7 +259,8 @@ namespace Blog.Migrations
                 {
                     b.HasOne("Blog.Models.Post")
                         .WithOne()
-                        .HasForeignKey("Blog.Models.Data.Category", "PostId");
+                        .HasForeignKey("Blog.Models.Data.Category", "PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Blog.Models.Data.Tag", b =>
@@ -244,6 +268,14 @@ namespace Blog.Migrations
                     b.HasOne("Blog.Models.Post")
                         .WithMany()
                         .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Blog.Models.Entities.Image", b =>
+                {
+                    b.HasOne("Blog.Models.Post")
+                        .WithOne()
+                        .HasForeignKey("Blog.Models.Entities.Image", "PostId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Blog.Migrations
 {
-    public partial class NewModel : Migration
+    public partial class NewEntity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -131,7 +132,7 @@ namespace Blog.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    PostId = table.Column<int>(nullable: true)
+                    PostId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -141,7 +142,7 @@ namespace Blog.Migrations
                         column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -158,6 +159,29 @@ namespace Blog.Migrations
                     table.PrimaryKey("PK_Tags", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Tags_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Base64 = table.Column<string>(nullable: true),
+                    Filename = table.Column<string>(nullable: true),
+                    Filesize = table.Column<int>(nullable: false),
+                    Filetype = table.Column<string>(nullable: true),
+                    PostId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Images_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "Id",
@@ -230,6 +254,11 @@ namespace Blog.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Images_PostId",
+                table: "Images",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName");
@@ -267,6 +296,9 @@ namespace Blog.Migrations
 
             migrationBuilder.DropTable(
                 name: "Tags");
+
+            migrationBuilder.DropTable(
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
