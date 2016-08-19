@@ -26,7 +26,7 @@ namespace Blog.Models
 
         public bool IsPublished { get; set; }
 
-        public Image image { get; set; }
+        public Image Image { get; set; }
 
         public Category Category { get; set; }
 

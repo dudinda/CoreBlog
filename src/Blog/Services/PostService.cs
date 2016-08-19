@@ -102,15 +102,19 @@ namespace Blog.Models.Data
 
 
         private Post Attach(Post post)
-        {         
+        {
 
-            //attach tags to post
-                post.Tags = context.Tags
-                    .Where(option => option.PostId == post.Id)
-                    .ToList();
+            //attach tags to the post
+            post.Tags = context.Tags
+                .Where(option => option.PostId == post.Id)
+                .ToList();
 
-            //attach category to post
-                post.Category = context.Categories
+            //attach an image to the post
+            post.Image = context.Images
+                .Where(option => option.PostId == post.Id)
+                .Single();
+            //attach a category to the post
+            post.Category = context.Categories
                     .Where(option => option.PostId == post.Id)
                     .Single<Category>();
 
@@ -125,15 +129,19 @@ namespace Blog.Models.Data
             foreach (var post in result)
             {
                 //attach tags to posts
+                post.Tags = context.Tags
+                    .Where(option => option.PostId == post.Id)
+                    .ToList();
 
-                post.Tags = context.Tags.Where(option => option.PostId == post.Id).ToList();
-              
+                //attach an image to each post
+                post.Image = context.Images
+                    .Where(option => option.PostId == post.Id)
+                    .Single();
 
-                //attach category to each post
-
+                //attach a category to each post
                 post.Category = context.Categories
                     .Where(option => option.PostId == post.Id)
-                    .Single<Category>();
+                    .Single();
             }
 
             return result;

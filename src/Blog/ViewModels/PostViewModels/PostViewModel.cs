@@ -1,4 +1,5 @@
 ﻿using Blog.Models.PostViewModels;
+using Blog.ViewModels.PostViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,24 +8,22 @@ namespace Blog.ViewModels
 {
     public class PostViewModel
     {
-        public PostViewModel() { }
 
         public int Id { get; set; }
         
-        [Required]
         public string Title { get; set; }
 
-        [Required]
         public string ShortDescription { get; set; }
 
         public string Author { get; set; }
 
-        [Required]
         public string Description { get; set; }
 
         public DateTime PostedOn { get; set; }
 
-        public virtual DateTime? Modified { get; set; }
+        public DateTime? Modified { get; set; }
+
+        public ImageViewModel Image { get; set; }
 
         public CategoryViewModel Category { get; set; }
 

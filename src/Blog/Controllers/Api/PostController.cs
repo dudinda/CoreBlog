@@ -26,10 +26,10 @@ namespace Blog.Controllers
             {
 
 
-                var newPost = ModelFactory.Create(viewModel);
-                newPost.Author = User.Identity.Name;
-                newPost.PostedOn = DateTime.UtcNow;
-                newPost.IsPublished = false;
+                var newPost             = ModelFactory.Create(viewModel);
+                    newPost.Author      = User.Identity.Name;
+                    newPost.PostedOn    = DateTime.UtcNow;
+                    newPost.IsPublished = false;
 
                 postService.AddPost(newPost);
 
