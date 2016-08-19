@@ -1,31 +1,39 @@
 ﻿<div ng-init="vm.getUnpublished()">
-    <table class="table table-hover">
+    <label>Search: <input ng-model="search"></label>
+    <table class="table table-responsive">
         <thead>
             <tr>
-                <th class="col-md-1"><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('title')">Title</a></th>
-                <th class="col-md-3"><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('author')">Author</a></th>
-                <th class="col-md-3"><a href="" target="_blank" ng-class="vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('postedOn')">Date</a></th>
-                <th class="col-md-2">Action</th>
+                <th class="col-md-2"><a href="" target="_blank" ng-class="vm.predicate === 'title' && vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('title')">Title</a></th>
+                <th class="col-md-2"><a href="" target="_blank" ng-class="vm.predicate === 'author' && vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('author')">Author</a></th>
+                <th class="col-md-1"><a href="" target="_blank" ng-class="vm.predicate === 'category' && vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('category')">Category</a></th>
+                <th class="col-md-2"><a href="" target="_blank" ng-class="vm.predicate === 'tag' && vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('tag')">Tags</a></th>
+                <th class="col-md-2"><a href="" target="_blank" ng-class="vm.predicate === 'postedOn' && vm.reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'" style="text-decoration:none;display:block;" ng-click="vm.order('postedOn')">Date</a></th>
+                <th class="col-md-3">Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="post in vm.posts | orderBy:vm.predicate:vm.reverse">
+            <tr dir-paginate="post in vm.posts | orderBy:vm.predicate:vm.reverse | filter:search | itemsPerPage: 5">
                 <td>{{post.title}}</td>
-                <td>{{post.author}}<a class="btn" ng-click="vm.approve(post, true)"><i class="fa fa-ban">Suspend</i></a></td>
+                <td>{{post.author}}</td>
+                <td>{{post.category.name}}</td>
+                <td ng-repeat="tag in post.tags">{{tag.name }}</td>
                 <td>{{post.postedOn | date: 'MM-dd-yyyy'}}</td>
                 <td class="btn-group">
-                    <a class="btn" href="#" ng-click="vm.approve(post, true)"><i class="fa fa-check">Approve</i></a>
-                    <a class="btn" href="#" ng-click="vm.approve(post, false)"><i class="fa fa-close">Delete</i></a>
+                    <a class="btn" ng-href="#/open/{{post.id}}"><i class="fa fa-folder-open"></i>Open</a>
+                    <a class="btn" ng-href="#/edit/{{post.id}}"><i class="fa fa-edit"></i>Edit</a>
+                    <a class="btn" ng-href="#/unpublished" ng-click="vm.approve($index, true)"><i class="fa fa-check">Approve</i></a>
+                    <a class="btn" ng-href="#/unpublished" ng-click="vm.approve($index, false)"><i class="fa fa-close">Delete</i></a>
                 </td>
             </tr>
         </tbody>
     </table>
-
+    <div class="text-center">
+        <dir-pagination-controls template-url="/views/pagination.html" max-size="5"></dir-pagination-controls>
+    </div>
     <div class="text-danger" ng-show="vm.error">
         {{vm.error}}
     </div>
     <div class="text-left" ng-show="vm.isBusy">
-        <i class="fa fa-spinner fa-spin">
-        </i>Loading...
+        <i class="fa fa-spinner fa-spin"></i>Loading...
     </div>
 </div>

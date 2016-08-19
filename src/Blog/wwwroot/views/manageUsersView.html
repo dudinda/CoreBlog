@@ -1,4 +1,5 @@
-﻿<table class="table table-hover">
+﻿<label>Search: <input ng-model="search"></label>
+<table class="table table-responsive">
     <thead>
         <tr>
             <th>Username</th>
@@ -8,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="user in vm.users">
+        <tr dir-paginate="user in vm.users | filter:search | itemsPerPage: 5">
             <td>{{user.userName}}</td>
             <td>{{user.email}}</td>
             <td>{{user.isBanned ? 'Banned' : 'Active'}}</td>
@@ -20,5 +21,12 @@
         </tr>
     </tbody>
 </table>
-<div class="text-left" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i>Loading...</div>
-<div class="text-danger" ng-show="vm.error">{{vm.error}}</div>
+<div class="text-center">
+    <dir-pagination-controls template-url="/views/pagination.html" max-size="5"></dir-pagination-controls>
+</div>
+<div class="text-danger" ng-show="vm.error">
+    {{vm.error}}
+</div>
+<div class="text-left" ng-show="vm.isBusy">
+    <i class="fa fa-spinner fa-spin"></i>Loading...
+</div>

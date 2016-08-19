@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
-    angular.module('adminApp', ['ngRoute'])
-       .config(function ($routeProvider) {
+    angular.module('adminApp', ['ngRoute', 'angularUtils.directives.dirPagination'])
+       .config(function ($routeProvider, paginationTemplateProvider) {
            $routeProvider
                .when("/published", {
                    controller: "postController",
@@ -27,8 +27,10 @@
                    controller: "postEditorController",
                    controllerAs: "vm",
                    templateUrl: "/views/editPostView.html"
-                });    
+               });
            $routeProvider.otherwise({ redirectTo: "/unpublished" });
-       })
+
+           paginationTemplateProvider.setPath('/views/pagination.html');
+       });
 
 })();
