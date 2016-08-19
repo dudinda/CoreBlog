@@ -1,8 +1,5 @@
-﻿
-<!DOCTYPE html>
-
+﻿<!DOCTYPE html>
 <html>
-
 <head>
 
     <meta charset="utf-8" />
@@ -25,12 +22,7 @@
         <div class="content">
             @RenderBody()
         </div>
-        <div class="footer">
-            <div class="container">
-                <h4 class="text-muted text-center"> &copy; @DateTime.Now.Year Daniil Dudin</h4>
-                <h6 class="text-center">powered by <a href="https://github.com/Softenraged/CoreBlog">CoreBlog</a></h6>
-            </div>
-        </div>
+        @Html.Partial("_Footer");
     </div>
 
 
