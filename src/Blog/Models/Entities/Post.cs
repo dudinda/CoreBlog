@@ -1,4 +1,5 @@
 ﻿using Blog.Models.Data;
+using Blog.Models.Entities;
 using System;
 using System.Collections.Generic;
 
@@ -24,6 +25,8 @@ namespace Blog.Models
         public virtual DateTime? Modified { get; set; }
 
         public bool IsPublished { get; set; }
+
+        public Image image { get; set; }
 
         public Category Category { get; set; }
 
