@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -15,13 +12,15 @@ using Blog.Models.Account;
 using Microsoft.AspNetCore.Mvc;
 using Blog.Models.Data;
 using Blog.ViewModels;
-using Sakura.AspNetCore.Mvc;
 using Blog.Service;
 using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json.Serialization;
 using Blog.ViewModels.ControlPanelViewModels;
 using Blog.Controllers;
 using Blog.Models.AccountViewModels;
+using Sakura.AspNetCore;
+using Blog.ViewModels.PostViewModels;
+using Blog.Models.Entities;
 
 namespace Blog
 {
@@ -125,9 +124,10 @@ namespace Blog
                 config.CreateMap<Post, PostViewModel>().ReverseMap();
                 config.CreateMap<Tag, TagViewModel>().ReverseMap();
                 config.CreateMap<Category, CategoryViewModel>().ReverseMap();
-                config.CreateMap<PostCreateViewModel, Post>();
+                config.CreateMap<CreatePostViewModel, Post>();
                 config.CreateMap<Post, PostControlPanelViewModel>().ReverseMap();
                 config.CreateMap<BlogUser, UserControlPanelViewModel>().ReverseMap();
+                config.CreateMap<Image, ImageViewModel>().ReverseMap();
             });
            
 
