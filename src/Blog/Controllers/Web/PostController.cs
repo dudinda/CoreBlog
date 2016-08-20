@@ -1,8 +1,7 @@
 ﻿using Blog.Models.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-
+using System;
 
 namespace Blog.Controllers
 {
@@ -21,11 +20,19 @@ namespace Blog.Controllers
         [Route("Open/{id}")]
         public IActionResult OpenPost(int id)
         {
-            var post = postService.GetPostById(id);
+            try
+            {
+                var post = postService.GetPostById(id);
 
-            var postViewModel = ModelFactory.Create(post);
+                var postViewModel = ModelFactory.Create(post);
 
-            return View(postViewModel);
+                return View(postViewModel);
+            }
+            catch (Exception)
+            { 
+                //no such id
+                return NotFound();
+            }
         }
 
 

@@ -1,4 +1,4 @@
-﻿@model ICollection<Blog.ViewModels.PostViewModel>
+﻿
 @{
     ViewBag.Title = "Manage panel";
 }
@@ -16,9 +16,14 @@
 @section Scripts{
     <script src="~/lib/angular/angular.js"></script>
     <script src="~/lib/angular-route/angular-route.min.js"></script>
-    <script src="~/js/Admin/adminApp.js"></script>
-    <script src="~/js/Admin/tabsController.js"></script>
-    <script src="~/js/Admin/controlPanelFactory.js"></script>
-    <script src="~/js/Admin/postController.js"></script>
-    <script src="~/js/Admin/userController.js"></script>
+
+    <development>
+        <script src="~/js/Admin/adminApp.js"></script>
+        <script src="~/lib/angular-utils-pagination/dirPagination.js"></script>
+        <script src="~/js/Admin/postEditorController.js"></script>
+        <script src="~/js/Admin/tabsController.js"></script>
+        <script src="~/js/Admin/controlPanelFactory.js"></script>
+        <script src="~/js/Admin/postController.js"></script>
+        <script src="~/js/Admin/userController.js"></script>
+    </development>
 }

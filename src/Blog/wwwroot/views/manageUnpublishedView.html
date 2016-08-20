@@ -16,7 +16,7 @@
                 <td>{{post.title}}</td>
                 <td>{{post.author}}</td>
                 <td>{{post.category.name}}</td>
-                <td ng-repeat="tag in post.tags">{{tag.name }}</td>
+                <td><a ng-repeat="tag in post.tags">{{tag.name }}</a></td>
                 <td>{{post.postedOn | date: 'MM-dd-yyyy'}}</td>
                 <td class="btn-group">
                     <a class="btn" ng-href="#/open/{{post.id}}"><i class="fa fa-folder-open"></i>Open</a>

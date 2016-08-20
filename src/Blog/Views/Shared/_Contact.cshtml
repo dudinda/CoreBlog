@@ -4,8 +4,7 @@
         <div class="col-md-4 col-md-offset-4">
             <h2>Contact us</h2>
 
-            <form method="post">
-                <div asp-validation-summary="ModelOnly"></div>
+            <form method="post">         
                 <div class="form group">
                     <label asp-for="Name">Username</label>
                     <input asp-for="Name" class="form-control text-muted" placeholder="Enter your name" />
@@ -30,6 +29,7 @@
                     <button type="submit" class="list-group-item" style="text-align:center;">Send</button>
                     <a asp-controller="Blog" asp-action="Index" class="list-group-item" style="text-align:center;">Cancel</a>
                 </div>
+                <div asp-validation-summary="ModelOnly"></div>
             </form>
         </div>
     </div>
