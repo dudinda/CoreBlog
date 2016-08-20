@@ -1,0 +1,27 @@
+﻿
+
+<div class="container">
+
+    <!-- Blog Post -->
+    <!-- Title -->
+    <h1>{{vm.post.category.name}}: {{vm.post.title}}</h1>
+    <hr>
+
+    <!-- Date/Time/Tags -->
+    <p>
+        <span class="glyphicon glyphicon-time"></span> Posted on {{vm.post.postedOn | date: 'MM-dd-yyyy'}} by <a text-size="10px">{{vm.post.author}}</a>
+    </p>
+    <span class="glyphicon glyphicon-tags"></span>
+    <a ng-repeat="tag in vm.post.tags">{{tag.name}}</a>
+    <hr>
+
+    <!-- Preview Image -->
+    <img class="center-block" ng-src="data:{{vm.post.image.filetype}}; base64,{{vm.post.image.base64}}" alt="{{vm.post.title}}">
+    <hr>
+
+    <!-- Post Content -->
+    <p style="white-space:normal; word-wrap:break-word">{{vm.post.shortDescription}}</p>
+    <p style="white-space:normal; word-wrap:break-word">{{vm.post.description}}</p>
+    <hr>
+</div>
+<div ng-show="vm.error">{{vm.error}}</div>
