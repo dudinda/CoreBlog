@@ -1,22 +1,24 @@
 ﻿(function() {
 
-   
+   'use strict';
 
-    angular.module('adminApp')
+    angular
+        .module('adminApp')
         .controller('postController', ['controlPanelFactory', postController]);
 
     function postController(controlPanelFactory) {
         var vm = this;
-     
+
         vm.posts = [];
 
         vm.error = "";
-        vm.isBusy = true;
-      
-        vm.predicate = 'author';
-        vm.reverse = true;
-        vm.currentPage = 1;
 
+        vm.isBusy = true;
+        vm.reverse = true;
+
+        vm.predicate = 'title';
+       
+   
         vm.getUnpublished = function () {
             vm.isBusy = true;
             controlPanelFactory
@@ -24,7 +26,7 @@
                     angular.copy(response, vm.posts);
                     vm.isBusy = false;
                 }).error(function (error) {
-                    vm.error = "Failed to get data";
+                    vm.error = "Failed to get unpublished posts.";
                 })
         };
 
@@ -35,7 +37,7 @@
                     angular.copy(response, vm.posts);
                     vm.isBusy = false;
                 }).error(function (error) {
-                    vm.error = "Failed to get data";
+                    vm.error = "Failed to get published posts.";
                 })
         };
 
@@ -44,15 +46,16 @@
             vm.predicate = predicate;
         };
     
-        vm.approve = function (post, isPublished) {
+        vm.approve = function (index, isPublished) {
             vm.isBusy = true;
             controlPanelFactory
-                .approvePost(post, isPublished).success(function (response) {
-                    vm.posts.pop(response);
+                .approvePost(vm.posts[index], isPublished).success(function (response) {
+                    vm.posts.splice(index, 1);
                     vm.isBusy = false;
                 }).error(function (error) {
-                    vm.error = "Failed to approve the post";
+                    vm.error = "Failed to approve: " + post.title;
                 });
         };
+    
     };
 })();

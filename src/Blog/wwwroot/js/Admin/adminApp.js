@@ -1,6 +1,7 @@
 ﻿(function () {
     'use strict';
-    angular.module('adminApp', ['ngRoute', 'angularUtils.directives.dirPagination'])
+    angular
+       .module('adminApp', ['ngRoute', 'angularUtils.directives.dirPagination'])
        .config(function ($routeProvider, paginationTemplateProvider) {
            $routeProvider
                .when("/published", {
@@ -21,7 +22,7 @@
                 .when("/open/:id", {
                     controller: "postEditorController",
                     controllerAs: "vm",
-                    templateUrl: "/views/editPostView.html"
+                    templateUrl: "/views/openPostView.html"
                 })
                .when("/edit/:id", {
                    controller: "postEditorController",
@@ -32,5 +33,4 @@
 
            paginationTemplateProvider.setPath('/views/pagination.html');
        });
-
 })();

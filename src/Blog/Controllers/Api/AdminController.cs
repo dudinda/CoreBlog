@@ -54,14 +54,12 @@ namespace Blog.Controllers
                 //if user exists
                 if (user != null)
                 {
-                    user.isBanned = false;
-
-                    var updateUserResult = await userManager.UpdateAsync(user);
-
-                    if (updateUserResult.Succeeded)
+                    if (await userManager.IsInRoleAsync(user, "Banned"))
                     {
+                        user.isBanned = false;
+                        var updateUserResult = await userManager.UpdateAsync(user);
 
-                        if (await userManager.IsInRoleAsync(user, "Banned"))
+                        if (updateUserResult.Succeeded)
                         {
 
                             var addToBannedResult    = await userManager.AddToRoleAsync(user, "User");
@@ -88,23 +86,21 @@ namespace Blog.Controllers
                 //if user exists
                 if (user != null)
                 {
-                    user.isBanned = true;
-
-                    var updateUserResult = await userManager.UpdateAsync(user);
-
-                    if (updateUserResult.Succeeded)
+                    if (await userManager.IsInRoleAsync(user, "User"))
                     {
+                        user.isBanned = true;
 
-                        if (await userManager.IsInRoleAsync(user, "User"))
+                        var updateUserResult = await userManager.UpdateAsync(user);
+
+                        if (updateUserResult.Succeeded)
                         {
-
                             var addToBannedResult    = await userManager.AddToRoleAsync(user, "Banned");
                             var removeFromUserResult = await userManager.RemoveFromRoleAsync(user, "User");
 
                             return Json(user.isBanned);
 
                         }
-                    }                
+                    }            
                 }
             }
 

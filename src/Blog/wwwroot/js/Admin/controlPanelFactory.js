@@ -1,8 +1,8 @@
 ﻿(function () {
     'use strict';
-
-    
-    angular.module('adminApp')
+   
+    angular
+        .module('adminApp')
         .factory('controlPanelFactory', ['$http', controlPanelFactory]);
 
     function controlPanelFactory($http) {

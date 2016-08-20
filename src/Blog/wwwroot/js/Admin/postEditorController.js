@@ -8,15 +8,17 @@
     function postEditorController($routeParams, controlPanelFactory) {
 
         var vm = this;
-        vm.post = {};
-        vm.error = "";
-        vm.id = $routeParams.id;
 
-        controlPanelFactory.getPost(vm.id).success(function (response) {
-            angular.copy(response, vm.post);
-        }).error(function () {
-            vm.error = "Failed to get the post with id: " + vm.id;
-        });
+        vm.post = {};
+
+        vm.error = "";
+     
+        controlPanelFactory
+            .getPost($routeParams.id).success(function (response) {
+                angular.copy(response, vm.post);
+            }).error(function () {
+                vm.error = "Failed to get the post with id: " + $routeParams.id;
+            });
         
 
     };

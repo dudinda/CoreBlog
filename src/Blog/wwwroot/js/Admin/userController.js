@@ -1,6 +1,8 @@
 ﻿(function () {
- 
-    angular.module('adminApp')
+    'use strict';
+
+    angular
+        .module('adminApp')
         .controller('userController', ['$http', 'controlPanelFactory', userController]);
 
     function userController($http, controlPanelFactory) {
