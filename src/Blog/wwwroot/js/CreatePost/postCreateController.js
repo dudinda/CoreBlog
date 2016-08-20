@@ -5,7 +5,7 @@
         .module('postCreateApp')
         .controller('postCreateController', ['postCreateFactory', postCreateController]);
 
-    function postCreateController(postCreateFactory) {
+    function postCreateController (postCreateFactory) {
 
         var vm = this;
         
@@ -13,17 +13,18 @@
         vm.isReady = false;
     
         vm.newPost = {};
-
+       
         vm.isFull = false;
 
         postCreateFactory
             .getPostCreateForm().success(function (response) {
                 angular.copy(response, vm.newPost);
+                vm.newPost.image = {};
             }).error(function () {
                 vm.error = "Oops. Something went wrong. Try again later!";
             });
 
-
+ 
         vm.addTag = function () {
             if (vm.newPost.tags.length < 5) {
                 vm.newPost.tags.push({
@@ -40,6 +41,8 @@
             vm.isFull = false;
             vm.newPost.tags.splice(index, 1);
         };
+        
+    
 
         vm.approve = function () {
             postCreateFactory

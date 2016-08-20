@@ -16,7 +16,7 @@
         <label>Tags</label>
         <div>
             <button ng-disabled="vm.isFull" class="btn" ng-click="vm.addTag()"><i class="fa fa-plus"></i></button>
-            <span class="fa fa-tag" ng-repeat="tag in vm.newPost.tags track by $index" ng-model="vm.newPost.tags[$index]">
+            <span class="fa fa-tag" ng-repeat="tag in vm.newPost.tags" ng-model="vm.newPost.tags[$index]">
                 <label>
                     <input class="tag" type="text" ng-model="tag.name" />
                     <a class="btn" ng-click="vm.removeTag($index)">
@@ -26,6 +26,10 @@
                 </label>
             </span>
         </div>
+    </div>
+    <div class="form-group">
+        <label>Image</label>
+        <input type="file" ng-model="vm.newPost.image" name="file" base-sixty-four-input  maxsize="1024" accept="image/*">
     </div>
     <div class="form-group">
         <label>Category</label>
@@ -49,5 +53,4 @@
     </div>
     
 </form>
-
 <div class="text-danger" ng-show="vm.error">{{vm.error}}</div>
