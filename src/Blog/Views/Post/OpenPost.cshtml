@@ -1,5 +1,7 @@
 ﻿@model Blog.ViewModels.PostViewModel
-
+@{
+    ViewData["Title"] = @Model.Title;
+}
 
     <div class="container">
 
@@ -11,12 +13,13 @@
         <!-- Date/Time -->
         <p>
             <span class="glyphicon glyphicon-time"></span> Posted on @Model.PostedOn by <a text-size="10px">@Model.Author</a>
+            <i class="fa fa-comments-o"></i> <span class="disqus-comment-count" data-disqus-identifier="@Model.Id"></span>
         </p>
 
         <hr>
 
         <!-- Preview Image -->
-        <img class="text-center" src="http://placehold.it/900x300" alt="@Model.Title">
+        <img class="text-center" src="data: @Model.Image.Filetype; base64, @Model.Image.Base64" alt="@Model.Title">
 
         <hr>
 
@@ -24,4 +27,24 @@
         <p class="lead">@Model.ShortDescription</p>
         <p>@Model.Description</p>
         <hr>
+        <div id="disqus_thread"></div>
     </div>
+ @section Scripts {
+<script>
+                var disqus_config = function () {
+                this.page.url = 'http://localhost:49480/Post/Open/' + @Model.Id; // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = '@Model.Id'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                };
+
+                (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+
+                s.src = '//CoreBlog.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                })();
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><br><br><br>
+ }
