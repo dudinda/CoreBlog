@@ -10,47 +10,24 @@ namespace Blog.Controllers
 
     public sealed partial class AdminController
     {
-  
+
         [HttpGet("/api/admin/users")]
         public JsonResult GetUsers()
         {
             //get all users
             var users = userManager.Users.ToList();
             var controlViewModel = ModelFactory.Create(users);
-            
+
             return Json(controlViewModel);
         }
-
-
-        [HttpGet("/api/admin/post/{id:int}")]
-        public IActionResult GetPost(int id)
-        {
-            try
-            {
-     
-                var post = postService.GetPostById(id);
-
-                var controlViewModel = ModelFactory.Create(post);
-
-                return Json(controlViewModel);
-            }
-            catch(Exception)
-            {
-                //no such id
-                return BadRequest();
-            }
-        }
-
-
        
-
         [HttpPost("/api/admin/unban")]
         public async Task<IActionResult> UnbanAsync([FromBody]UserControlPanelViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 var user = await userManager.FindByNameAsync(viewModel.UserName);
-
+            
                 //if user exists
                 if (user != null)
                 {
