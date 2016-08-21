@@ -3,54 +3,66 @@
 
     angular
         .module('postCreateApp')
-        .controller('postCreateController', ['postCreateFactory', postCreateController]);
+        .controller('postCreateController', ['$routeParams' ,'postCreateFactory', postCreateController]);
 
-    function postCreateController (postCreateFactory) {
+    function postCreateController($routeParams, postCreateFactory) {
 
         var vm = this;
-        
+
         vm.error = "";
+      
+        vm.post = {};
+  
         vm.isReady = false;
-    
-        vm.newPost = {};
-       
         vm.isFull = false;
 
-        postCreateFactory
-            .getPostCreateForm().success(function (response) {
-                angular.copy(response, vm.newPost);
-                vm.newPost.image = {};
-            }).error(function () {
-                vm.error = "Oops. Something went wrong. Try again later!";
-            });
+        //if there is no route params, set status to false
+        vm.edit = $routeParams.id === undefined ? false : true;
 
- 
+        vm.newPost = function () {
+            postCreateFactory
+                .getPostForm().success(function (response) {
+                    angular.copy(response, vm.post);
+                    vm.post.image = {};
+                }).error(function () {
+                    vm.error = "Oops. Something went wrong. Try again later!";
+                });
+        };
+
+        vm.updatePost = function () {
+            postCreateFactory
+                .getPost($routeParams.id).success(function (response) {
+                    angular.copy(response, vm.post);
+                }).error(function () {
+                    vm.error = "Oops. Something went wrong. Try again later!";
+                });
+        };
+
+
         vm.addTag = function () {
-            if (vm.newPost.tags.length < 5) {
-                vm.newPost.tags.push({
+            if (vm.post.tags.length < 5) {
+                vm.post.tags.push({
                     name: ''
                 });
-            } 
+            }
 
-            if(vm.newPost.tags.length === 5) {
+            if (vm.post.tags.length === 5) {
                 vm.isFull = true;
             }
         };
-        
+
         vm.removeTag = function (index) {
             vm.isFull = false;
-            vm.newPost.tags.splice(index, 1);
+            vm.post.tags.splice(index, 1);
         };
-        
-    
 
         vm.approve = function () {
             postCreateFactory
-                .sendNewPost(vm.newPost).success(function () {
+                .sendNewPost(vm.post).success(function () {
                     vm.isReady = true;
                 }).error(function () {
                     vm.error = "Oops. Something went wrong. Try again later!";
                 });
         };
-    }
+    };
 })();

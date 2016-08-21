@@ -8,7 +8,7 @@
 
     function postCreateFactory($http) {
 
-        function getPostCreateForm() {
+        function getPostForm() {
             return $http.get('/api/post/create');
         }
 
@@ -16,10 +16,20 @@
             return $http.post('/api/post/submit', post);
         }
 
-        var service = {
-            getPostCreateForm: getPostCreateForm,
-            sendNewPost: sendNewPost
 
+        function getPost(id) {
+            return $http.get("/api/admin/post/" + id);
+        }
+        
+        function updatePost(post) {
+            return $http.post("/api/post/update", post);
+        }
+
+        var service = {
+            getPostForm: getPostForm,
+            sendNewPost: sendNewPost,
+            updatePost: updatePost,
+            getPost: getPost       
         };
 
         return service;

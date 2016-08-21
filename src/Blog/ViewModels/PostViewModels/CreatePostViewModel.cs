@@ -6,7 +6,10 @@ using System.ComponentModel.DataAnnotations;
 namespace Blog.Models.PostViewModels
 {
     public class CreatePostViewModel
-    {    
+    {
+        
+        public int Id { get; set; }
+            
         [Required]
         public string Title { get; set; }
 
