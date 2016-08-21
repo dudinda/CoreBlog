@@ -6,9 +6,10 @@ using System;
 
 namespace Blog.Controllers
 {
+    [Authorize(Roles = "Admin, User")]
     public sealed partial class PostController
     {
-        [Authorize(Roles = "Admin, User")]
+       
         [HttpGet("/api/post/create")]
         public IActionResult GetPostForm()
         {
@@ -18,7 +19,6 @@ namespace Blog.Controllers
         }
 
 
-        [Authorize(Roles = "Admin, User")]
         [HttpPost("/api/post/submit")]
         public IActionResult GetNewPost([FromBody]CreatePostViewModel viewModel)
         {
@@ -29,7 +29,6 @@ namespace Blog.Controllers
                 var newPost             = ModelFactory.Create(viewModel);
                     newPost.Author      = User.Identity.Name;
                     newPost.PostedOn    = DateTime.UtcNow;
-                    newPost.IsPublished = false;
 
                 postService.AddPost(newPost);
 
@@ -41,6 +40,44 @@ namespace Blog.Controllers
             }
 
             return BadRequest();
+        }
+
+        [HttpPut("/api/post/update")]
+        public IActionResult UpdatePost([FromBody]CreatePostViewModel viewModel)
+        {
+            if(ModelState.IsValid)
+            {
+                var post                 = postService.GetPostById(viewModel.Id);
+                var updatedPost          = ModelFactory.Create(post, viewModel);
+                    updatedPost.Modified = DateTime.UtcNow;
+
+                postService.UpdatePost(updatedPost);
+
+                if (postService.SaveAll())
+                {
+                    return Ok();
+                }
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet("/api/post/get/{id:int}")]
+        public IActionResult GetPost(int id)
+        {
+            try
+            {
+                var post = postService.GetPostById(id);
+
+                var controlViewModel = ModelFactory.Create<CreatePostViewModel>(post);
+
+                return Json(controlViewModel);
+            }
+            catch (Exception)
+            {
+                //no such id
+                return BadRequest();
+            }
         }
 
     }

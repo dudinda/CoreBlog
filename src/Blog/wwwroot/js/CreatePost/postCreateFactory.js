@@ -18,11 +18,11 @@
 
 
         function getPost(id) {
-            return $http.get("/api/admin/post/" + id);
+            return $http.get("/api/post/get/" + id);
         }
         
         function updatePost(post) {
-            return $http.post("/api/post/update", post);
+            return $http.put("/api/post/update", post);
         }
 
         var service = {

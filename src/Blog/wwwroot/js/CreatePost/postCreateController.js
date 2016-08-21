@@ -29,7 +29,7 @@
                 });
         };
 
-        vm.updatePost = function () {
+        vm.getPost = function () {
             postCreateFactory
                 .getPost($routeParams.id).success(function (response) {
                     angular.copy(response, vm.post);
@@ -37,7 +37,15 @@
                     vm.error = "Oops. Something went wrong. Try again later!";
                 });
         };
-
+        
+        vm.updatePost = function () {
+            postCreateFactory
+                .updatePost(vm.post).success(function(){
+                    vm.error = "TEST";
+                }).error(function () {
+                    vm.error = "Oops. Something went wrong. Try again later!";
+                });;
+        };
 
         vm.addTag = function () {
             if (vm.post.tags.length < 5) {
