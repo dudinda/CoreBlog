@@ -5,21 +5,21 @@ namespace Blog.Models.AccountViewModels
 {
     public class RegistrationViewModel
     {
-        [Required]
-        public string Name { get; set; }
+        [Required(ErrorMessage = "Username is required.")]
+        public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Email is required.")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Password is required.")]
         public string Password { get; set; }
 
-        [Compare("Password", ErrorMessage = "Passwords don't match")]
+        [Compare("Password", ErrorMessage = "Passwords don't match.")]
         public string ConfirmPassword { get; set; }
 
         [Required]
-        [Range(18, 120, ErrorMessage = "You must be 18 or older")]
+        [Range(18, 120, ErrorMessage = "You must be 18 or older.")]
         public int Age { get; set; }
     }
 }

@@ -33,13 +33,12 @@ namespace Blog.Controllers
         {
             if (ModelState.IsValid)
             {         
-
                 var userExist = await userManager
-                    .FindByNameAsync(viewModel.Name);
+                    .FindByNameAsync(viewModel.UserName);
 
                 if (userExist != null)
                 {
-                    ModelState.AddModelError("", $"Username {viewModel.Name} already exists");
+                    ModelState.AddModelError("", $"Username {viewModel.UserName} already exists");
                     return View();
                 }
 
@@ -57,24 +56,18 @@ namespace Blog.Controllers
 
                 var result = await userManager
                     .CreateAsync(newUser, viewModel.Password);
-
-
-                var userRole = await userManager.AddToRoleAsync(newUser, "User");
-
-
-                if (!userRole.Succeeded)
-                {
-                    throw new InvalidProgramException("Failed to bind user to the role");
-                }
-
+                   
                 if (result.Succeeded)
                 {
+                    var userRole = await userManager.AddToRoleAsync(newUser, "User");
+
                     context.SaveChanges();
+
                     return RedirectToActionPermanent("Index", "Blog");
                 }
             }
 
-            return BadRequest();
+            return NotFound();
         }
     }
 }
