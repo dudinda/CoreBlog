@@ -11,10 +11,10 @@ namespace Blog.Models.Data
 {
     public static class ModelFactory
     {
-
-        public static PostViewModel Create(Post post)
+  
+        public static T Create<T>(Post post)
         {
-            return Mapper.Map<PostViewModel>(post);
+            return Mapper.Map<T>(post);
         }
 
         public static BlogUser Create(UserControlPanelViewModel viewModel)
@@ -25,6 +25,11 @@ namespace Blog.Models.Data
         public static UserControlPanelViewModel Create(BlogUser user)
         {
             return Mapper.Map<UserControlPanelViewModel>(user);
+        }
+
+        public static Post Create(Post post, CreatePostViewModel viewModel)
+        {
+            return Mapper.Map(viewModel, post);
         }
 
         public static Post Create(CreatePostViewModel viewModel)
