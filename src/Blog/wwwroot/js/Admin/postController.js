@@ -13,7 +13,7 @@
 
         vm.error = "";
 
-        vm.isBusy = true;
+        vm.isBusy = false;
         vm.reverse = true;
 
         vm.predicate = 'title';
@@ -24,9 +24,10 @@
             controlPanelFactory
                 .getUnpublishedPosts().success(function (response) {
                     angular.copy(response, vm.posts);
-                    vm.isBusy = false;
                 }).error(function (error) {
                     vm.error = "Failed to get unpublished posts.";
+                }).finally(function () {
+                    vm.isBusy = false;
                 })
         };
 
@@ -35,9 +36,10 @@
             controlPanelFactory
                 .getPublishedPosts().success(function (response) {
                     angular.copy(response, vm.posts);
-                    vm.isBusy = false;
                 }).error(function (error) {
                     vm.error = "Failed to get published posts.";
+                }).finally(function () {
+                    vm.isBusy = false;
                 })
         };
 
@@ -46,14 +48,27 @@
             vm.predicate = predicate;
         };
     
-        vm.approve = function (index, isPublished) {
+        vm.delete = function (index) {
             vm.isBusy = true;
             controlPanelFactory
-                .approvePost(vm.posts[index], isPublished).success(function (response) {
+                .deletePost(vm.posts[index]).success(function (response) {
                     vm.posts.splice(index, 1);
+                }).error(function (error) {
+                    vm.error = "Failed to delete: " + post.title;
+                }).finally(function () {
                     vm.isBusy = false;
+                });
+        };
+
+        vm.approve = function (index) {
+            vm.isBusy = true;
+            controlPanelFactory
+                .approvePost(vm.posts[index]).success(function (response) {
+                    vm.posts.splice(index, 1);
                 }).error(function (error) {
                     vm.error = "Failed to approve: " + post.title;
+                }).finally(function () {
+                    vm.isBusy = false;
                 });
         };
     

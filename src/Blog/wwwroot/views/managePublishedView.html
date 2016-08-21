@@ -21,7 +21,7 @@
                 <td class="btn-group">
                     <a class="btn" ng-href="#/open/{{post.id}}"><i class="fa fa-folder-open"></i>Open</a>
                     <a class="btn" ng-href="#/edit/{{post.id}}"><i class="fa fa-edit"></i>Edit</a>
-                    <a class="btn" ng-href="#/published" ng-click="vm.approve($index, false)"><i class="fa fa-close">Delete</i></a>
+                    <a class="btn" ng-href="#/published" ng-click="vm.delete($index)"><i class="fa fa-close">Delete</i></a>
                 </td>
             </tr>
         </tbody>

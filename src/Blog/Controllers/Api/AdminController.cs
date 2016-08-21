@@ -84,32 +84,42 @@ namespace Blog.Controllers
             return BadRequest();
         }
 
+
+        [HttpPost("/api/admin/delete")]
+        public IActionResult DeletePost([FromBody]PostControlPanelViewModel viewModel)
+        {
+            if(ModelState.IsValid)
+            {
+                var post = postService.GetPostById(viewModel.Id);
+
+                postService.RemovePost(post);
+
+                if(postService.SaveAll())
+                {
+                    return Ok();
+                }
+                
+            }
+            return BadRequest();
+        }
+
         [HttpPost("/api/admin/approve")]
         public IActionResult ApprovePost([FromBody]PostControlPanelViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                //get an existing post then set status
-                var post             = postService.GetPostById(viewModel.Id);                    
-                    post.IsPublished = viewModel.IsPublished;
-  
-                if (post.IsPublished)
-                {
-                    //if it was approved
-                    post.Modified = DateTime.UtcNow;
-                    postService.UpdatePost(post);
-                }
-                else
-                {
-                    //else remove it from the database
-                    postService.RemovePost(post);
-                }
+                //get an existing post then set isPublished status
+                var post             = postService.GetPostById(viewModel.Id);
+                    post.IsPublished = true;
 
+                    postService.UpdatePost(post);
+        
                 if (postService.SaveAll())
                 {
-                    return Json(viewModel);
+                    return Ok();
                 }
             }
+
             return BadRequest();
         }
 

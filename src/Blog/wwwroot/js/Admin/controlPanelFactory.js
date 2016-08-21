@@ -22,11 +22,12 @@
         function getPost(id) {
             return $http.get("/api/admin/post/" + id);
         }
+        
+        function deletePost(post) {
+            return $http.post("/api/admin/delete", post);
+        }
 
-        function approvePost(post, isPublished) {
-            //set isPublished status
-            post.isPublished = isPublished;
-
+        function approvePost(post) {
             return $http.post("/api/admin/approve", post);
         }
 
@@ -45,7 +46,8 @@
             approvePost: approvePost,
             banUser: banUser,
             unbanUser: unbanUser,
-            getPost: getPost
+            getPost: getPost,
+            deletePost: deletePost
         }
   
         return service;
