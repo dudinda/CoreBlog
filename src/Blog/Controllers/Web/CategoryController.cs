@@ -25,7 +25,7 @@ namespace Blog.Controllers
                 return RedirectPermanent($"Category/{search.Text}");
             }
 
-            return BadRequest();
+            return NotFound();
         }
 
     

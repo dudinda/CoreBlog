@@ -1,4 +1,5 @@
 ﻿using Blog.Models.Data;
+using Blog.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -24,7 +25,7 @@ namespace Blog.Controllers
             {
                 var post = postService.GetPostById(id);
 
-                var postViewModel = ModelFactory.Create(post);
+                var postViewModel = ModelFactory.Create<PostViewModel>(post);
 
                 return View(postViewModel);
             }

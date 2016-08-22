@@ -14,10 +14,12 @@ namespace Blog.Controllers
         private IPageService pageService { get; }
         private IPostService postService { get; } 
 
-        public BlogController (IPostService repository, IPageService pageService, IMailService mailService)
+        public BlogController (IPostService postService, 
+                               IPageService pageService,
+                               IMailService mailService)
         {
             this.mailService = mailService;
-            this.postService = repository;
+            this.postService = postService;
             this.pageService = pageService;
         }
 
@@ -43,7 +45,7 @@ namespace Blog.Controllers
             ViewData["Other"]       = postService.GetCategoryCounter(posts, "Other");
 
             //get latest posts
-            ViewData["Latest"] = ModelFactory.Create<PostViewModel>( latestposts );
+            ViewBag.Latest = ModelFactory.Create<PostViewModel>( latestposts );
 
             var pageViewModel = ModelFactory.Create( pagedList );        
                   
@@ -67,12 +69,9 @@ namespace Blog.Controllers
                 mailService.SendEmail(viewModel);
 
                 ModelState.Clear();
-                ViewBag.Message = "Thanks for your feedback!";
+                ViewBag.Message = "Thanks for your feedback!";              
             }
-
             return View();
         }
-
-
     }
 }

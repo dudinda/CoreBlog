@@ -23,7 +23,12 @@ namespace Blog.Models.Data
         public void RemovePost(Post post)
         {
             context.Remove(post);
-        } 
+        }
+
+        public void UpdatePost(Post post)
+        {
+            context.Update(post);
+        }
 
         public bool SaveAll()
         {
@@ -41,11 +46,6 @@ namespace Blog.Models.Data
             return Attach(context.Posts.Where(post => post.IsPublished));
         }
 
-        public void UpdatePost(Post post)
-        {
-            context.Update(post);
-        }
- 
         public IEnumerable<Post> GetLatest(IEnumerable<Post> posts, int count)
         {
             return posts.TakeLast(5).OrderByDescending(post => post.PostedOn);

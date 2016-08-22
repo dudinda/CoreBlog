@@ -21,7 +21,7 @@
         </div>
         <div class="panel-body">
             <div class="list-group">
-                @foreach (var post in (IEnumerable<Blog.ViewModels.PostViewModel>)ViewData["Latest"])
+                @foreach (var post in ViewBag.Latest)
                 {
                     <a asp-controller="Post" asp-action="OpenPost" asp-route-id="@(post.Id)" class="list-group-item"> @post.Title</a>
                 }

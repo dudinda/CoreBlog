@@ -16,6 +16,15 @@
     background: #222;
 }
 
+p{
+    word-wrap:break-word;
+}
+
+
+.tag {
+    width: 45px;
+}
+
 .pagination .current{
     padding:6px 9px 5px 9px;
     font-weight: bold;
