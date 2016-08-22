@@ -60,6 +60,7 @@ namespace Blog
             services.AddIdentity<BlogUser, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedEmail = false;
                 options.Password.RequiredLength = 8;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
@@ -109,11 +110,11 @@ namespace Blog
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/errors/500");
             }
 
             app.UseApplicationInsightsExceptionTelemetry();
-
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
             app.UseStaticFiles();
 
             app.UseIdentity();
@@ -124,19 +125,20 @@ namespace Blog
                 config.CreateMap<Post, PostViewModel>().ReverseMap();
                 config.CreateMap<Tag, TagViewModel>().ReverseMap();
                 config.CreateMap<Category, CategoryViewModel>().ReverseMap();
-                config.CreateMap<CreatePostViewModel, Post>();
+                config.CreateMap<CreatePostViewModel, Post>().ReverseMap();
                 config.CreateMap<Post, PostControlPanelViewModel>().ReverseMap();
                 config.CreateMap<BlogUser, UserControlPanelViewModel>().ReverseMap();
                 config.CreateMap<Image, ImageViewModel>().ReverseMap();
             });
-           
+
 
             app.UseMvc(routes =>
             {
+
                 routes.MapRoute(
                     name: "Home",
                     template: "{controller}/{page?}",
-                    defaults: new {controller = "Blog", Action="Index"}
+                    defaults: new { controller = "Blog", Action = "Index" }
                     );
 
                 routes.MapRoute(
@@ -144,6 +146,11 @@ namespace Blog
                     template: "{controller}/{action}/{page?}"
                     );
 
+                routes.MapRoute(
+                    name: "Error",
+                    template: "errors/{code}",
+                    defaults: new { controller = "Errors", Action = "Error" }
+                    );
             });
 
             await init.SeedDataAsync();
