@@ -2,6 +2,7 @@
 using Blog.ViewModels.AccountViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace Blog.Controllers
@@ -9,19 +10,23 @@ namespace Blog.Controllers
     [ResponseCache(CacheProfileName = "Default")]
     sealed public class AuthController : Controller
     {
+        private ILogger<AuthController> logger { get; }
         private UserManager<BlogUser> userManager { get; }
         private SignInManager<BlogUser> signInManager { get; }
 
-        public AuthController(SignInManager<BlogUser> signInManager, UserManager<BlogUser> userManager)
+        public AuthController(SignInManager<BlogUser> signInManager, 
+                              UserManager<BlogUser> userManager, 
+                              ILogger<AuthController> logger)
         {
             this.signInManager = signInManager;
             this.userManager   = userManager;
+            this.logger        = logger;
         }
 
         public IActionResult Login()
         {
             if(User.Identity.IsAuthenticated)
-            {
+            {         
                 return RedirectToAction("Index", "Blog");
             }
             return View();
@@ -53,11 +58,12 @@ namespace Blog.Controllers
 
                     if (signInResult.Succeeded)
                     {
+                        logger.LogInformation($"{User.Identity.Name} is now logged in.");
                         return RedirectToAction("Index", "Blog");
                     }         
                 }
             }
-
+            logger.LogInformation($"Attemp to log in with {viewModel.UserName} and {viewModel.Password} failed.");
             ModelState.AddModelError("", "Login or password is incorrect.");
        
             return View();
@@ -66,8 +72,9 @@ namespace Blog.Controllers
         public async Task<IActionResult> Logout()
         {
             if(User.Identity.IsAuthenticated)
-            {
+            {            
                 await signInManager.SignOutAsync();
+                logger.LogInformation($"{User.Identity.Name} is now logged out.");
             }
             return RedirectToActionPermanent("Index", "Blog");
         }

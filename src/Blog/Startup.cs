@@ -69,6 +69,7 @@ namespace Blog
             })
             .AddEntityFrameworkStores<BlogContext>();
 
+            services.AddLogging();
     
 
             services.AddScoped<IPostService, PostService>();
@@ -97,8 +98,8 @@ namespace Blog
                                     ILoggerFactory loggerFactory,
                                     BlogInit init)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            loggerFactory.AddConsole(LogLevel.Error);
+            loggerFactory.AddDebug(LogLevel.Error);
             
             app.UseApplicationInsightsRequestTelemetry();
 
