@@ -2,6 +2,9 @@
 using Blog.Models.AccountViewModels;
 using Blog.Models.Data;
 using Blog.Models.PostViewModels;
+using Blog.Service;
+using Blog.ViewModels.AccountViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,27 +16,52 @@ namespace Blog.Controllers
     [ResponseCache(CacheProfileName = "Default")]
     sealed public class RegController : Controller
     {
+        private IMailService mailService { get; }
         private ILogger<RegController> logger { get; }
         private  UserManager<BlogUser> userManager { get; }
-        private  BlogContext context { get;}
+        private  BlogContext context { get; }
 
         public RegController(BlogContext context, 
                              UserManager<BlogUser> userManager,
-                             ILogger<RegController> logger)
+                             ILogger<RegController> logger,
+                             IMailService mailService)
         {
             this.context     = context;
             this.userManager = userManager;
             this.logger      = logger;
+            this.mailService = mailService;
         }
 
+   
         [HttpGet("[controller]/registration")]
         public IActionResult Registration()
         {
             return View();
         }
 
+
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string id, string token)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.FindByIdAsync(id);
+
+                if (user != null)
+                {
+                    var result = await userManager.ConfirmEmailAsync(user, token);
+
+                    if(result.Succeeded)
+                    {
+                        return View();
+                    }
+                }
+            }
+            return NotFound();
+        }
+
         [HttpPost("[controller]/registration")]
-        [ValidateAntiForgeryToken]
+       // [ValidateAntiForgeryToken]
         public async Task<IActionResult> Registration(RegistrationViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -72,7 +100,21 @@ namespace Blog.Controllers
 
                         logger.LogInformation($"New account: {newUser.UserName}, {newUser.Email}");
 
-                        return RedirectToActionPermanent("Index", "Blog");
+                        //generate token
+                        var token = await userManager.GenerateEmailConfirmationTokenAsync(newUser);
+
+                        //generate callbackUrl
+                        var callback = Url.Action("ConfirmEmail",
+                                                  "Reg",
+                                                  new { id = newUser.Id, token = token },
+                                                  protocol: HttpContext.Request.Scheme);
+
+                        await mailService.ConfirmEmailAsync(newUser, callback);
+
+                        ViewData["Email"]   = newUser.Email;
+                        ViewData["Message"] = "Thanks for joining us!";
+
+                        return View();
                     }
                 }
             }

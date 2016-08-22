@@ -67,7 +67,8 @@ namespace Blog
                 options.Password.RequireDigit = false;
 
             })
-            .AddEntityFrameworkStores<BlogContext>();
+            .AddEntityFrameworkStores<BlogContext>()
+            .AddDefaultTokenProviders();
 
             services.AddLogging();
     
@@ -98,7 +99,7 @@ namespace Blog
                                     ILoggerFactory loggerFactory,
                                     BlogInit init)
         {
-            loggerFactory.AddConsole(LogLevel.Error);
+            loggerFactory.AddConsole(LogLevel.Information);
             loggerFactory.AddDebug(LogLevel.Error);
             
             app.UseApplicationInsightsRequestTelemetry();

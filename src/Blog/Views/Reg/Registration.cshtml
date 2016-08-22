@@ -2,8 +2,9 @@
     @{
         ViewBag.Title = "Registration";
     }
-
-    <div class="row">
+@if (ViewData["Message"] == null)
+{
+ <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <h2>Join us!</h2>
 
@@ -41,7 +42,16 @@
             </form>   
         </div>
     </div>
+}
 
+@if(ViewData["Message"] != null)
+{
+    <div>
+        <h1>@ViewData["Message"]</h1>
+        <p>We just sent you a confirmation email to @ViewData["Email"]</p>
+    </div>
+
+}
 
 @section Scripts { 
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>

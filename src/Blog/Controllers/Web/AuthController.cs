@@ -14,32 +14,32 @@ namespace Blog.Controllers
         private UserManager<BlogUser> userManager { get; }
         private SignInManager<BlogUser> signInManager { get; }
 
-        public AuthController(SignInManager<BlogUser> signInManager, 
-                              UserManager<BlogUser> userManager, 
+        public AuthController(SignInManager<BlogUser> signInManager,
+                              UserManager<BlogUser> userManager,
                               ILogger<AuthController> logger)
         {
             this.signInManager = signInManager;
-            this.userManager   = userManager;
-            this.logger        = logger;
+            this.userManager = userManager;
+            this.logger = logger;
         }
 
         public IActionResult Login()
         {
-            if(User.Identity.IsAuthenticated)
-            {         
+            if (User.Identity.IsAuthenticated)
+            {
                 return RedirectToAction("Index", "Blog");
             }
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel viewModel) 
+        public async Task<IActionResult> Login(LoginViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 //get an existing user by name or email
-                var user  = await userManager.FindByNameAsync(viewModel.UserName);
-                    user  = await userManager.FindByEmailAsync(viewModel.UserName); 
+                var user = await userManager.FindByNameAsync(viewModel.UserName);
+                    user = await userManager.FindByEmailAsync(viewModel.UserName);
 
                 //if user exist
                 if (user != null) {
@@ -47,6 +47,12 @@ namespace Blog.Controllers
                     if (user.isBanned)
                     {
                         ModelState.AddModelError("", $"Your account has been temporarily suspended until {user.LockoutEnd}.");
+                        return View();
+                    }
+
+                    if(user.EmailConfirmed == false)
+                    {
+                        ModelState.AddModelError("", $"You must activate your account with the code sent to your email address: {user.Email}");
                         return View();
                     }
 
@@ -60,14 +66,22 @@ namespace Blog.Controllers
                     {
                         logger.LogInformation($"{User.Identity.Name} is now logged in.");
                         return RedirectToAction("Index", "Blog");
-                    }         
+                    }
                 }
             }
             logger.LogInformation($"Attemp to log in with {viewModel.UserName} and {viewModel.Password} failed.");
             ModelState.AddModelError("", "Login or password is incorrect.");
-       
+
             return View();
         }
+
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View(new ForgotPasswordViewModel());
+        }
+
 
         public async Task<IActionResult> Logout()
         {
