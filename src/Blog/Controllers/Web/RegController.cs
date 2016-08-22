@@ -4,6 +4,7 @@ using Blog.Models.Data;
 using Blog.Models.PostViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -12,13 +13,17 @@ namespace Blog.Controllers
     [ResponseCache(CacheProfileName = "Default")]
     sealed public class RegController : Controller
     {
+        private ILogger<RegController> logger { get; }
         private  UserManager<BlogUser> userManager { get; }
         private  BlogContext context { get;}
 
-        public RegController(BlogContext context, UserManager<BlogUser> userManager)
+        public RegController(BlogContext context, 
+                             UserManager<BlogUser> userManager,
+                             ILogger<RegController> logger)
         {
-            this.context = context;
+            this.context     = context;
             this.userManager = userManager;
+            this.logger      = logger;
         }
 
         [HttpGet("[controller]/registration")]
@@ -28,7 +33,7 @@ namespace Blog.Controllers
         }
 
         [HttpPost("[controller]/registration")]
-     //   [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Registration(RegistrationViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -61,13 +66,18 @@ namespace Blog.Controllers
                 {
                     var userRole = await userManager.AddToRoleAsync(newUser, "User");
 
-                    context.SaveChanges();
+                    if (userRole.Succeeded)
+                    {
+                        context.SaveChanges();
 
-                    return RedirectToActionPermanent("Index", "Blog");
+                        logger.LogInformation($"New account: {newUser.UserName}, {newUser.Email}");
+
+                        return RedirectToActionPermanent("Index", "Blog");
+                    }
                 }
             }
-
-            return NotFound();
+            logger.LogError($"Failed to register new user: {viewModel.UserName}, {viewModel.Email}");
+            return BadRequest();
         }
     }
 }
