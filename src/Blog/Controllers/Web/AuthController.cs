@@ -1,5 +1,7 @@
 ﻿using Blog.Models.Account;
+using Blog.Service;
 using Blog.ViewModels.AccountViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,17 +12,20 @@ namespace Blog.Controllers
     [ResponseCache(CacheProfileName = "Default")]
     sealed public class AuthController : Controller
     {
+        private IMailService mailService { get; }
         private ILogger<AuthController> logger { get; }
         private UserManager<BlogUser> userManager { get; }
         private SignInManager<BlogUser> signInManager { get; }
 
         public AuthController(SignInManager<BlogUser> signInManager,
                               UserManager<BlogUser> userManager,
-                              ILogger<AuthController> logger)
+                              ILogger<AuthController> logger,
+                              IMailService mailService)
         {
             this.signInManager = signInManager;
-            this.userManager = userManager;
-            this.logger = logger;
+            this.userManager   = userManager;
+            this.logger        = logger;
+            this.mailService   = mailService;
         }
 
         public IActionResult Login()
@@ -31,6 +36,7 @@ namespace Blog.Controllers
             }
             return View();
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel viewModel)
@@ -75,14 +81,6 @@ namespace Blog.Controllers
             return View();
         }
 
-
-        [HttpGet]
-        public IActionResult ForgotPassword()
-        {
-            return View(new ForgotPasswordViewModel());
-        }
-
-
         public async Task<IActionResult> Logout()
         {
             if(User.Identity.IsAuthenticated)
@@ -92,5 +90,95 @@ namespace Blog.Controllers
             }
             return RedirectToActionPermanent("Index", "Blog");
         }
+
+
+
+        public IActionResult ResetPassword()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var user = await userManager.FindByIdAsync(Request.Query["id"]);
+                //if user exists
+                if (user != null)
+                {
+                    if (user.Email != viewModel.Email)
+                    {
+                        ModelState.AddModelError("", "Email addresses don't match.");
+                        return View();
+                    }
+
+                    var result = await userManager.ResetPasswordAsync(user, Request.Query["token"], viewModel.Password);
+
+                    if (!result.Succeeded)
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError("", error.Code);
+                        }
+
+                        return View();
+                    }
+
+                    return View("Login");
+                }
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendResetLink(ResetPasswordViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var user = await userManager.FindByEmailAsync(viewModel.Email);
+
+                if (user != null)
+                {
+
+                    var isConfirmed = await userManager.IsEmailConfirmedAsync(user);
+
+                    //if email is not confirmed
+                    if (!isConfirmed)
+                    {
+                        ModelState.AddModelError("", "Please confirm your registration email first.");
+                        return View("RecoverPassword");
+                    }
+
+                    //generate token
+                    var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
+                    //generate callback url
+                    var callback = Url.Action("ResetPassword",
+                                              "Auth",
+                                              new { id = user.Id, token = token },
+                                              protocol: HttpContext.Request.Scheme);
+
+                    await mailService.ConfirmEmailAsync(user, callback);
+
+                    ViewData["Message"] = "Thanks! We sent a password reset link to your email address.";
+                    return View("RecoverPassword");
+                }
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet]
+        public IActionResult SendResetLink()
+        {
+            return View(new ResetPasswordViewModel());
+        }
+
     }
 }
