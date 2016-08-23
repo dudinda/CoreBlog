@@ -1,9 +1,7 @@
-﻿@using Sakura.AspNetCore;
-
-@model Blog.ViewModels.PageViewModel
+﻿@model Blog.ViewModels.PageViewModel
 
 @{
-    var totalCount = Model.PostsPerPage.TotalCount;
+    var totalCount = Model.PagedList.TotalCount;
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/BackToTop.css" />

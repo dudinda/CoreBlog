@@ -67,9 +67,9 @@ namespace Blog.Models.Data
             return Mapper.Map<CategoryViewModel>(category);
         }
 
-        public static PageViewModel Create(PagedList<IEnumerable<PostViewModel>, PostViewModel> pagedList)
+        public static PageViewModel Create(IPagedList<PostViewModel> pagedList)
         {
-            return new PageViewModel { PostsPerPage = pagedList };
+            return new PageViewModel(pagedList);
         }
     }
 }

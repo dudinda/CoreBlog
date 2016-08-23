@@ -1,6 +1,6 @@
 ﻿@model Blog.ViewModels.PageViewModel
 
-    @foreach (var post in Model.PostsPerPage)
+    @foreach (var post in Model.PagedList)
     {
         <div class="well" style="background-color:#fff">
             <!-- Blog Post -->
