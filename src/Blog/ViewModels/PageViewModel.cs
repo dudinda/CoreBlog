@@ -5,7 +5,13 @@ namespace Blog.ViewModels
 {
     public class PageViewModel
     {
-        public PagedList<IEnumerable<PostViewModel>, PostViewModel> PostsPerPage { get; set; }
+        public PageViewModel(IPagedList<PostViewModel> pagedList)
+        {
+            PagedList = pagedList;
+        }
+
+        public IPagedList<PostViewModel> PagedList { get; }
+
         public SearchViewModel Search { get; set; } = new SearchViewModel();
         
     }

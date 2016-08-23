@@ -41,15 +41,15 @@ namespace Blog.Controllers
 
 
         [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(string id, string token)
+        public async Task<IActionResult> ConfirmEmail()
         {
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByIdAsync(id);
+                var user = await userManager.FindByIdAsync(Request.Query["id"]);
 
                 if (user != null)
                 {
-                    var result = await userManager.ConfirmEmailAsync(user, token);
+                    var result = await userManager.ConfirmEmailAsync(user, Request.Query["token"]);
 
                     if(result.Succeeded)
                     {
