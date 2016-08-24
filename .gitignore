@@ -244,5 +244,5 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 
-/src/Blog/wwwroot/lib
-/src/Blog/wwwroot/images
+/src/CoreBlog.Web/wwwroot/lib
+/src/CoreBlog.Web/wwwroot/images
