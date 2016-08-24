@@ -1,0 +1,56 @@
+﻿@model CoreBlog.Web.ViewModels.Post.PostViewModel
+@{
+    ViewData["Title"] = @Model.Title;
+}
+
+    <div class="container">
+
+        <!-- Blog Post -->
+        <!-- Title -->
+        <h1 class="text-center">@Model.Category.Name: @Model.Title</h1>
+        <hr>
+
+        <!-- Date/Time -->
+        <p>
+            <span class="glyphicon glyphicon-time"></span> Posted on @Model.PostedOn by <a text-size="10px">@Model.Author</a>
+            <i class="fa fa-comments-o"></i> <span class="disqus-comment-count" data-disqus-identifier="@Model.Id"></span>
+        </p>
+
+        <hr>
+
+        <!-- Preview Image -->
+        <img class="text-center" src="~/images/@Model.Image.Filename" alt="@Model.Title">
+
+        <hr>
+
+        <!-- Post Content -->
+        <p class="lead">@Model.ShortDescription</p>
+        <p>@Model.Description</p>
+        <hr>
+        <div>
+            @if(Model.Modified != null) {
+            <h6>Last edited by @Model.Author on @Model.Modified</h6>
+            }
+            @if(Model.Author == User.Identity.Name) {
+            <a class="btn" style="width:100%" asp-controller="Post" asp-action="CreatePost" asp-fragment="/edit/@Model.Id">Edit</a>
+            }
+        </div>
+        <div id="disqus_thread"></div>
+    </div>
+
+ @section Scripts {
+    <script>
+         var disqus_config = function () {
+                        this.page.url = 'http://localhost:49480//Post/Open/' + @Model.Id;
+                        this.page.identifier = '@Model.Id';
+                    };
+
+         (function() {
+             var d = document, s = d.createElement('script');
+             s.src = '//CoreBlog.disqus.com/embed.js';
+             s.setAttribute('data-timestamp', +new Date());
+             (d.head || d.body).appendChild(s);
+          })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><br><br><br>
+ }

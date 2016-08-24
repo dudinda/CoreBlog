@@ -1,10 +1,5 @@
-﻿using Blog.Controllers;
-using Blog.Controllers.Web;
-using Blog.Models.Data;
-using Blog.Models.PostViewModels;
-using Blog.Service;
+﻿using CoreBlog.Web.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace CoreBlog.Test

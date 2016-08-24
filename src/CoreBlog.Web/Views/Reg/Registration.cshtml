@@ -1,0 +1,65 @@
+﻿@model CoreBlog.Web.ViewModels.Account.RegistrationViewModel
+@{
+    ViewBag.Title = "Registration";
+}
+@if (ViewData["Message"] == null)
+{
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h2>Join us!</h2>
+
+            <form method="post">
+                <div class="form group">
+                    <label asp-for="UserName">Username</label>
+                    <input asp-for="UserName" class="form-control text-muted" placeholder="Enter your name" />
+                    <span asp-validation-for="UserName" class="text-muted"></span>
+                </div>
+                <div class="form group">
+                    <label asp-for="Email" placeholder="Enter your email">Email</label>
+                    <input type="email" asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-muted"></span>
+                </div>
+                <div class="form group">
+                    <label asp-for="Password" placeholder="Enter your password">Password</label>
+                    <input type="password" asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-muted"></span>
+                </div>
+                <div class="form group">
+                    <label asp-for="ConfirmPassword" placeholder="Confirm your password">Confirm Password</label>
+                    <input type="password" asp-for="ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-muted"></span>
+                </div>
+                <div class="form group">
+                    <label asp-for="Age" placeholder="Enter your age">Age</label>
+                    <input asp-for="Age" class="form-control" />
+                    <span asp-validation-for="Age" class="text-muted"></span>
+                </div>
+                <div class="form-group">
+                    <a asp-controller="Blog" asp-action="Index" class="btn btn-default">Cancel</a>
+                    <input type="submit" value="Register" class="btn btn-success" />
+                </div>
+                <div asp-validation-summary="ModelOnly"></div>
+            </form>
+        </div>
+    </div>
+}
+
+@if (ViewData["Message"] != null)
+{
+    <div onshow="timer(5, '/blog/1')">
+        <h1>@ViewData["Message"]</h1>
+        <p>
+            We just sent you a confirmation email to @ViewData["Email"]
+        </p>
+        <p>
+            You will be automatically redirected in <span id="timer"></span> seconds.
+        </p>
+    </div>
+
+}
+
+@section Scripts {
+    <script src="~/js/JqueryScripts/redirect.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

@@ -1,0 +1,32 @@
+﻿@model CoreBlog.Web.ViewModels.Page.PageViewModel
+
+@{
+    var totalCount = Model.PagedList.TotalCount;
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/BackToTop.css" />
+    <link rel="stylesheet" href="~/css/SearchBar.css" />
+}
+
+<div class="container">
+    <div class="row">
+        @Html.Partial("_Search", Model.Search)
+
+        @if (totalCount > 0)
+        {
+            @Html.Partial("_Posts")
+            @Html.Partial("_Pagination")
+        }
+        else
+        {
+            <h2 class="text-center">Nothing was found! Try again!</h2>
+
+        }
+    </div>
+    <a href="#" class="scrollToTop"><i class="fa fa-long-arrow-up" style="font-size:44px"></i></a>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/JqueryScripts/scrollToTop.js"></script>
+}
