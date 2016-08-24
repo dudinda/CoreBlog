@@ -1,14 +1,14 @@
 ﻿@model Blog.Models.AccountViewModels.RegistrationViewModel
-    @{
-        ViewBag.Title = "Registration";
-    }
+@{
+    ViewBag.Title = "Registration";
+}
 @if (ViewData["Message"] == null)
 {
- <div class="row">
+    <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <h2>Join us!</h2>
 
-            <form method="post">            
+            <form method="post">
                 <div class="form group">
                     <label asp-for="UserName">Username</label>
                     <input asp-for="UserName" class="form-control text-muted" placeholder="Enter your name" />
@@ -39,21 +39,27 @@
                     <input type="submit" value="Register" class="btn btn-success" />
                 </div>
                 <div asp-validation-summary="ModelOnly"></div>
-            </form>   
+            </form>
         </div>
     </div>
 }
 
-@if(ViewData["Message"] != null)
+@if (ViewData["Message"] != null)
 {
-    <div>
+    <div onshow="timer(5, '/blog/1')">
         <h1>@ViewData["Message"]</h1>
-        <p>We just sent you a confirmation email to @ViewData["Email"]</p>
+        <p>
+            We just sent you a confirmation email to @ViewData["Email"]
+        </p>
+        <p>
+            You will be automatically redirected in <span id="timer"></span> seconds.
+        </p>
     </div>
 
 }
 
-@section Scripts { 
+@section Scripts {
+    <script src="~/js/JqueryScripts/redirect.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 }
