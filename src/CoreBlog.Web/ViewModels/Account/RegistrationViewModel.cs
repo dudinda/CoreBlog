@@ -17,7 +17,7 @@ namespace CoreBlog.Web.ViewModels.Account
         [Compare("Password", ErrorMessage = "Passwords don't match.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Age is required.")]
         [Range(18, 120, ErrorMessage = "You must be 18 or older.")]
         public int Age { get; set; }
     }

@@ -5,18 +5,18 @@ namespace CoreBlog.Web.ViewModels.Account
     public class ContactViewModel
     {
 
-        [Required]
+        [Required(ErrorMessage = "Username is required.")]
         public string Name { get; set; }
-        
-        [Required]
+
+        [Required(ErrorMessage = "Email is required.")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Subject is required.")]
         [StringLength(32)]
         public string Subject { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Message is required.")]
         public string Message { get; set; }
      
     }
