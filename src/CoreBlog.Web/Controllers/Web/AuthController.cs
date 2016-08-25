@@ -27,7 +27,8 @@ namespace CoreBlog.Web.Controllers
             this.logger        = logger;
             this.mailService   = mailService;
         }
-
+        #region Login.
+        [AllowAnonymous]
         public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
@@ -80,7 +81,9 @@ namespace CoreBlog.Web.Controllers
 
             return View();
         }
+        #endregion
 
+        #region Logout.
         public async Task<IActionResult> Logout()
         {
             if(User.Identity.IsAuthenticated)
@@ -90,13 +93,61 @@ namespace CoreBlog.Web.Controllers
             }
             return RedirectToActionPermanent("Index", "Blog");
         }
+        #endregion
 
 
+        #region Send reset link.
+        [HttpGet]
+        public IActionResult SendResetLink()
+        {
+            return View(new SendResetPasswordViewModel());
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> SendResetLink(SendResetPasswordViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var user = await userManager.FindByEmailAsync(viewModel.Email);
+
+                if (user != null)
+                {
+
+                    var isConfirmed = await userManager.IsEmailConfirmedAsync(user);
+
+                    //if email is not confirmed
+                    if (!isConfirmed)
+                    {
+                        ModelState.AddModelError("", "Please confirm your registration email first.");
+                        return View();
+                    }
+
+                    //generate token
+                    var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
+                    //generate callback url
+                    var callback = Url.Action("ResetPassword",
+                                              "Auth",
+                                              new { id = user.Id, token = token },
+                                              protocol: HttpContext.Request.Scheme);
+
+                    await mailService.ConfirmEmailAsync(user, callback);
+
+                    ViewData["Message"] = "Thanks! We sent a password reset link to your email address.";
+                    return View();
+                }
+            }
+
+            return BadRequest();
+        }
+        #endregion
+
+        #region Reset password.
+        [HttpGet]
         public IActionResult ResetPassword()
         {
-
-            return View();
+            return View(new ResetPasswordViewModel());
         }
 
         [HttpPost]
@@ -135,50 +186,6 @@ namespace CoreBlog.Web.Controllers
             return NotFound();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> SendResetLink(ResetPasswordViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-
-                var user = await userManager.FindByEmailAsync(viewModel.Email);
-
-                if (user != null)
-                {
-
-                    var isConfirmed = await userManager.IsEmailConfirmedAsync(user);
-
-                    //if email is not confirmed
-                    if (!isConfirmed)
-                    {
-                        ModelState.AddModelError("", "Please confirm your registration email first.");
-                        return View("RecoverPassword");
-                    }
-
-                    //generate token
-                    var token = await userManager.GeneratePasswordResetTokenAsync(user);
-
-                    //generate callback url
-                    var callback = Url.Action("ResetPassword",
-                                              "Auth",
-                                              new { id = user.Id, token = token },
-                                              protocol: HttpContext.Request.Scheme);
-
-                    await mailService.ConfirmEmailAsync(user, callback);
-
-                    ViewData["Message"] = "Thanks! We sent a password reset link to your email address.";
-                    return View("RecoverPassword");
-                }
-            }
-
-            return NotFound();
-        }
-
-        [HttpGet]
-        public IActionResult SendResetLink()
-        {
-            return View(new ResetPasswordViewModel());
-        }
-
     }
+    #endregion
 }
