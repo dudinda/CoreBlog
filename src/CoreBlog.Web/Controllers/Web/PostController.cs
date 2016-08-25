@@ -9,6 +9,7 @@ namespace CoreBlog.Web.Controllers
 {
     [ResponseCache(CacheProfileName = "Default")]
     [Route("[controller]")]
+    [Authorize(Policy = "Active")]
     public sealed partial class PostController : Controller
     {
         private IPostService postService { get; }
@@ -39,7 +40,6 @@ namespace CoreBlog.Web.Controllers
         }
 
 
-        [Authorize(Roles = "Admin, User")]
         [Route("Create")]
         public IActionResult CreatePost()
         {

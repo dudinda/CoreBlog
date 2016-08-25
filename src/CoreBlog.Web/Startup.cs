@@ -14,11 +14,15 @@ using CoreBlog.Data.Entities;
 using CoreBlog.Web.ViewModels.Account;
 using CoreBlog.Web.Services;
 using CoreBlog.Data.Context;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace CoreBlog.Web
 {
     public class Startup
     {
+        private IConfigurationRoot Configuration { get; }
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -26,19 +30,10 @@ namespace CoreBlog.Web
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
-            if (env.IsDevelopment())
-            {
-                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets();          
-            }
-
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 
-        public IConfigurationRoot Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -46,15 +41,34 @@ namespace CoreBlog.Web
             services.AddIdentity<BlogUser, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
-                options.SignIn.RequireConfirmedEmail = false;
+
+                options.SignIn.RequireConfirmedEmail = true;
+
                 options.Password.RequiredLength = 8;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
 
+                options.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
+                options.Cookies.ApplicationCookie.AccessDeniedPath = "/Auth/Forbidden";
+                
             })
             .AddEntityFrameworkStores<BlogContext>()
             .AddDefaultTokenProviders();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy =>
+                {
+                    policy.RequireRole("Admin");
+                });
+
+                options.AddPolicy("Active", policy =>
+                {
+                    policy.RequireRole("Admin", "User");
+                });
+
+            });
 
             services.AddLogging();
 
@@ -64,21 +78,24 @@ namespace CoreBlog.Web
             services.AddScoped<IMailService, MailService>();
             services.AddTransient<BlogInit>();
 
-            services.AddMvc(option => {
-                option.CacheProfiles.Add("Default",
-                    new CacheProfile()
-                    {
-                       NoStore = true            
-                    });
+            services
+                .AddMvc(option =>
+                {
+                    option.CacheProfiles.Add("Default",
+                        new CacheProfile()
+                        {
+                            NoStore = true
+                        });
                 })
                 .AddJsonOptions(option =>
                 {
-                    option.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                });
+                    option
+                        .SerializerSettings
+                        .ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });       
+        }
 
-            }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
                                     IHostingEnvironment env,
                                     ILoggerFactory loggerFactory,
@@ -86,22 +103,13 @@ namespace CoreBlog.Web
         {
             loggerFactory.AddConsole(LogLevel.Information);
             loggerFactory.AddDebug(LogLevel.Error);
-            
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-                app.UseBrowserLink();
-            }
-            else
-            {
-                app.UseExceptionHandler("/errors/500");
-            }
 
+            app.UseExceptionHandler("/errors/500");
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
-            app.UseStaticFiles();
 
+            app.UseStaticFiles();
+            app.UseCookieAuthentication();
             app.UseIdentity();
 
             AutoMapper.Mapper.Initialize(config =>
@@ -115,8 +123,7 @@ namespace CoreBlog.Web
                 config.CreateMap<BlogUser, UserControlPanelViewModel>().ReverseMap();
                 config.CreateMap<Image, ImageViewModel>().ReverseMap();
             });
-
-
+       
             app.UseMvc(routes =>
             {
 
