@@ -42,7 +42,7 @@ namespace CoreBlog.Data.Context
 
                 var bannedCreateResult = await roleManager.CreateAsync(bannedRole);
 
-                if (!adminCreateResult.Succeeded)
+                if (!bannedCreateResult.Succeeded)
                 {
                     throw new InvalidProgramException("Failed to create new role");
                 }
