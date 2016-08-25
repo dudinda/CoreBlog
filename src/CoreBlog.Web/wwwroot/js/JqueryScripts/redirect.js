@@ -21,3 +21,8 @@
     }, 1000);
 
 };
+
+$(document).ready(function () {
+    timer(5, '/blog/1');
+});
+

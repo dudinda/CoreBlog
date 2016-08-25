@@ -46,7 +46,7 @@
 
 @if (ViewData["Message"] != null)
 {
-    <div onshow="timer(5, '/blog/1')">
+    <div>
         <h1>@ViewData["Message"]</h1>
         <p>
             We just sent you a confirmation email to @ViewData["Email"]
@@ -54,12 +54,9 @@
         <p>
             You will be automatically redirected in <span id="timer"></span> seconds.
         </p>
+        @section Scripts {
+            <script src="~/js/JqueryScripts/redirect.js"></script>
+        }
     </div>
 
-}
-
-@section Scripts {
-    <script src="~/js/JqueryScripts/redirect.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 }
