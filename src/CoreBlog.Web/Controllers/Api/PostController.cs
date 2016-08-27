@@ -1,21 +1,17 @@
 ﻿using CoreBlog.Web.Factory;
 using CoreBlog.Web.ViewModels.Post;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace CoreBlog.Web.Controllers
 {
-    [Authorize(Roles = "Admin, User")]
     public sealed partial class PostController
     {
        
         [HttpGet("/api/post/create")]
         public IActionResult GetPostForm()
         {
-            var createPostViewModel = new CreatePostViewModel();
-
-            return Json(createPostViewModel);
+            return Json(new CreatePostViewModel());
         }
 
 
@@ -24,17 +20,14 @@ namespace CoreBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-
-
                 var newPost             = ModelFactory.Create(viewModel);
                     newPost.Author      = User.Identity.Name;
                     newPost.PostedOn    = DateTime.UtcNow;
-            
+                          
                 postService.AddPost(newPost);
 
                 if(postService.SaveAll())
                 {
-                    ViewBag.Message = "Thanks for joining us!";
                     return Ok();
                 }
             }

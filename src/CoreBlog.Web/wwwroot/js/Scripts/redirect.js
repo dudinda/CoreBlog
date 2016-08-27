@@ -19,10 +19,8 @@
         }
 
     }, 1000);
-
 };
 
-$(document).ready(function () {
+$document.ready(function () {
     timer(5, '/blog/1');
 });
-

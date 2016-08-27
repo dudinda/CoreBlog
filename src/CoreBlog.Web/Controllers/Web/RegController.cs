@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace CoreBlog.Web.Controllers
 {
     [ResponseCache(CacheProfileName = "Default")]
-    sealed public class RegController : Controller
+    public sealed class RegController : Controller
     {
         private  IMailService mailService { get; }
         private  ILogger<RegController> logger { get; }
@@ -54,11 +54,11 @@ namespace CoreBlog.Web.Controllers
                     }
                 }
             }
-            return NotFound();
+            return View();
         }
 
         [HttpPost("[controller]/registration")]
-       // [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Registration(RegistrationViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -80,8 +80,7 @@ namespace CoreBlog.Web.Controllers
                     ModelState.AddModelError("", $"Username with {viewModel.Email} email already exists");
                     return View();
                 }
-
-                
+               
                 var newUser = ModelFactory.Create(viewModel);
 
                 var result = await userManager
@@ -115,8 +114,7 @@ namespace CoreBlog.Web.Controllers
                     }
                 }
             }
-            logger.LogError($"Failed to register new user: {viewModel.UserName}, {viewModel.Email}");
-            return BadRequest();
+            return View();
         }
     }
 }

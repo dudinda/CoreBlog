@@ -1,20 +1,29 @@
 ﻿
-    <div class="container" ng-init="vm.preview()">
-        <h1>{{vm.openPost.category.name}}: {{vm.openPost.title}}</h1>
-        <hr>
-        <p>
-            <span class="glyphicon glyphicon-time"></span> Posted on {{vm.openPost.postedOn | date: 'MM-dd-yyyy'}} by <a text-size="10px">{{vm.openPost.author}}</a>
-        </p>
-        <span class="glyphicon glyphicon-tags"></span>
-        <a ng-repeat="tag in vm.openPost.tags">{{tag.name}}</a>
-        <hr>
-        <img class="center-block" ng-src="data:{{vm.openPost.image.filetype}}; base64,{{vm.openPost.image.base64}}" alt="{{vm.openPost.title}}">
-        <hr>
-        <p style="white-space:normal; word-wrap:break-word">{{vm.openPost.shortDescription}}</p>
-        <p style="white-space:normal; word-wrap:break-word" ng-bind-html="vm.openPost.description">{{vm.openPost.description}}</p>
-        <hr>
-        <a ng-href="#/">Back</a>
-        <div class="text-danger" ng-show="vm.error">
-            {{vm.error}}
-        </div>
+<div class="container" ng-init="vm.preview()">
+    <h1>
+        {{vm.openPost.category.name}}: {{vm.openPost.title}}
+    </h1>
+    <hr>
+    <p>
+        <span class="glyphicon glyphicon-time"></span> Posted on {{vm.openPost.postedOn | date: 'MM-dd-yyyy'}} by <a text-size="10px">{{vm.openPost.author}}</a>
+    </p>
+    <span class="glyphicon glyphicon-tags">  </span>
+
+    <a ng-repeat="tag in vm.openPost.tags">
+        {{tag.name}}
+    </a>
+    <hr>
+    <img class="center-block" ng-src="data:{{vm.openPost.image.filetype}}; base64,{{vm.openPost.image.base64}}" alt="{{vm.openPost.title}}">
+    <hr>
+    <p style="white-space:normal; word-wrap:break-word">
+        {{vm.openPost.shortDescription}}
+    </p>
+    <p style="white-space:normal; word-wrap:break-word" ng-bind-html="vm.openPost.description">
+        {{vm.openPost.description}}
+    </p>
+    <hr>
+    <a ng-href="#/">Back</a>
+    <div class="text-danger" ng-show="vm.error">
+        {{vm.error}}
     </div>
+</div>

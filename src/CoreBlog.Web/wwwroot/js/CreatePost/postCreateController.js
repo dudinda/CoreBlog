@@ -41,7 +41,7 @@
         vm.updatePost = function () {
             postCreateFactory
                 .updatePost(vm.post).success(function(){
-                    vm.error = "TEST";
+                    vm.isReady = true;
                 }).error(function () {
                     vm.error = "Oops. Something went wrong. Try again later!";
                 });;

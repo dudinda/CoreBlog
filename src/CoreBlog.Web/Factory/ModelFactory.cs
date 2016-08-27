@@ -58,9 +58,9 @@ namespace CoreBlog.Web.Factory
             return Mapper.Map<BlogUser>(viewModel);
         }
 
-        public static IEnumerable<TagViewModel> Create(IEnumerable<Tag> tags)
+        public static IEnumerable<Tag> Create(IEnumerable<TagViewModel> tags)
         {
-            return Mapper.Map<IEnumerable<TagViewModel>>(tags);
+            return Mapper.Map<IEnumerable<Tag>>(tags);
         }
 
         public static CategoryViewModel Create(Category category)

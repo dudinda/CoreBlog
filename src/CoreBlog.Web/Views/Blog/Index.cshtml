@@ -1,7 +1,7 @@
 ﻿@model CoreBlog.Web.ViewModels.Page.PageViewModel
 
 
-@{ 
+@{
 
     ViewBag.Title = "CoreBlog";
     var totalCount = Model.PagedList.TotalCount;
@@ -9,10 +9,10 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/BackToTop.css" />
+    <link rel="stylesheet" href="~/css/scrollToTop.css" />
     <link rel="stylesheet" href="~/css/SearchBar.css" />
+    <link rel="stylesheet" href="~/css/widgetBar.css" />
 }
-
 
 <div class="row">
     <div class="col-lg-9">
@@ -22,18 +22,18 @@
 
         }
     </div>
-    <div class="col-lg-3">       
-           @Html.Partial("_Widgets")
+    <div class="col-lg-3 widgetBar">
+        @Html.Partial("_Widgets")
+        <a href="#" class="scrollToTop"><i></i></a>
     </div>
-   
+    @Html.Partial("_Pagination")
     
 </div>
-<a href="#" class="scrollToTop"><i class="fa fa-long-arrow-up" style="font-size:44px"></i></a>
-@Html.Partial("_Pagination")
-    
+
+
 
 @section Scripts {
-    <script src="~/js/JqueryScripts/scrollToTop.js"></script>
+    <script src="~/js/Scripts/scrollToTop.js"></script>
 }
 
 

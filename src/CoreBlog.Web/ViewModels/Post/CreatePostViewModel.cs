@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Html;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CoreBlog.Web.ViewModels.Post
@@ -12,9 +13,9 @@ namespace CoreBlog.Web.ViewModels.Post
         public string Title { get; set; }
 
         [Required]
-        public  string ShortDescription { get; set; }
+        public string ShortDescription { get; set; }
 
-        [Required]   
+        [Required]
         public  string Description { get; set; }
 
         [Required]
@@ -22,6 +23,6 @@ namespace CoreBlog.Web.ViewModels.Post
 
         public ImageViewModel Image { get; set; }
 
-        public List<TagViewModel> Tags { get; set; } = new List<TagViewModel>();
+        public ICollection<TagViewModel> Tags { get; set; } = new List<TagViewModel>();
     }
 }

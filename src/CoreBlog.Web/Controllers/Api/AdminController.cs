@@ -1,4 +1,5 @@
-﻿using CoreBlog.Web.Factory;
+﻿using CoreBlog.Data.Utility;
+using CoreBlog.Web.Factory;
 using CoreBlog.Web.ViewModels.ControlPanel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -104,6 +105,11 @@ namespace CoreBlog.Web.Controllers
             {
                 var post = postService.GetPostById(viewModel.Id);
 
+                if(post.Image.Base64 != null)
+                {
+                    FromBase64ToImage.Delete(post.Image);
+                }
+
                 postService.RemovePost(post);
 
                 if(postService.SaveAll())
@@ -126,7 +132,12 @@ namespace CoreBlog.Web.Controllers
                 var post             = postService.GetPostById(viewModel.Id);
                     post.IsPublished = true;
 
-                    postService.UpdatePost(post);
+                if (post.Image.Base64 != null)
+                {
+                    FromBase64ToImage.ToImage(post.Image);
+                }
+
+                postService.UpdatePost(post);
         
                 if (postService.SaveAll())
                 {
@@ -143,8 +154,8 @@ namespace CoreBlog.Web.Controllers
         {
             try
             {
-                //get all unpublished posts
-                var posts = postService.GetAll();
+                //get all published posts
+                var posts = postService.GetAllPublished();
 
                 var controlViewModel = ModelFactory.Create<PostControlPanelViewModel>(posts);
 

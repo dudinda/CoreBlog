@@ -7,19 +7,13 @@
     @Html.Partial("_Contact")
 }
 
-<div>
+@if (ViewBag.Message != null)
+{
     <div>
-        @if (ViewBag.Message != null)
-        {
-            <h1>@ViewBag.Message</h1>
-            <p>
-                You will be automatically redirected in <span id="timer"></span> seconds.
-            </p>
-
-            @section Scripts {
-                <script src="~/js/JqueryScripts/redirect.js"></script>
-            }
-        }
+        <h1>@ViewBag.Message</h1>
     </div>
-</div>
+    <div>
+        @Html.Partial("_Redirect")
+    </div>
+}
 

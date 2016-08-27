@@ -8,8 +8,11 @@
     function userController($http, controlPanelFactory) {
 
         var vm = this;
+
         vm.users = [];
+
         vm.error = "";
+
         vm.isBusy = true;
 
         controlPanelFactory

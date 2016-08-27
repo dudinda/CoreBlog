@@ -6,6 +6,7 @@ namespace CoreBlog.Web.ViewModels.Page
     {
         [Required]
         [StringLength(64)]
+        [DisplayFormat(ConvertEmptyStringToNull = true)]
         public string Text { get; set; }
     }
 }

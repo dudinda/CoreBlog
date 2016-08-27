@@ -34,7 +34,7 @@ namespace CoreBlog.Web.Controllers
         public IActionResult Index(int page = 1)
         {
                
-            var posts       = postService.GetAll();
+            var posts       = postService.GetAllPublished();
             var latestposts = postService.GetLatest(posts, 5);
             var pagedList   = pageService.GetPagedList(posts, page);
 
@@ -60,8 +60,8 @@ namespace CoreBlog.Web.Controllers
             return View();
         }
 
-        [Authorize(Roles = "User")]
         [HttpPost("[controller]/contact")]
+        [ValidateAntiForgeryToken]
         public IActionResult Contact(ContactViewModel viewModel)
         {
             if(ModelState.IsValid)

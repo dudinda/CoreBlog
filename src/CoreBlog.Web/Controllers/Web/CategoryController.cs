@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CoreBlog.Web.Controllers
 {
     [Route("[controller]/")]
-    sealed public class CategoryController : Controller
+    public sealed class CategoryController : Controller
     {
         private IPageService pageService { get; }
         private IPostService postService { get; }
@@ -25,7 +25,7 @@ namespace CoreBlog.Web.Controllers
                 return RedirectPermanent($"Category/{search.Text}");
             }
 
-            return NotFound();
+            return View();
         }
 
     

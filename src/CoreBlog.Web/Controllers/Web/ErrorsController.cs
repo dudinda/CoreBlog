@@ -3,7 +3,7 @@
 
 namespace CoreBlog.Web.Controllers
 {
-    public class ErrorsController : Controller
+    public sealed class ErrorsController : Controller
     {
         
         public IActionResult Error(int code)

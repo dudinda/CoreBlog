@@ -8,7 +8,7 @@ using CoreBlog.Web.Services;
 namespace CoreBlog.Web.Controllers
 {
     [Route("[controller]/")]
-    sealed public class TagController : Controller
+    public sealed class TagController : Controller
     {
         private IPageService pageService { get; }
         private IPostService postService { get; }

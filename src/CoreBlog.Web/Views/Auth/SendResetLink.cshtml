@@ -25,12 +25,9 @@
 {
     <div>
         <h1>@ViewData["Message"]</h1>
-        <p>
-            You will be automatically redirected in <span id="timer"></span> seconds.
-        </p>
     </div>
-    @section Scripts {
-        <script src="~/js/JqueryScripts/redirect.js"></script>
-    }
+    <div>
+        @Html.Partial("_Redirect")
+    </div>
 }
 
