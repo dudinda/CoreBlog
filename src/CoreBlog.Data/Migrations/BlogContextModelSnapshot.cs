@@ -128,8 +128,6 @@ namespace CoreBlog.Data.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<string>("UrlSlug");
-
                     b.HasKey("Id");
 
                     b.ToTable("Posts");

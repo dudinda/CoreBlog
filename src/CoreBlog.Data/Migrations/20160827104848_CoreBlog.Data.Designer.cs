@@ -8,7 +8,7 @@ using CoreBlog.Data.Context;
 namespace CoreBlog.Data.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20160824203101_CoreBlog.Data")]
+    [Migration("20160827104848_CoreBlog.Data")]
     partial class CoreBlogData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -128,8 +128,6 @@ namespace CoreBlog.Data.Migrations
                     b.Property<string>("ShortDescription");
 
                     b.Property<string>("Title");
-
-                    b.Property<string>("UrlSlug");
 
                     b.HasKey("Id");
 

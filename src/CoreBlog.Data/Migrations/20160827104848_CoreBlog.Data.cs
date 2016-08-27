@@ -48,8 +48,7 @@ namespace CoreBlog.Data.Migrations
                     Modified = table.Column<DateTime>(nullable: true),
                     PostedOn = table.Column<DateTime>(nullable: false),
                     ShortDescription = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
-                    UrlSlug = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
