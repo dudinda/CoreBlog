@@ -9,7 +9,6 @@ Libraries and frameworks:
   <li><a href="http://getbootstrap.com/">Bootstrap 3</a></li>
   <li><a href="http://fontawesome.io/">Font-Awesome</a></li>
   <li><a href="http://automapper.org/">Automapper</a></li>
-  <li><a href="https://disqus.com/">Disqus</a></li>
   </ul>
 </p>
 
