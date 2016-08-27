@@ -3,6 +3,11 @@
     ViewBag.Title = "New post";
 }
 
+
+@section Styles {
+    <link rel='stylesheet' href="~/lib/textAngular/dist/textAngular.css" />
+}
+
 <div class="row" ng-app="postCreateApp">
     <div class="col-md-4 col-md-offset-4" ng-view>
         
@@ -16,6 +21,9 @@
     <script src="~/lib/angular/angular.min.js"></script>
     <script src="~/lib/angular-route/angular-route.min.js"></script>
     <script src="~/lib/angular-base64-upload/dist/angular-base64-upload.min.js"></script>
+    <script src="~/lib/textAngular/dist/textAngular-rangy.min.js"></script>
+    <script src="~/lib/textAngular/dist/textAngular-sanitize.min.js"></script>
+    <script src="~/lib/textAngular/dist/textAngular.min.js"></script>
     <script src="~/js/CreatePost/createPostApp.js"></script>
     <script src="~/js/CreatePost/postCreateFactory.js"></script>
     <script src="~/js/CreatePost/postCreateController.js"></script>

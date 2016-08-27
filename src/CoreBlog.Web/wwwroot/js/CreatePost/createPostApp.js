@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-      .module('postCreateApp', ['ngRoute', 'naif.base64'])
+      .module('postCreateApp', ['ngRoute', 'textAngular', 'naif.base64'])
       .config(function ($routeProvider) {
           $routeProvider
             .when("/", {

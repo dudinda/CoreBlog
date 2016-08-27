@@ -45,7 +45,7 @@
         </div>
         <div class="form group">
             <label for="description">Description</label>
-            <textarea ng-model="vm.post.description" name="description" id="description" type="text" class="form-control text-muted"></textarea>
+            <text-angular ng-model="vm.post.description"></text-angular>
             <span ng-show="CreateNewPost.description.$error.required" class="text-warning">Description is required.</span>
         </div>
         <div class="list-group" ng-show="vm.edit == false">
@@ -58,4 +58,5 @@
         </div>
     </form>
     <div class="text-danger" ng-show="vm.error">{{vm.error}}</div>
+    <pre>{{vm.post}}</pre>
 </div>

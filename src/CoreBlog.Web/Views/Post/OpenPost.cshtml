@@ -25,7 +25,7 @@
 
         <!-- Post Content -->
         <p class="lead">@Model.ShortDescription</p>
-        <p>@Model.Description</p>
+        <p>@Html.Raw(Model.Description)</p>
         <hr>
         <div>
             @if(Model.Modified != null) {
