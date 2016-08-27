@@ -185,7 +185,15 @@ namespace CoreBlog.Web.Controllers
 
             return NotFound();
         }
+        #endregion
+
+        #region Forbidden.
+        public IActionResult Forbidden()
+        {
+            return View();
+        }
+        #endregion
 
     }
-    #endregion
+ 
 }
