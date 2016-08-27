@@ -7,15 +7,16 @@ namespace CoreBlog.Data.Context
 {
     public class BlogContext : IdentityDbContext<BlogUser>, IBlogContext
     {
-     
-        public BlogContext(DbContextOptions<BlogContext> options) : base(options)
+        private IConfigurationRoot config { get; }
+
+        public BlogContext(DbContextOptions<BlogContext> options, IConfigurationRoot config) : base(options)
         {
-           
+            this.config = config;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CoreBlogDb;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer(config["CoreBlogDb:ConnectionString"]);
             base.OnConfiguring(optionsBuilder);
         }
 

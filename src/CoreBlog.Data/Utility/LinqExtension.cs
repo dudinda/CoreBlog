@@ -9,7 +9,7 @@ namespace CoreBlog.Data.Utility
         {
             if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             }
 
             if (count <= 0) yield break;

@@ -9,7 +9,7 @@ namespace WilderBlog.Data
     // to resolve migrations in class library
     public class Startup
     {
-        private IConfigurationRoot config;
+        private IConfigurationRoot config { get; }
 
         public Startup(IHostingEnvironment env)
         {
@@ -22,11 +22,11 @@ namespace WilderBlog.Data
 
         }
 
-        public void ConfigureServices(IServiceCollection svc)
+        public void ConfigureServices(IServiceCollection services)
         {
-            svc.AddSingleton<IConfigurationRoot>(config);
+            services.AddSingleton(config);
 
-            svc.AddEntityFrameworkSqlServer()
+            services.AddEntityFrameworkSqlServer()
               .AddDbContext<BlogContext>();
         }
 

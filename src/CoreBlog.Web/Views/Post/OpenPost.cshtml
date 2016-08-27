@@ -1,42 +1,40 @@
 ﻿@model CoreBlog.Web.ViewModels.Post.PostViewModel
+@inject Microsoft.Extensions.Configuration.IConfigurationRoot config
+
 @{
     ViewData["Title"] = @Model.Title;
 }
 
     <div class="container">
+    <h1 class="text-center">@Model.Category.Name: @Model.Title</h1>
+    <hr>
+    <p>
+        <span class="glyphicon glyphicon-time"></span> Posted on @Model.PostedOn by <a text-size="10px">@Model.Author</a>
+        <i class="fa fa-comments-o"></i> <span class="disqus-comment-count" data-disqus-identifier="@Model.Id"></span>
+    </p>
 
-        <!-- Blog Post -->
-        <!-- Title -->
-        <h1 class="text-center">@Model.Category.Name: @Model.Title</h1>
-        <hr>
+    <hr>
 
-        <!-- Date/Time -->
-        <p>
-            <span class="glyphicon glyphicon-time"></span> Posted on @Model.PostedOn by <a text-size="10px">@Model.Author</a>
-            <i class="fa fa-comments-o"></i> <span class="disqus-comment-count" data-disqus-identifier="@Model.Id"></span>
-        </p>
 
-        <hr>
+    <img class="text-center" src="~/images/@Model.Image.Filename" alt="@Model.Title">
 
-        <!-- Preview Image -->
-        <img class="text-center" src="~/images/@Model.Image.Filename" alt="@Model.Title">
+    <hr>
 
-        <hr>
-
-        <!-- Post Content -->
-        <p class="lead">@Model.ShortDescription</p>
-        <p>@Html.Raw(Model.Description)</p>
-        <hr>
-        <div>
-            @if(Model.Modified != null) {
+    <p class="lead">@Model.ShortDescription</p>
+    <p>@Html.Raw(Model.Description)</p>
+    <hr>
+    <div>
+        @if (Model.Modified != null)
+        {
             <h6>Last edited by @Model.Author on @Model.Modified</h6>
-            }
-            @if(Model.Author == User.Identity.Name) {
+        }
+        @if (Model.Author == User.Identity.Name)
+        {
             <a class="btn" style="width:100%" asp-controller="Post" asp-action="CreatePost" asp-fragment="/edit/@Model.Id">Edit</a>
-            }
-        </div>
-        <div id="disqus_thread"></div>
+        }
     </div>
+    <div id="disqus_thread"></div>
+</div>
 
 
  @section Scripts {
@@ -48,8 +46,10 @@
 
          (function() {
              var d = document, s = d.createElement('script');
-             s.src = '//CoreBlog.disqus.com/embed.js';
+             s.src = '//@(config["Site:Disqus"]).disqus.com/embed.js';
+
              s.setAttribute('data-timestamp', +new Date());
+
              (d.head || d.body).appendChild(s);
           })();
     </script>
