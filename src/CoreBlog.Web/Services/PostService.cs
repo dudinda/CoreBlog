@@ -4,6 +4,7 @@ using CoreBlog.Data.Utility;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CoreBlog.Web.Services
 {
@@ -16,26 +17,44 @@ namespace CoreBlog.Web.Services
             this.context = context;
         }
 
+        /// <summary>
+        /// Add new post
+        /// </summary>
+        /// <param name="post">Post</param>
         public void AddPost(Post post)
         {
             context.Posts.Add(post);
         }
 
+        /// <summary>
+        /// Delete post
+        /// </summary>
+        /// <param name="id">Post</param>
         public void RemovePost(Post post)
         {
             context.Posts.Remove(post);
         }
 
+        /// <summary>
+        /// Update post
+        /// </summary>
+        /// <param name="post">Post</param>
         public void UpdatePost(Post post)
         {
             context.Posts.Update(post);
         }
 
+        /// <summary>
+        /// Save all
+        /// </summary>
         public bool SaveAll()
         {
             return context.SaveChanges() > 0;
         }
 
+        /// <summary>
+        /// Get unpublished posts
+        /// </summary>
         public IEnumerable<Post> GetAllUnpublished()
         {
             return context
@@ -46,7 +65,10 @@ namespace CoreBlog.Web.Services
                         .Include(post => post.Category);
         }
 
-        public IEnumerable<Post> GetAll()
+        /// <summary>
+        /// Get published posts
+        /// </summary>
+        public IEnumerable<Post> GetAllPublished()
         {
             return context
                         .Posts
@@ -56,14 +78,25 @@ namespace CoreBlog.Web.Services
                         .Include(post => post.Category);
         }
 
+
+        /// <summary>
+        /// Get latest posts
+        /// </summary>
+        /// <param name="posts">Posts</param>
+        /// <param name="count">Posts to take</param>
         public IEnumerable<Post> GetLatest(IEnumerable<Post> posts, int count)
         {
             return posts
-                        .TakeLast(5)
+                        .TakeLast(count)
                         .OrderByDescending(post => post.PostedOn);
         }
             
 
+        /// <summary>
+        /// Get single post
+        /// </summary>
+        /// <param name="id">Post id</param>
+        /// <returns>Post object</returns>
         public Post GetPostById(int id)
         {        
             return context
@@ -75,23 +108,21 @@ namespace CoreBlog.Web.Services
                         .Single(); 
         }
 
-        public Post GetPostBySlug(string slug)
-        {
-            return context
-                        .Posts
-                        .Where(option => option.UrlSlug == slug)
-                        .Include(post => post.Tags)
-                        .Include(post => post.Image)
-                        .Include(post => post.Category)
-                        .First();
-        }
 
+        /// <summary>
+        /// Get posts by category
+        /// </summary>
+        /// <param name="categoryName">Category name</param>
         public IEnumerable<Post> GetPostsByCategory(string categoryName)
         {           
-            return GetAll()
+            return GetAllPublished()
                         .Where(category => category.Category.Name.Equals(categoryName));                
         }
 
+        /// <summary>
+        /// Get a counter 
+        /// </summary>
+        /// <param name="categoryName">Category name</param>
         public int GetCategoryCounter(IEnumerable<Post> collection, string categoryName)
         {
             return collection
@@ -99,21 +130,29 @@ namespace CoreBlog.Web.Services
                         .Count();
         }
 
+
+        /// <summary>
+        /// Get posts by text
+        /// </summary>
         public IEnumerable<Post> GetPostsByText(string text)
         {
             //search in title/short description/description
 
-            return GetAll()
-                        .Where(option => option.Description.Contains(text)      ||
-                                         option.ShortDescription.Contains(text) ||
+            return GetAllPublished()
+                        .Where(option => option.Description.Contains(text) ||
+                                         option.ShortDescription.Contains(text)  ||
                                          option.Title.Contains(text)
                                        );           
         }
 
+
+        /// <summary>
+        /// Get posts by tag name
+        /// </summary>
         public IEnumerable<Post> GetPostsByTag(string tagName)
         {
             //get all posts which contain tagName
-            return GetAll()
+            return GetAllPublished()
                         .Where(option => option.Tags.Any(name => name.Name == tagName));
             
         }
