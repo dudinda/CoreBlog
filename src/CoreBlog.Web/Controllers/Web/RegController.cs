@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace CoreBlog.Web.Controllers
 {
     [ResponseCache(CacheProfileName = "Default")]
+    [Route("[controller]")]
     public sealed class RegController : Controller
     {
         private  IMailService mailService { get; }
@@ -30,7 +31,7 @@ namespace CoreBlog.Web.Controllers
         }
 
    
-        [HttpGet("[controller]/registration")]
+        [HttpGet("registration")]
         public IActionResult Registration()
         {
             return View();
@@ -57,7 +58,7 @@ namespace CoreBlog.Web.Controllers
             return View();
         }
 
-        [HttpPost("[controller]/registration")]
+        [HttpPost("registration")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Registration(RegistrationViewModel viewModel)
         {

@@ -6,8 +6,8 @@ using System;
 
 namespace CoreBlog.Web.Controllers
 {
-    [Route("[controller]/")]
     [ResponseCache(CacheProfileName = "Default")]
+    [Route("[controller]")]
     public sealed class SearchController : Controller
     {
         private IPageService pageService { get; }

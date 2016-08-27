@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreBlog.Web.Controllers
 {
-    [Route("[controller]/")]
+    [Route("[controller]")]
     public sealed class CategoryController : Controller
     {
         private IPageService pageService { get; }

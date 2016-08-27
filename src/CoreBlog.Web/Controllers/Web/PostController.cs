@@ -19,9 +19,8 @@ namespace CoreBlog.Web.Controllers
             this.postService = postService;
         }
 
-        [HttpGet]
+        [HttpGet("Open/{id:int}")]
         [AllowAnonymous]
-        [Route("Open/{id}")]
         public IActionResult OpenPost(int id)
         {
             try
@@ -40,7 +39,7 @@ namespace CoreBlog.Web.Controllers
         }
 
 
-        [Route("Create")]
+        [HttpGet("create")]
         public IActionResult CreatePost()
         {
             return View();
