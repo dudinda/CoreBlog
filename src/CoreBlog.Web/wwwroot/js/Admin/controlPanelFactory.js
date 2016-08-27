@@ -20,7 +20,7 @@
         }
 
         function getPost(id) {
-            return $http.get("/api/admin/post/" + id);
+            return $http.get("/api/post/get/" + id);
         }
         
         function deletePost(post) {
@@ -39,6 +39,10 @@
             return $http.post("/api/admin/unban", user);
         }
 
+        function updatePost(post) {
+            return $http.put("/api/post/update", post);
+        }
+
         var service = {
             getUnpublishedPosts: getUnpublishedPosts,
             getPublishedPosts: getPublishedPosts,
@@ -47,7 +51,8 @@
             banUser: banUser,
             unbanUser: unbanUser,
             getPost: getPost,
-            deletePost: deletePost
+            deletePost: deletePost,
+            updatePost: updatePost            
         }
   
         return service;

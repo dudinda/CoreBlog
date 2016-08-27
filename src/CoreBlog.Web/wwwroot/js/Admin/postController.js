@@ -4,12 +4,13 @@
 
     angular
         .module('adminApp')
-        .controller('postController', ['controlPanelFactory', postController]);
+        .controller('postController', ['$routeParams', 'controlPanelFactory', postController]);
 
-    function postController(controlPanelFactory) {
+    function postController($routeParams, controlPanelFactory) {
         var vm = this;
 
         vm.posts = [];
+        
 
         vm.error = "";
 
@@ -41,6 +42,19 @@
                 }).finally(function () {
                     vm.isBusy = false;
                 })
+        };
+
+        vm.preview = function () {           
+            vm.isBusy = true;
+            vm.openPost = {};
+            controlPanelFactory
+                .getPost($routeParams.id).success(function (response) {
+                    angular.copy(response, vm.openPost);
+                }).error(function () {
+                    vm.error = "Failed to open post with id: " + $routeParams.id;
+                }).finally(function () {
+                    vm.isBusy = false;
+                });
         };
 
         vm.order = function (predicate) {

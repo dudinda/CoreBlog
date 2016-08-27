@@ -20,7 +20,9 @@
                     templateUrl: "/views/manageUsersView.html"
                 })
                 .when("/open/:id", {
-                    templateUrl: "/views/openPostView.html"
+                    controller: "postController",
+                    controllerAs: "vm",
+                    templateUrl: "/views/postPreviewView.html"
                 });
  
            $routeProvider.otherwise({ redirectTo: "/unpublished" });
