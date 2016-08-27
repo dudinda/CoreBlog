@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 namespace CoreBlog.Web.Services
 {
@@ -139,9 +140,9 @@ namespace CoreBlog.Web.Services
             //search in title/short description/description
 
             return GetAllPublished()
-                        .Where(option => option.Description.Contains(text) ||
-                                         option.ShortDescription.Contains(text)  ||
-                                         option.Title.Contains(text)
+                        .Where(option => option.Description.Contains(text, StringComparison.OrdinalIgnoreCase)       ||
+                                         option.ShortDescription.Contains(text, StringComparison.OrdinalIgnoreCase)  ||
+                                         option.Title.Contains(text, StringComparison.OrdinalIgnoreCase)
                                        );           
         }
 
