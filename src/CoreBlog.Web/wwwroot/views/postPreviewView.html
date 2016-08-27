@@ -11,7 +11,7 @@
         <img class="center-block" ng-src="data:{{vm.openPost.image.filetype}}; base64,{{vm.openPost.image.base64}}" alt="{{vm.openPost.title}}">
         <hr>
         <p style="white-space:normal; word-wrap:break-word">{{vm.openPost.shortDescription}}</p>
-        <p style="white-space:normal; word-wrap:break-word">{{vm.openPost.description}}</p>
+        <p style="white-space:normal; word-wrap:break-word" ng-bind-html="vm.openPost.description">{{vm.openPost.description}}</p>
         <hr>
         <a ng-href="#/">Back</a>
         <div class="text-danger" ng-show="vm.error">

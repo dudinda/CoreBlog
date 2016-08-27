@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
     angular
-       .module('adminApp', ['ngRoute', 'angularUtils.directives.dirPagination'])
+       .module('adminApp', ['ngRoute', 'angularUtils.directives.dirPagination', 'ngSanitize'])
        .config(function ($routeProvider, paginationTemplateProvider) {
            $routeProvider
                .when("/published", {
