@@ -13,3 +13,7 @@ Libraries and frameworks:
   </ul>
 </p>
 
+#License
+<p>
+This project is licensed under the MIT License.
+</p>
