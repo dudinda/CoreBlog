@@ -5,19 +5,19 @@ using System.IO;
 
 namespace CoreBlog.Data.Utility
 {
-    public static class FromBase64ToImage
+    public static class ImageExtension
     {
-        public static void ToImage(Image source)
+        public static void ToImage(this Image source)
         {
             if (source == null)
             {
                 throw new ArgumentNullException(nameof(source));
             }
 
-            ToImageImpl(source); 
+            ToImageImpl(source);
         }
 
-        private static void ToImageImpl(Image source)
+        private static void ToImageImpl(this Image source)
         {
             var bytes = Convert.FromBase64String(source.Base64);
 
@@ -25,7 +25,7 @@ namespace CoreBlog.Data.Utility
         }
 
 
-        public static void Delete(Image source)
+        public static void Delete(this Image source)
         {
             if (source == null)
             {
@@ -35,7 +35,7 @@ namespace CoreBlog.Data.Utility
             DeleteImpl(source);
         }
 
-        private static void DeleteImpl(Image source)
+        private static void DeleteImpl(this Image source)
         {
             File.Delete(@"wwwroot\images\" + source.Filename);
         }
