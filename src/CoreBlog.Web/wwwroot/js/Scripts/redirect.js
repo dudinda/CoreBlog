@@ -1,4 +1,6 @@
-﻿function timer(seconds, url) {
+﻿'use strict';
+
+function timer(seconds, url) {
 
     $('#timer').text(seconds);
 
