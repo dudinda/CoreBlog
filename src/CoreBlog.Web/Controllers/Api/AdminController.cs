@@ -107,7 +107,7 @@ namespace CoreBlog.Web.Controllers
 
                 if(post.Image.Base64 != null)
                 {
-                    FromBase64ToImage.Delete(post.Image);
+                    post.Image.Delete();
                 }
 
                 postService.RemovePost(post);
@@ -134,7 +134,7 @@ namespace CoreBlog.Web.Controllers
 
                 if (post.Image.Base64 != null)
                 {
-                    FromBase64ToImage.ToImage(post.Image);
+                    post.Image.ToImage();
                 }
 
                 postService.UpdatePost(post);
