@@ -16,6 +16,7 @@ using CoreBlog.Web.Services;
 using CoreBlog.Data.Context;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Html;
 
 namespace CoreBlog.Web
 {
@@ -36,7 +37,7 @@ namespace CoreBlog.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddSingleton(Configuration);
             services.AddDbContext<BlogContext>();
             services.AddIdentity<BlogUser, IdentityRole>(options =>
             {
@@ -97,17 +98,26 @@ namespace CoreBlog.Web
 
 
         public void Configure(IApplicationBuilder app,
-                                    IHostingEnvironment env,
-                                    ILoggerFactory loggerFactory,
-                                    IServiceScopeFactory scopeFactory)
+                              IHostingEnvironment env,
+                              ILoggerFactory loggerFactory,
+                              IServiceScopeFactory scopeFactory)
         {
             loggerFactory.AddConsole(LogLevel.Information);
             loggerFactory.AddDebug(LogLevel.Error);
 
 
-            app.UseExceptionHandler("/errors/500");
-            app.UseStatusCodePagesWithReExecute("/errors/{0}");
+            if (env.IsDevelopment())
+            {
+                loggerFactory.AddDebug(LogLevel.Information);
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+            }
+            else
+            {
 
+                app.UseExceptionHandler("/errors/500");
+                app.UseStatusCodePagesWithReExecute("/errors/{0}");
+            }
             app.UseStaticFiles();
             app.UseCookieAuthentication();
             app.UseIdentity();
@@ -116,14 +126,15 @@ namespace CoreBlog.Web
             {
                 config.CreateMap<RegistrationViewModel, BlogUser>();
                 config.CreateMap<Post, PostViewModel>().ReverseMap();
+               
                 config.CreateMap<Tag, TagViewModel>().ReverseMap();
                 config.CreateMap<Category, CategoryViewModel>().ReverseMap();
                 config.CreateMap<CreatePostViewModel, Post>().ReverseMap();
                 config.CreateMap<Post, PostControlPanelViewModel>().ReverseMap();
                 config.CreateMap<BlogUser, UserControlPanelViewModel>().ReverseMap();
                 config.CreateMap<Image, ImageViewModel>().ReverseMap();
+                config.CreateMap<HtmlString, string>().ConstructUsing(src => src.Value);
             });
-       
             app.UseMvc(routes =>
             {
 
