@@ -126,14 +126,12 @@ namespace CoreBlog.Web
             {
                 config.CreateMap<RegistrationViewModel, BlogUser>();
                 config.CreateMap<Post, PostViewModel>().ReverseMap();
-               
                 config.CreateMap<Tag, TagViewModel>().ReverseMap();
                 config.CreateMap<Category, CategoryViewModel>().ReverseMap();
-                config.CreateMap<CreatePostViewModel, Post>().ReverseMap();
                 config.CreateMap<Post, PostControlPanelViewModel>().ReverseMap();
                 config.CreateMap<BlogUser, UserControlPanelViewModel>().ReverseMap();
                 config.CreateMap<Image, ImageViewModel>().ReverseMap();
-                config.CreateMap<HtmlString, string>().ConstructUsing(src => src.Value);
+                config.CreateMap<Post, CreatePostViewModel>().ReverseMap();
             });
             app.UseMvc(routes =>
             {

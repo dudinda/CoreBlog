@@ -16,7 +16,7 @@
     <hr>
 
 
-    <img class="text-center" src="~/images/@Model.Image.Filename" alt="@Model.Title">
+    <img class="image" src="~/images/@Model.Image.Filename" alt="@Model.Title">
 
     <hr>
 
@@ -40,7 +40,7 @@
  @section Scripts {
     <script>
          var disqus_config = function () {
-                        this.page.url = 'http://localhost:49480//Post/Open/' + @Model.Id;
+                        this.page.url = 'http://localhost:49480/Post/Open/' + @Model.Id;
                         this.page.identifier = '@Model.Id';
                     };
 

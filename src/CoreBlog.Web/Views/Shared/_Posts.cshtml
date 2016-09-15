@@ -3,12 +3,8 @@
     @foreach (var post in Model.PagedList)
     {
         <div class="well" style="background-color:#fff">
-            <!-- Blog Post -->
-            <!-- Title -->
             <h2 class="text-center">@post.Category.Name: <a asp-controller="Post" asp-action="OpenPost" asp-route-id="@(post.Id)">@post.Title</a></h2>
             <hr>
-
-            <!-- Date/Time -->
             <p>
                 <span class="glyphicon glyphicon-time"></span> Posted on @post.PostedOn by <a text-size="10px">@post.Author</a>
             </p>
@@ -25,15 +21,9 @@
             </p>
             <p><i class="fa fa-comments-o text-left"></i><span class="disqus-comment-count" data-disqus-identifier="@(post.Id)"></span></p>
             <hr>
-
-            <!-- Preview Image -->
-            <img class="img-responsive" src="~/images/@post.Image.Filename" alt="@post.Title" />
-
-            <hr>
-
-            <!-- Post Content -->
+            <img class="image" src="~/images/@post.Image.Filename" alt="@post.Title" />
+            <hr>       
             <p class="lead">@post.ShortDescription</p>
-            <article style="white-space:normal; word-wrap:break-word">@Html.Raw(post.Description)</article>
             <hr>
             <a asp-controller="Post" asp-action="OpenPost" asp-route-id="@post.Id" style="width:100%" class="btn btn-default">Open</a>
         </div>

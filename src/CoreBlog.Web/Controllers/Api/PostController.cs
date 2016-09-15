@@ -40,10 +40,13 @@ namespace CoreBlog.Web.Controllers
         {
             if(ModelState.IsValid)
             {
-                var post                 = postService.GetPostById(viewModel.Id);
+                var post = postService.GetPostById(viewModel.Id);
+                    post.Tags.Clear();
+
                 var updatedPost          = ModelFactory.Create(post, viewModel);
                     updatedPost.Modified = DateTime.UtcNow;
 
+               
                 postService.UpdatePost(updatedPost);
 
                 if (postService.SaveAll())
