@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,13 +9,17 @@ namespace CoreBlog.Data.Context
 {
     public sealed class BlogInit
     {
+        private IConfigurationRoot config { get; }
         private RoleManager<IdentityRole> roleManager { get; }
         private UserManager<BlogUser> userManager { get; }
 
-        public BlogInit(UserManager<BlogUser> userManager, RoleManager<IdentityRole> roleManager)
+        public BlogInit(UserManager<BlogUser> userManager,
+                        RoleManager<IdentityRole> roleManager,
+                        IConfigurationRoot config)  
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
+            this.config = config;
         }
 
 
@@ -52,21 +57,22 @@ namespace CoreBlog.Data.Context
 
         private async Task SeedControlUsersAsync()
         {
+
             var userExist = await userManager
-                .FindByNameAsync("admin");
+                .FindByNameAsync(config["Site:Username"]);
 
             if (userExist == null)
             {
                 var adminUser = new BlogUser()
                 {
-                    UserName = "admin",
-                    Email = "enragesoft@gmail.com",
+                    UserName       = config["Site:Username"],
+                    Email          = config["Site:Email"],
                     EmailConfirmed = true,
                     
                 };
 
                 var createUserResult = await userManager
-                    .CreateAsync(adminUser, "+Vd245aasDR4912Fn+");
+                    .CreateAsync(adminUser, config["Site:Password"]);
 
                 if (!createUserResult.Succeeded)
                 {
