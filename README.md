@@ -18,4 +18,12 @@ This project is licensed under the MIT License.
 </p>
 
 #Sample
-![alt tag](http://imgur.com/KDXy6rR)
+
+![](http://i.imgur.com/KDXy6rR.png)
+
+![](http://i.imgur.com/WjBVsDt.png)
+
+![](http://i.imgur.com/2MUVZuo.png)
+
+![](http://i.imgur.com/0zzyDJk.png)
+
