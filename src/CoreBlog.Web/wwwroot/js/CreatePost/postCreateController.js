@@ -3,9 +3,11 @@
 
     angular
         .module('postCreateApp')
-        .controller('postCreateController', ['$routeParams' ,'postCreateFactory', postCreateController]);
+        .controller('postCreateController', ['$routeParams',
+                                             'postCreateFactory',
+                                             '$window', postCreateController]);
 
-    function postCreateController($routeParams, postCreateFactory) {
+    function postCreateController($routeParams, postCreateFactory, $window) {
 
         var vm = this;
 
@@ -44,7 +46,9 @@
                     vm.isReady = true;
                 }).error(function () {
                     vm.error = "Oops. Something went wrong. Try again later!";
-                });;
+                }).finally(function () {
+                    $window.location.href = '/Post/Open/' + $routeParams.id;
+                });
         };
 
         vm.addTag = function () {
@@ -70,7 +74,7 @@
                     vm.isReady = true;
                 }).error(function () {
                     vm.error = "Oops. Something went wrong. Try again later!";
-                });
+                })
         };
     };
 })();

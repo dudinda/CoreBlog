@@ -16,7 +16,6 @@
             return $http.post('/api/post/submit', post);
         }
 
-
         function getPost(id) {
             return $http.get("/api/post/get/" + id);
         }
