@@ -1,30 +1,35 @@
 ﻿@model CoreBlog.Web.ViewModels.Page.PageViewModel
 
-    @foreach (var post in Model.PagedList)
-    {
-        <div class="well" style="background-color:#fff">
-            <h2 class="text-center">@post.Category.Name: <a asp-controller="Post" asp-action="OpenPost" asp-route-id="@(post.Id)">@post.Title</a></h2>
-            <hr>
-            <p>
-                <span class="glyphicon glyphicon-time"></span> Posted on @post.PostedOn by <a text-size="10px">@post.Author</a>
-            </p>
-            <p>
-                @if (post.Tags.Any())
+@foreach (var post in Model.PagedList)
+{
+    <div class="well" style="background-color:#fff">
+        <h2 class="text-center">@post.Category.Name: <a asp-controller="Post" asp-action="OpenPost" asp-route-id="@(post.Id)">@post.Title</a></h2>
+        <hr>
+        <p>
+            <span class="glyphicon glyphicon-time"></span> Posted on @post.PostedOn by <a text-size="10px">@post.Author</a>
+        </p>
+        <p>
+            @if (post.Tags.Any())
                 {
-                    <span class="glyphicon glyphicon-tags"></span>
+                <span class="glyphicon glyphicon-tags"></span>
                     @foreach (var tag in post.Tags)
                     {
                         <a asp-controller="Tag" asp-action="@tag.Name">@tag.Name</a>
 
                     }
-                }
-            </p>
-            <p><i class="fa fa-comments-o text-left"></i><span class="disqus-comment-count" data-disqus-identifier="@(post.Id)"></span></p>
-            <hr>
-            <img class="image" src="~/images/@post.Image.Filename" alt="@post.Title" />
-            <hr>       
-            <p class="lead">@post.ShortDescription</p>
-            <hr>
-            <a asp-controller="Post" asp-action="OpenPost" asp-route-id="@post.Id" style="width:100%" class="btn btn-default">Open</a>
-        </div>
-    }
+            }
+        </p>
+        <p>
+            <i class="fa fa-comments-o text-left"></i>
+            <span class="disqus-comment-count" data-disqus-url="http://localhost:49480/Post/Open/@post.Id">
+
+            </span>
+        </p>
+        <hr>
+        <img class="image" src="~/images/@post.Image.Filename" alt="@post.Title" />
+        <hr>
+        <p class="lead">@post.ShortDescription</p>
+        <hr>
+        <a asp-controller="Post" asp-action="OpenPost" asp-route-id="@post.Id" style="width:100%" class="btn btn-default">Open</a>
+    </div>
+}

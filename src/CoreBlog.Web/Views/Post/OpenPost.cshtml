@@ -5,14 +5,29 @@
     ViewData["Title"] = @Model.Title;
 }
 
-    <div class="container">
+<div class="container">
     <h1 class="text-center">@Model.Category.Name: @Model.Title</h1>
     <hr>
     <p>
         <span class="glyphicon glyphicon-time"></span> Posted on @Model.PostedOn by <a text-size="10px">@Model.Author</a>
-        <i class="fa fa-comments-o"></i> <span class="disqus-comment-count" data-disqus-identifier="@Model.Id"></span>
     </p>
+    <p>
+        @if (Model.Tags.Any())
+            {
+            <span class="glyphicon glyphicon-tags"></span>
+                @foreach (var tag in Model.Tags)
+                {
+                    <a asp-controller="Tag" asp-action="@tag.Name">@tag.Name</a>
 
+                }
+        }
+    </p>
+    <p>
+        <i class="fa fa-comments-o text-left"></i>
+        <span class="disqus-comment-count" data-disqus-url="http://localhost:49480/Post/Open/@Model.Id">
+
+        </span>
+    </p>
     <hr>
 
 
@@ -37,21 +52,21 @@
 </div>
 
 
- @section Scripts {
+@section Scripts {
     <script>
-         var disqus_config = function () {
-                        this.page.url = 'http://localhost:49480/Post/Open/' + @Model.Id;
-                        this.page.identifier = '@Model.Id';
-                    };
+        var disqus_config = function () {
+            this.page.url = 'http://localhost:49480/Post/Open/' + @Model.Id;
+            this.page.identifier = '@Model.Id';
+        };
 
-         (function() {
-             var d = document, s = d.createElement('script');
-             s.src = '//@(config["Site:Disqus"]).disqus.com/embed.js';
+        (function() {
+            var d = document, s = d.createElement('script');
+            s.src = '//@(config["Site:Disqus"]).disqus.com/embed.js';
 
-             s.setAttribute('data-timestamp', +new Date());
+            s.setAttribute('data-timestamp', +new Date());
 
-             (d.head || d.body).appendChild(s);
-          })();
+            (d.head || d.body).appendChild(s);
+        })();
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><br><br><br>
- }
+}
