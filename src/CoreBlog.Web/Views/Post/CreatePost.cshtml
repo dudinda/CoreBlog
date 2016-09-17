@@ -25,10 +25,17 @@
     <script src="~/lib/textAngular/dist/textAngular-sanitize.min.js"></script>
     <script src="~/lib/textAngular/dist/textAngular.min.js"></script>
 
-    <development>
+    <environment names="Staging">
+        <script src="~/js/CreatePost/createPostApp.min.js"></script>
+        <script src="~/js/CreatePost/postCreateFactory.min.js"></script>
+        <script src="~/js/CreatePost/postCreateController.min.js"></script>
+        <script src="~/js/CreatePost/postEditorController.min.js"></script>
+    </environment>
+
+    <environment names="Development">
         <script src="~/js/CreatePost/createPostApp.js"></script>
         <script src="~/js/CreatePost/postCreateFactory.js"></script>
         <script src="~/js/CreatePost/postCreateController.js"></script>
         <script src="~/js/CreatePost/postEditorController.js"></script>
-    </development>
+    </environment>
 }

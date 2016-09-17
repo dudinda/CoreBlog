@@ -11,9 +11,9 @@
 <div class="container">
     <div class="row">
         @Html.Partial("_Search", Model.Search)
-
         @if (totalCount > 0)
         {
+            <h4>Search results: @totalCount</h4>
             @Html.Partial("_Posts")
             @Html.Partial("_Pagination")
         }
@@ -23,10 +23,17 @@
 
         }
     </div>
-    <a href="#" class="scrollToTop"><i></i></a>
+    <a href="#" class="scrollToTop">
+        <i class="fa fa-arrow-circle-up fa-5x"> </i>
+    </a>
 </div>
 
 
 @section Scripts {
-    <script src="~/js/Scripts/scrollToTop.js"></script>
+    <enviromental names="Development">
+        <script src="~/js/Scripts/scrollToTop.js"></script>
+    </enviromental>
+    <environment names="Staging">
+        <script src="~/js/Scripts/scrollToTop.min.js"></script>
+    </environment>
 }

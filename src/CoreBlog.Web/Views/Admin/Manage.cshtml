@@ -16,14 +16,22 @@
 @section Scripts{
     <script src="~/lib/angular/angular.js"></script>
     <script src="~/lib/angular-route/angular-route.min.js"></script>
+    <script src="~/lib/angular-utils-pagination/dirPagination.js"></script>
+    <script src="~/lib/angular-sanitize/angular-sanitize.min.js"></script>
 
-    <development>
+    <environment names="Staging">
+        <script src="~/js/Admin/adminApp.min.js"></script>
+        <script src="~/js/Admin/tabsController.min.js"></script>
+        <script src="~/js/Admin/controlPanelFactory.min.js"></script>
+        <script src="~/js/Admin/postController.min.js"></script>
+        <script src="~/js/Admin/userController.min.js"></script>
+    </environment>
+
+    <environment names="Development">
         <script src="~/js/Admin/adminApp.js"></script>
-        <script src="~/lib/angular-utils-pagination/dirPagination.js"></script>
-        <script src="~/lib/angular-sanitize/angular-sanitize.min.js"></script>
         <script src="~/js/Admin/tabsController.js"></script>
         <script src="~/js/Admin/controlPanelFactory.js"></script>
         <script src="~/js/Admin/postController.js"></script>
         <script src="~/js/Admin/userController.js"></script>
-    </development>
+    </environment>
 }

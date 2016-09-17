@@ -10,8 +10,6 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/scrollToTop.css" />
-    <link rel="stylesheet" href="~/css/SearchBar.css" />
-    <link rel="stylesheet" href="~/css/widgetBar.css" />
 }
 
 <div class="row">
@@ -22,19 +20,23 @@
 
         }
     </div>
-    <div class="col-lg-3 widgetBar">
+    <div class="col-lg-3">
         @Html.Partial("_Widgets")
-        <a href="#" class="scrollToTop"><i></i></a>
     </div>
+    <a href="#" class="scrollToTop">
+        <i class="fa fa-arrow-circle-up fa-5x"> </i>
+    </a>
     <div class="container">
         @Html.Partial("_Pagination")
     </div>
 </div>
-
-
-
 @section Scripts {
-    <script src="~/js/Scripts/scrollToTop.js"></script>
+    <enviromental names="Development">
+        <script src="~/js/Scripts/scrollToTop.js"></script>
+    </enviromental>
+    <environment names="Staging">
+        <script src="~/js/Scripts/scrollToTop.min.js"></script>
+    </environment>
 }
 
 
