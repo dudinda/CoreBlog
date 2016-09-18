@@ -1,5 +1,4 @@
-﻿
-<div class="container" ng-init="vm.preview()">
+﻿<div class="container" ng-init="vm.preview()">
     <h1>
         {{vm.openPost.category.name}}: {{vm.openPost.title}}
     </h1>
@@ -22,8 +21,8 @@
         {{vm.openPost.description}}
     </p>
     <hr>
-    <a ng-href="#/">Back</a>
-    <div class="text-danger" ng-show="vm.error">
-        {{vm.error}}
-    </div>
+    <a ng-href="#/" class="btn btn-default">Back</a>
+</div>
+<div class="text-danger" ng-show="vm.error">
+    {{vm.error}}
 </div>

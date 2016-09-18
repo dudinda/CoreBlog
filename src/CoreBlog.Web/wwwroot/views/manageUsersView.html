@@ -1,5 +1,4 @@
-﻿<label>Search: <input ng-model="search"></label>
-<table class="table table-responsive">
+﻿<table class="table table-responsive">
     <thead>
         <tr>
             <th class="col-md-3">Username</th>
@@ -24,6 +23,7 @@
 <div class="text-center">
     <dir-pagination-controls template-url="/views/paginationView.html" max-size="5"></dir-pagination-controls>
 </div>
+<label>Search: <input ng-model="search"></label>
 <div class="text-danger" ng-show="vm.error">
     {{vm.error}}
 </div>

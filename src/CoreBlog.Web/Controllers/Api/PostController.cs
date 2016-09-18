@@ -1,4 +1,5 @@
-﻿using CoreBlog.Web.Factory;
+﻿using CoreBlog.Data.Utility;
+using CoreBlog.Web.Factory;
 using CoreBlog.Web.ViewModels.Post;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -42,10 +43,14 @@ namespace CoreBlog.Web.Controllers
             {
                 var post = postService.GetPostById(viewModel.Id);
                     post.Tags.Clear();
-
+              
                 var updatedPost          = ModelFactory.Create(post, viewModel);
                     updatedPost.Modified = DateTime.UtcNow;
 
+                if(updatedPost.Image.Base64 != null)
+                {
+                    updatedPost.Image.ToImage();
+                }
                
                 postService.UpdatePost(updatedPost);
 

@@ -1,13 +1,9 @@
 ﻿.scrollToTop{ 
-	text-decoration: none;
 	position:fixed;
-    padding-bottom:100px;
-    background-size: 70px 70px;
-    background-image: url("../images/top-512.png");
-    background-repeat: no-repeat;
-    background-position: right bottom;
-}
-.scrollToTop:hover{
-	text-decoration:none;
+    bottom:100px;
+    right: 100px;
+    display:none;
+    cursor: pointer;
 }
 
+.

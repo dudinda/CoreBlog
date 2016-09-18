@@ -1,5 +1,4 @@
 ﻿<div ng-init="vm.getPublished()">
-    <label>Search: <input ng-model="search"></label>
     <table class="table table-responsive">
         <thead>
             <tr>
@@ -20,7 +19,6 @@
                 <td>{{post.postedOn | date: 'MM-dd-yyyy'}}</td>
                 <td class="btn-group">
                     <a class="btn" ng-href="#/open/{{post.id}}"><i class="fa fa-folder-open"></i>Open</a>
-                    <a class="btn" ng-href="#/edit/{{post.id}}"><i class="fa fa-edit"></i>Edit</a>
                     <a class="btn" ng-href="#/published" ng-show="!vm.isBusy" ng-click="vm.delete($index)"><i class="fa fa-close">Delete</i></a>
                 </td>
             </tr>
@@ -29,6 +27,7 @@
     <div class="text-center">
         <dir-pagination-controls template-url="/views/paginationView.html" max-size="5"></dir-pagination-controls>
     </div>
+    <label>Search: <input ng-model="search"></label>
     <div class="text-danger" ng-show="vm.error">
         {{vm.error}}
     </div>
