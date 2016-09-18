@@ -4,14 +4,15 @@
 
     angular
         .module('adminApp')
-        .controller('postController', ['$routeParams', 'controlPanelFactory', postController]);
+        .controller('postController', ['$routeParams',
+                                       'controlPanelFactory',
+                                       postController]);
 
     function postController($routeParams, controlPanelFactory) {
         var vm = this;
 
         vm.posts = [];
-        
-
+   
         vm.error = "";
 
         vm.isBusy = false;
@@ -41,7 +42,7 @@
                     vm.error = "Failed to get published posts.";
                 }).finally(function () {
                     vm.isBusy = false;
-                })
+                });
         };
 
         vm.preview = function () {           
@@ -61,12 +62,16 @@
             vm.reverse = (vm.predicate === predicate) ? !vm.reverse : false;
             vm.predicate = predicate;
         };
+
+        vm.isDeleted = function (post) {
+            return !post.deleted;
+        };
     
-        vm.delete = function (index) {
+        vm.delete = function (post) {
             vm.isBusy = true;
             controlPanelFactory
-                .deletePost(vm.posts[index]).success(function () {
-                    vm.posts.splice(index, 1);
+                .deletePost(post).success(function () {
+                    post.deleted = true;
                 }).error(function (error) {
                     vm.error = "Failed to delete: " + post.title;
                 }).finally(function () {
@@ -74,11 +79,11 @@
                 });
         };
 
-        vm.approve = function (index) {
+        vm.approve = function (post) {
             vm.isBusy = true;
             controlPanelFactory
-                .approvePost(vm.posts[index]).success(function (response) {
-                    vm.posts.splice(index, 1);
+                .approvePost(post).success(function () {
+                    post.deleted = true;
                 }).error(function (error) {
                     vm.error = "Failed to approve: " + post.title;
                 }).finally(function () {

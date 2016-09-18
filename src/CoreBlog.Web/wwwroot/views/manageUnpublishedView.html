@@ -4,23 +4,34 @@
             <tr>
                 <th class="col-md-2"><a ng-click="vm.order('title')">Title</a></th>
                 <th class="col-md-2"><a ng-click="vm.order('author')">Author</a></th>
-                <th class="col-md-1"><a ng-click="vm.order('category')">Category</a></th>
+                <th class="col-md-2"><a ng-click="vm.order('category')">Category</a></th>
                 <th class="col-md-2"><a ng-click="vm.order('tag')">Tags</a></th>
                 <th class="col-md-2"><a ng-click="vm.order('postedOn')">Date</a></th>
-                <th class="col-md-3">Action</th>
+                <th class="col-md-2">Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr dir-paginate="post in vm.posts | orderBy:vm.predicate:vm.reverse | filter:search | itemsPerPage: 5">
+            <tr dir-paginate="post in vm.posts | filter: vm.isDeleted | orderBy:vm.predicate:vm.reverse | filter:search | itemsPerPage: 5">
+
                 <td>{{post.title}}</td>
                 <td>{{post.author}}</td>
                 <td>{{post.category.name}}</td>
                 <td><a ng-repeat="tag in post.tags">{{tag.name }}</a></td>
                 <td>{{post.postedOn | date: 'MM-dd-yyyy'}}</td>
                 <td class="btn-group">
-                    <a class="btn" ng-href="#/open/{{post.id}}"><i class="fa fa-folder-open"></i>Open</a>
-                    <a class="btn" ng-href="#/unpublished" ng-click="vm.approve($index)"><i class="fa fa-check">Approve</i></a>
-                    <a class="btn" ng-href="#/unpublished" ng-click="vm.delete($index)"><i class="fa fa-close">Delete</i></a>
+
+                    <a class="btn" ng-href="#/open/{{post.id}}">
+                        <i class="fa fa-folder-open">Open</i>
+                    </a>
+
+                    <a class="btn" ng-click="vm.approve(post)">
+                        <i class="fa fa-check">Approve</i>
+                    </a>
+
+                    <a class="btn" ng-click="vm.delete(post)">
+                        <i class="fa fa-close">Delete</i>
+                    </a>
+
                 </td>
             </tr>
         </tbody>

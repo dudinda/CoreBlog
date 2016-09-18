@@ -3,7 +3,9 @@
 
     angular
         .module('adminApp')
-        .controller('userController', ['$http', 'controlPanelFactory', userController]);
+        .controller('userController', ['$http',
+                                       'controlPanelFactory',
+                                       userController]);
 
     function userController($http, controlPanelFactory) {
 
@@ -47,7 +49,7 @@
                 .banUser(user).success(function(response){
                     user.isBanned = response;
                 }).error(function (error) {
-                    vm.error = "Failed to ban the user" + user.userName;
+                    vm.error = "Failed to ban the user: " + user.userName;
                 }).finally(function () {
                     vm.isBusy = false;
                 });

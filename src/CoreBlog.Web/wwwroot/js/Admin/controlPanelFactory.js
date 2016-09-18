@@ -20,7 +20,7 @@
         }
 
         function getPost(id) {
-            return $http.get("/api/post/get/" + id);
+            return $http.get("/api/post/get" + id);
         }
         
         function deletePost(post) {

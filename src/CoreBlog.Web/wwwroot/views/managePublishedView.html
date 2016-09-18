@@ -11,15 +11,18 @@
             </tr>
         </thead>
         <tbody>
-            <tr dir-paginate="post in vm.posts | orderBy:vm.predicate:vm.reverse | filter:search | itemsPerPage: 5">
+            <tr dir-paginate="post in vm.posts | filter: vm.isDeleted | orderBy:vm.predicate:vm.reverse | filter:search | itemsPerPage: 5">
+
                 <td>{{post.title}}</td>
                 <td>{{post.author}}</td>
                 <td>{{post.category.name}}</td>
-                <td><a ng-repeat="tag in post.tags">{{tag.name}}</a></td>
+                <td><a ng-repeat="tag in post.tags">{{tag.name }}</a></td>
                 <td>{{post.postedOn | date: 'MM-dd-yyyy'}}</td>
                 <td class="btn-group">
                     <a class="btn" ng-href="#/open/{{post.id}}"><i class="fa fa-folder-open"></i>Open</a>
-                    <a class="btn" ng-href="#/published" ng-show="!vm.isBusy" ng-click="vm.delete($index)"><i class="fa fa-close">Delete</i></a>
+                    <a class="btn" ng-show="!vm.isBusy" ng-click="vm.delete(post)">
+                        <i class="fa fa-close">Delete</i>
+                    </a>
                 </td>
             </tr>
         </tbody>
