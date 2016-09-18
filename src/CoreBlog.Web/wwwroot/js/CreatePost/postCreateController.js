@@ -74,7 +74,9 @@
                     vm.isReady = true;
                 }).error(function () {
                     vm.error = "Oops. Something went wrong. Try again later!";
-                })
+                }).finally(function () {
+                    $window.location.href = '/Blog/1';
+                });
         };
     };
 })();
