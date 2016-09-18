@@ -8,36 +8,40 @@
 <div class="container">
     <h1 class="text-center">@Model.Category.Name: @Model.Title</h1>
     <hr>
-    <p>
-        <span class="glyphicon glyphicon-time"></span> Posted on @Model.PostedOn by <a text-size="10px">@Model.Author</a>
-    </p>
-    <p>
-        @if (Model.Tags.Any())
+    <div class="col-xs-7">
+        <p>
+            <span class="glyphicon glyphicon-time"></span> Posted on @Model.PostedOn by <a text-size="10px">@Model.Author</a>
+        </p>
+        <p>
+            @if (Model.Tags.Any())
             {
-            <span class="glyphicon glyphicon-tags"></span>
-                @foreach (var tag in Model.Tags)
-                {
-                    <a asp-controller="Tag" asp-action="@tag.Name">@tag.Name</a>
+                <span class="glyphicon glyphicon-tags"></span>
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <a asp-controller="Tag" asp-action="@tag.Name">@tag.Name</a>
 
-                }
+                    }
+            }
+        </p>
+        <p>
+            <i class="fa fa-comments-o text-left"></i>
+            <span class="disqus-comment-count" data-disqus-url="http://localhost:49480/Post/Open/@Model.Id">
+
+            </span>
+        </p>
+    </div>
+    <div class="col-xs-5">
+        @if (Model.Image.Base64 != null)
+        {
+        <img class="image" src="~/images/@Model.Image.Filename" alt="@Model.Title" />
         }
-    </p>
-    <p>
-        <i class="fa fa-comments-o text-left"></i>
-        <span class="disqus-comment-count" data-disqus-url="http://localhost:49480/Post/Open/@Model.Id">
-
-        </span>
-    </p>
-    <hr>
-
-
-    <img class="image" src="~/images/@Model.Image.Filename" alt="@Model.Title">
-
-    <hr>
-
-    <p class="lead">@Model.ShortDescription</p>
+    </div>
+    <hr />
+    <div class="col-xs-12">
+        <p class="lead">@Model.ShortDescription</p>
+    </div>
     <p>@Html.Raw(Model.Description)</p>
-    <hr>
+    <hr />
     <div>
         @if (Model.Modified != null)
         {

@@ -7,6 +7,8 @@ var gulp = require("gulp"),
     cssmin = require("gulp-cssmin"),
     uglify = require("gulp-uglify");
 
+var ngAnnotate = require('gulp-ng-annotate');
+
 var webroot = "./wwwroot/";
 
 var paths = {
@@ -29,10 +31,10 @@ gulp.task("clean:css", function (cb) {
 gulp.task("clean", ["clean:js", "clean:css"]);
 
 gulp.task("min:js", function () {
-    return gulp.src([paths.js, "!" + paths.minJs], { base: "." })
-        .pipe(concat(paths.concatJsDest))
+    return gulp.src(paths.js)
+        .pipe(ngAnnotate())
         .pipe(uglify())
-        .pipe(gulp.dest("."));
+        .pipe(gulp.dest("wwwroot/lib/_app"));
 });
 
 gulp.task("min:css", function () {

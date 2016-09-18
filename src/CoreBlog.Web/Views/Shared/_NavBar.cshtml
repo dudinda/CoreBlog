@@ -24,16 +24,15 @@
                     if (User.IsInRole("Admin"))
                     {
                         <li><a asp-controller="Admin" asp-action="Manage">Manage</a></li>
+                        <li><a asp-controller="Post" asp-action="CreatePost">Create new post</a></li>
                     }
-                    <li><a asp-controller="Post" asp-action="CreatePost">Create new post</a></li>
+
                     <li><a asp-controller="Auth" asp-action="Logout">Logout</a></li>
 
                 }
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Info<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li class="divider"></li>
-                        <li><a href="#">About</a></li>
                         <li class="divider"></li>
                         <li><a asp-controller="Blog" asp-action="Contact">Contact</a></li>
                         <li class="divider"></li>
