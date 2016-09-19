@@ -19,7 +19,7 @@
         vm.isFull = false;
 
         //if there is no route params, set status to false
-        vm.edit = $routeParams.id === undefined ? false : true;
+        vm.edit = ( $routeParams.id === undefined ) ? false : true;
 
         vm.newPost = function () {
             postCreateFactory
@@ -68,7 +68,14 @@
             vm.post.tags.splice(index, 1);
         };
 
-        vm.approve = function () {
+        vm.back = function (update) {
+
+            vm.edit ? $window.location.href = '/Post/Open/' + $routeParams.id
+                      :
+                      $window.location.href = '/Blog/1';
+        };
+
+        vm.approve = function () {  
             postCreateFactory
                 .sendNewPost(vm.post).success(function () {
                     vm.isReady = true;

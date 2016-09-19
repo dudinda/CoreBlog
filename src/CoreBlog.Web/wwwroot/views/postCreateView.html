@@ -49,12 +49,12 @@
             <span ng-show="CreateNewPost.description.$error.required" class="text-warning">Description is required.</span>
         </div>
         <div class="list-group" ng-show="vm.edit == false">
-            <a ng-disabled="newPostForm.$invalid" ng-click="vm.approve()" class="btn btn-success list-group-item">Post!</a>
-            <a asp-controller="Blog" asp-action="Index" class="btn list-group-item">Cancel</a>
+            <button ng-disabled="newPostForm.$invalid" style="text-align:center;" ng-click="vm.approve()" class="btn btn-success list-group-item">Post!</button>
+            <button ng-click="vm.back()" style="text-align:center;" class="btn list-group-item">Cancel</button>
         </div>
         <div class="list-group" ng-show="vm.edit == true">
-            <a ng-disabled="newPostForm.$invalid" ng-click="vm.updatePost()" class="btn btn-success list-group-item">Update!</a>
-            <a asp-controller="Post" asp-action="OpenPost" asp-route-id="" class="btn list-group-item">Back</a>
+            <button ng-disabled="newPostForm.$invalid" style="text-align:center;" ng-click="vm.updatePost()" class="btn btn-success list-group-item">Update!</button>
+            <button ng-click="vm.back()" style="text-align:center;" class="btn list-group-item">Back</button>
         </div>
     </form>
     <div class="text-danger" ng-show="vm.error">{{vm.error}}</div>
