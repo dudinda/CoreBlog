@@ -132,7 +132,7 @@ namespace CoreBlog.Web.Controllers
                                               new { id = user.Id, token = token },
                                               protocol: HttpContext.Request.Scheme);
 
-                    await mailService.ConfirmEmailAsync(user, callback);
+                    await mailService.ResetPasswordAsync(user, callback);
 
                     ViewData["Message"] = "Thanks! We sent a password reset link to your email address.";
                     return View();

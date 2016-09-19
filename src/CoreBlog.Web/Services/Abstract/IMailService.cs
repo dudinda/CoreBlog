@@ -8,5 +8,6 @@ namespace CoreBlog.Web.Services
     {
         void SendEmail(ContactViewModel viewModel);
         Task ConfirmEmailAsync(BlogUser user, string callbackUrl);
+        Task ResetPasswordAsync(BlogUser user, string callbackUrl);
     }
 }

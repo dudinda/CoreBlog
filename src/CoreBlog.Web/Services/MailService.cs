@@ -50,5 +50,23 @@ namespace CoreBlog.Web.Services
                 await client.DisconnectAsync(true);
             }
         }
+
+        public async Task ResetPasswordAsync(BlogUser user, string callbackUrl)
+        {
+
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress(config["Site:Username"], config["Site:Email"]));
+            emailMessage.To.Add(new MailboxAddress($"{user.UserName}", $"{user.Email}"));
+            emailMessage.Subject = "Thanks for registration!";
+            emailMessage.Body = new TextPart("Html") { Text = $"Please use the following link to <a href='{callbackUrl}'>reset your password</a>." };
+
+            using (var client = new SmtpClient())
+            {
+                await client.ConnectAsync("smtp.gmail.com", 587, false);
+                await client.AuthenticateAsync(config["Site:Email"], config["Site:Password"]);
+                await client.SendAsync(emailMessage);
+                await client.DisconnectAsync(true);
+            }
+        }
     }
 }
