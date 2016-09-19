@@ -23,7 +23,12 @@ namespace CoreBlog.Web.Controllers
         [HttpPost]
         public IActionResult GetString(SearchViewModel search)
         {
-        
+            //due to [DisplayFormat] attribute issue
+            if (search.Text == null)
+            {
+                return RedirectToAction("SearchResult", new { text = "" });
+            }
+            
             if (ModelState.IsValid)
             {
                 return RedirectToAction("SearchResult", new { text = search.Text });
