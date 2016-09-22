@@ -135,7 +135,6 @@ namespace CoreBlog.Web
             });
             app.UseMvc(routes =>
             {
-
                 routes.MapRoute(
                     name: "Home",
                     template: "{controller}/{page?}",
@@ -152,6 +151,7 @@ namespace CoreBlog.Web
                     template: "errors/{code}",
                     defaults: new { controller = "Errors", Action = "Error" }
                     );
+
             });
 
             using (var scope = scopeFactory.CreateScope())

@@ -8,7 +8,7 @@ using CoreBlog.Web.ViewModels.Account;
 namespace CoreBlog.Web.Controllers
 {
     [ResponseCache(CacheProfileName = "Default")]
-    [Route("[controller]")]
+    [Route("")]
     public sealed class BlogController : Controller
     {
         private IMailService mailService { get; }
@@ -24,14 +24,14 @@ namespace CoreBlog.Web.Controllers
             this.pageService = pageService;
         }
 
-
+        [HttpGet("")]
         public IActionResult Index()
         {
-           return LocalRedirectPermanent("/Blog/1");
+           return Index(1);
         }
 
 
-        [HttpGet("{page:int?}")]
+        [HttpGet("[controller]/{page:int?}")]
         public IActionResult Index(int page = 1)
         {
                
@@ -54,13 +54,13 @@ namespace CoreBlog.Web.Controllers
         }
 
       
-        [HttpGet("contact")]
+        [HttpGet("[controller]/contact")]
         public IActionResult Contact()
         {
             return View();
         }
 
-        [HttpPost("contact")]
+        [HttpPost("[controller]/contact")]
       //  [ValidateAntiForgeryToken]
         public IActionResult Contact(ContactViewModel viewModel)
         {
