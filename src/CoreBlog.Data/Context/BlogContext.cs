@@ -16,7 +16,10 @@ namespace CoreBlog.Data.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(config["CoreBlogDb:ConnectionString"]);
+            optionsBuilder.UseSqlServer(config["CoreBlogDb:ConnectionString"], 
+                                        assembly => assembly.MigrationsAssembly("CoreBlog.Web")
+                                        );
+
             base.OnConfiguring(optionsBuilder);
         }
 

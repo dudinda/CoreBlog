@@ -5,13 +5,12 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using CoreBlog.Data.Context;
 
-namespace CoreBlog.Data.Migrations
+namespace CoreBlog.Web.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20160827104848_CoreBlog.Data")]
-    partial class CoreBlogData
+    partial class BlogContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")

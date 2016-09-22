@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace CoreBlog.Data.Migrations
+namespace CoreBlog.Web.Migrations
 {
-    public partial class CoreBlogData : Migration
+    public partial class Prod : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
