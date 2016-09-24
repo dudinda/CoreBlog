@@ -6,7 +6,7 @@ namespace CoreBlog.Web.Services
 {
     public interface IMailService
     {
-        void SendEmail(ContactViewModel viewModel);
+        Task SendEmailAsync(ContactViewModel viewModel);
         Task ConfirmEmailAsync(BlogUser user, string callbackUrl);
         Task ResetPasswordAsync(BlogUser user, string callbackUrl);
     }

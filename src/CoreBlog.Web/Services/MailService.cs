@@ -1,8 +1,7 @@
 ﻿using CoreBlog.Data.Context;
 using CoreBlog.Web.ViewModels.Account;
-using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
-using MimeKit;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace CoreBlog.Web.Services
@@ -16,57 +15,41 @@ namespace CoreBlog.Web.Services
             this.config = config;
         }
 
-        public void SendEmail(ContactViewModel viewModel)
+        public async Task SendEmailAsync(ContactViewModel viewModel)
         {
-            var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress($"{viewModel.Name}", $"{viewModel.Email}"));
-            emailMessage.To.Add(new MailboxAddress(config["Site:Username"], config["Site:Email"]));
-            emailMessage.Subject = viewModel.Subject;
-            emailMessage.Body = new TextPart("plain") { Text = viewModel.Message };
+            var emailMessage         = new SendGrid.SendGridMessage();
+                emailMessage.From    =  new MailAddress($"{viewModel.Email}", $"{viewModel.Name}");          
+                emailMessage.Subject = viewModel.Subject;
+                emailMessage.Text    = viewModel.Message;
+                emailMessage.AddTo(config["Site:Email"]);
 
-            using (var client = new SmtpClient())
-            {
-                client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate(config["Site:Email"], config["Site:Password"]);
-                client.Send(emailMessage);
-                client.Disconnect(true);
-            }
+            var transportWeb = new SendGrid.Web(config["SendGrid:ApiKey"]);
+            await transportWeb.DeliverAsync(emailMessage);
         }
 
         public async Task ConfirmEmailAsync(BlogUser user, string callbackUrl)
         {
-           
-            var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress(config["Site:Username"], config["Site:Email"]));
-            emailMessage.To.Add(new MailboxAddress($"{user.UserName}", $"{user.Email}"));
-            emailMessage.Subject = "Thanks for registration!";
-            emailMessage.Body = new TextPart("Html") { Text = $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>" };
-        
-            using (var client = new SmtpClient())
-            {
-                await client.ConnectAsync("smtp.gmail.com", 587, false);
-                await client.AuthenticateAsync(config["Site:Email"], config["Site:Password"]);
-                await client.SendAsync(emailMessage);
-                await client.DisconnectAsync(true);
-            }
+
+            var emailMessage         = new SendGrid.SendGridMessage();
+                emailMessage.From    = new MailAddress(config["Site:Email"], config["Site:Username"]);       
+                emailMessage.Subject = "Thanks for registration!";
+                emailMessage.Text    = $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>";
+                emailMessage.AddTo($"{user.Email}");
+
+            var transportWeb = new SendGrid.Web(config["SendGrid:ApiKey"]);
+            await transportWeb.DeliverAsync(emailMessage);
         }
 
         public async Task ResetPasswordAsync(BlogUser user, string callbackUrl)
         {
+            var emailMessage         = new SendGrid.SendGridMessage();
+                emailMessage.From    = new MailAddress(config["Site:Email"], config["Site:Username"]);
+                emailMessage.Subject = "Password reset.";
+                emailMessage.Text    = $"Please use the following link to <a href='{callbackUrl}'>reset your password</a>.";
+                emailMessage.AddTo($"{user.Email}");
 
-            var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress(config["Site:Username"], config["Site:Email"]));
-            emailMessage.To.Add(new MailboxAddress($"{user.UserName}", $"{user.Email}"));
-            emailMessage.Subject = "Thanks for registration!";
-            emailMessage.Body = new TextPart("Html") { Text = $"Please use the following link to <a href='{callbackUrl}'>reset your password</a>." };
-
-            using (var client = new SmtpClient())
-            {
-                await client.ConnectAsync("smtp.gmail.com", 587, false);
-                await client.AuthenticateAsync(config["Site:Email"], config["Site:Password"]);
-                await client.SendAsync(emailMessage);
-                await client.DisconnectAsync(true);
-            }
+            var transportWeb = new SendGrid.Web(config["SendGrid:ApiKey"]);
+            await transportWeb.DeliverAsync(emailMessage);
         }
     }
 }
