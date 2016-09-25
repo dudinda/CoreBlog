@@ -16,31 +16,27 @@
             @if (Model.Tags.Any())
             {
                 <span class="glyphicon glyphicon-tags"></span>
-                    @foreach (var tag in Model.Tags)
-                    {
-                        <a asp-controller="Tag" asp-action="@tag.Name">@tag.Name</a>
+                @foreach (var tag in Model.Tags)
+                {
+                    <a asp-controller="Tag" asp-action="@tag.Name">@tag.Name</a>
 
-                    }
+                }
             }
-        </p>
-        <p>
-            <i class="fa fa-comments-o text-left"></i>
-            <span class="disqus-comment-count" data-disqus-url="http://localhost:49480/Post/Open/@Model.Id">
-
-            </span>
         </p>
     </div>
     <div class="col-xs-5">
         @if (Model.Image.Base64 != null)
         {
-        <img class="image" src="~/images/@Model.Image.Filename" alt="@Model.Title" />
+            <img class="image" src="~/images/@Model.Image.Filename" />
         }
     </div>
     <hr />
     <div class="col-xs-12">
         <p class="lead">@Model.ShortDescription</p>
     </div>
-    <p>@Html.Raw(Model.Description)</p>
+    <div class="col-xs-12">
+        @Html.Raw(Model.Description)
+    </div>
     <hr />
     <div>
         @if (Model.Modified != null)
@@ -49,18 +45,20 @@
         }
         @if (Model.Author == User.Identity.Name)
         {
-            <a class="btn" style="width:100%" asp-controller="Post" asp-action="CreatePost" asp-fragment="/edit/@Model.Id">Edit</a>
+            <a class="btn" style="width:100%;" asp-controller="Post" asp-action="CreatePost" asp-fragment="/Edit/@Model.Id">
+                Edit
+            </a>
         }
-    </div>
-    <div id="disqus_thread"></div>
+</div>
+<div id="disqus_thread"></div>
 </div>
 
 
 @section Scripts {
     <script>
         var disqus_config = function () {
-            this.page.url = 'http://localhost:49480/Post/Open/' + @Model.Id;
-            this.page.identifier = '@Model.Id';
+            this.page.url = "@("http://coreblogweb20160921095053.azurewebsites.net/Post/Open/" + Model.Id)";
+            this.page.identifier = "@(Model.Id)";
         };
 
         (function() {
@@ -72,5 +70,5 @@
             (d.head || d.body).appendChild(s);
         })();
     </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><br><br><br>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 }
