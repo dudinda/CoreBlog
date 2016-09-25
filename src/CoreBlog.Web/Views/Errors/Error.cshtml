@@ -1,22 +1,10 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>@ViewData["Code"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-</head>
-<body>
-    <div class="text-center">
-        <img src="~/images/CoreLogo.png" />
-        <h1>CoreBlog</h1>
-    </div>
-    <div class="text-center text-info">
-        <h3>@ViewData["Code"]</h3>
-        <h3>@ViewData["Message"]</h3>
-        <a class="btn btn-default" asp-controller="Blog" asp-action="Index">Home page</a>
-    </div>
-    
-
-    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-</body>
-</html>
+﻿
+<div class="text-center">
+    <h1>CoreBlog</h1>
+    <i class="fa fa-gear fa-5x"></i>
+</div>
+<div class="text-center text-info">
+    <h3>@ViewData["Code"]</h3>
+    <h3>@ViewData["Message"]</h3>
+    <a class="btn btn-default" asp-controller="Blog" asp-action="Index">Home page</a>
+</div>
