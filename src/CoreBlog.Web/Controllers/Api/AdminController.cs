@@ -31,6 +31,29 @@ namespace CoreBlog.Web.Controllers
             }
         }
        
+        [HttpPost("/api/admin/deleteuser")]
+        public async Task<IActionResult> DeleteUserAsync([FromBody]UserControlPanelViewModel viewModel)
+        {
+            if(ModelState.IsValid)
+            {
+                var user = await userManager.FindByNameAsync(viewModel.UserName);
+
+                if(user != null)
+                {
+                    var deleteUserResult = await userManager.DeleteAsync(user);
+
+                    if(deleteUserResult.Succeeded)
+                    {
+                        logger.LogInformation($"{user.UserName} has been deleted.");
+                        return Ok();
+                    }
+                }
+
+            }
+            logger.LogError($"Failed to delete: {viewModel.UserName}");
+            return BadRequest();
+        }
+
         [HttpPost("/api/admin/unban")]
         public async Task<IActionResult> UnbanAsync([FromBody]UserControlPanelViewModel viewModel)
         {
@@ -98,7 +121,7 @@ namespace CoreBlog.Web.Controllers
         }
 
 
-        [HttpPost("/api/admin/delete")]
+        [HttpPost("/api/admin/deletepost")]
         public IActionResult DeletePost([FromBody]PostControlPanelViewModel viewModel)
         {
             if(ModelState.IsValid)

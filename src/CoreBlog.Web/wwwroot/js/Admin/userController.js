@@ -19,12 +19,30 @@
 
         controlPanelFactory
             .getUsers().success(function (response) {
-                angular.copy(response, vm.users)
+                angular.copy(response, vm.users);
                 vm.isBusy = false;
             }).error(function (error) {
                 vm.error = "Failed to get users";
             });
         
+
+        vm.isDeleted = function (user) {
+            return !user.deleted;
+        };
+
+        vm.delete = function (user) {
+
+            vm.isBusy = true;
+
+            controlPanelFactory
+                .deleteUser(user).success(function (response) {
+                    user.deleted = true;
+                }).error(function (error) {
+                    vm.error = "Failed to delete the user: " + user.userName;
+                }).finally(function () {
+                    vm.isBusy = false;
+                });
+        };
     
         vm.unban = function (user) {
      
@@ -39,7 +57,6 @@
                     vm.isBusy = false;
                 });
         };
-
 
         vm.ban = function (user) {
 

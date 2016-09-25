@@ -24,7 +24,11 @@
         }
         
         function deletePost(post) {
-            return $http.post("/api/admin/delete", post);
+            return $http.post("/api/admin/deletepost", post);
+        }
+
+        function deleteUser(user) {
+            return $http.post("/api/admin/deleteuser", user);
         }
 
         function approvePost(post) {
@@ -50,10 +54,11 @@
             approvePost: approvePost,
             banUser: banUser,
             unbanUser: unbanUser,
+            deleteUser: deleteUser,
             getPost: getPost,
             deletePost: deletePost,
             updatePost: updatePost            
-        }
+        };
   
         return service;
     }; 
