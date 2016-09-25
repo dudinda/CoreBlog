@@ -7,6 +7,6 @@
   },
 
   "CoreBlogDb": {
-    "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=CoreBlogDb;Trusted_Connection=True;MultipleActiveResultSets=true"
+    "ConnectionString": "ConnectionString"
   }
 }
