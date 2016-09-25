@@ -3,7 +3,7 @@
     <div class="col-md-4 col-md-offset-4">
         <h2>Join us!</h2>
 
-        <form method="post">
+        <form novalidate method="post">
             <div class="form group">
                 <label asp-for="UserName">Username</label>
                 <input asp-for="UserName" class="form-control text-muted" placeholder="Enter your name" />
@@ -29,11 +29,20 @@
                 <input asp-for="Age" class="form-control" />
                 <span asp-validation-for="Age" class="text-muted"></span>
             </div>
-            <div class="form-group">
-                <a asp-controller="Blog" asp-action="Index" class="btn btn-default">Cancel</a>
-                <input type="submit" value="Register" class="btn btn-success" />
+            <div class="form-group text-right">
+                <recaptcha align="center" />
+                <span class="text-danger" id="recaptchaErrorMessage"></span>
+            </div>
+            <div class="form-group list-group">
+                <button type="submit" class="list-group-item list-group-item-action"  style="text-align:center;outline:none">Sign up!</button>
+                <a asp-controller="Blog" asp-action="Index" class="list-group-item list-group-item-action" style="text-align:center;">Cancel</a>
+               
             </div>
             <div asp-validation-summary="ModelOnly"></div>
         </form>
     </div>
 </div>
+
+@section Scripts {
+    <recaptcha-script validation-message-element-id="recaptchaErrorMessage" />
+}

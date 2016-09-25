@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using System.Threading.Tasks;
 
 namespace CoreBlog.Web.Controllers
@@ -31,10 +32,10 @@ namespace CoreBlog.Web.Controllers
         }
 
    
-        [HttpGet("registration")]
+        [HttpGet("Registration")]
         public IActionResult Registration()
         {
-            return View();
+            return View(new RegistrationViewModel());
         }
 
 
@@ -58,8 +59,8 @@ namespace CoreBlog.Web.Controllers
             return View();
         }
 
-        [HttpPost("registration")]
-        [ValidateAntiForgeryToken]
+        [HttpPost("Registration")]
+        [ValidateRecaptcha]
         public async Task<IActionResult> Registration(RegistrationViewModel viewModel)
         {
             if (ModelState.IsValid)

@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using CoreBlog.Web.Services;
 using CoreBlog.Web.Factory;
 using CoreBlog.Web.ViewModels.Post;
 using CoreBlog.Web.ViewModels.Account;
+using System.Threading.Tasks;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 
 namespace CoreBlog.Web.Controllers
 {
@@ -54,19 +55,19 @@ namespace CoreBlog.Web.Controllers
         }
 
       
-        [HttpGet("[controller]/contact")]
+        [HttpGet("[controller]/Contact")]
         public IActionResult Contact()
         {
             return View();
         }
 
-        [HttpPost("[controller]/contact")]
-      //  [ValidateAntiForgeryToken]
-        public IActionResult Contact(ContactViewModel viewModel)
+        [HttpPost("[controller]/Contact")]
+        [ValidateRecaptcha]
+        public async Task<IActionResult> Contact(ContactViewModel viewModel)
         {
             if(ModelState.IsValid)
             {
-                mailService.SendEmail(viewModel);
+                await mailService.SendEmailAsync(viewModel);
 
                 ModelState.Clear();
                 ViewBag.Message = "Thanks for your feedback!";              

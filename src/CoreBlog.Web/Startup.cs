@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -14,9 +13,7 @@ using CoreBlog.Data.Entities;
 using CoreBlog.Web.ViewModels.Account;
 using CoreBlog.Web.Services;
 using CoreBlog.Data.Context;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Html;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 
 namespace CoreBlog.Web
 {
@@ -79,21 +76,29 @@ namespace CoreBlog.Web
             services.AddScoped<IMailService, MailService>();
             services.AddTransient<BlogInit>();
 
+
             services
-                .AddMvc(option =>
-                {
-                    option.CacheProfiles.Add("Default",
-                        new CacheProfile()
-                        {
-                            NoStore = true
-                        });
-                })
-                .AddJsonOptions(option =>
-                {
-                    option
-                        .SerializerSettings
-                        .ContractResolver = new CamelCasePropertyNamesContractResolver();
-                });       
+              .AddMvc(option =>
+              {
+                  option.CacheProfiles.Add("Default",
+                      new CacheProfile()
+                      {
+                          NoStore = true
+                      });
+              })
+              .AddJsonOptions(option =>
+              {
+                  option
+                      .SerializerSettings
+                      .ContractResolver = new CamelCasePropertyNamesContractResolver();
+              });
+
+            services.AddRecaptcha(new RecaptchaOptions
+            {
+                SiteKey = Configuration["Recaptcha:SiteKey"],
+                SecretKey = Configuration["Recaptcha:SecretKey"],
+                ValidationMessage = "Are you a robot?"
+            });
         }
 
 
