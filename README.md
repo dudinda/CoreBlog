@@ -17,13 +17,5 @@ Libraries and frameworks:
 This project is licensed under the MIT License.
 </p>
 
-#Sample
-
-![](http://i.imgur.com/KDXy6rR.png)
-
-![](http://i.imgur.com/WjBVsDt.png)
-
-![](http://i.imgur.com/2MUVZuo.png)
-
-![](http://i.imgur.com/0zzyDJk.png)
-
+#Demo(Single-user version)
+http://coreblogweb20160921095053.azurewebsites.net/
