@@ -22,13 +22,12 @@
             </div>
             <div class="form group">
                 <label asp-for="Message">Your message</label>
-                <textarea asp-for="Message" class="form-control"></textarea>
+                <textarea asp-for="Message" style="resize:both;" class="form-control"></textarea>
                 <span asp-validation-for="Message" class="text-muted"></span>
             </div>
-            <div class="form-group">               
+            <div class="form-group">                            
                     <recaptcha align="center" />
                     <span class="text-danger" id="recaptchaErrorMessage"></span>
-                </div>
             </div>
             <div class="list-group">
                 <button type="submit" class="list-group-item" style="text-align:center;">Send</button>

@@ -1,6 +1,6 @@
 ﻿@model CoreBlog.Web.ViewModels.Page.SearchViewModel
 
-<form asp-controller="@ViewBag.Controller" asp-action="GetString">
+<form asp-controller="@ViewBag.Controller" novalidate asp-action="GetString">
     <div class="input-group form-group">
         <input class="form-control" asp-for="Text" placeholder="e.g. Hello World!">
         <span class="input-group-btn">

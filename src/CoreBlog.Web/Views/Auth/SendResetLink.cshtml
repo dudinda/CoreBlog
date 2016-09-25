@@ -7,14 +7,16 @@
     <div class="panel">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
-                <form method="post">
+                <form novalidate method="post">
                     <div class="form group">
                         <label asp-for="Email" placeholder="Enter your email">Email</label>
                         <input type="email" asp-for="Email" class="form-control" />
                         <span asp-validation-for="Email" class="text-muted"></span>
                     </div>
+                    <div class="form-group list-group">
+                        <button class="list-group-item list-group-item-action" type="submit">Send reset link</button>
+                    </div>
                     <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-                    <button class="btn" type="submit">Send reset link</button>
                 </form>
             </div>
         </div>
