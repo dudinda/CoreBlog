@@ -46,7 +46,10 @@ namespace CoreBlog.Web.Controllers
             {
                 //get an existing user by name or email
                 var user = await userManager.FindByNameAsync(viewModel.UserName);
+
+                if (user == null) {
                     user = await userManager.FindByEmailAsync(viewModel.UserName);
+                }
 
                 //if user exist
                 if (user != null) {

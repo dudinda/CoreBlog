@@ -10,7 +10,7 @@
                 controllerAs: "vm",
                 templateUrl: "/views/postCreateView.html"
             })
-            .when("/edit/:id", {
+            .when("/Edit/:id", {
                 controller: "postCreateController",
                 controllerAs: "vm",
                 templateUrl: "/views/postCreateView.html"

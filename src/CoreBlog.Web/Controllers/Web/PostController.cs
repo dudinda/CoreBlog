@@ -39,7 +39,7 @@ namespace CoreBlog.Web.Controllers
         }
 
 
-        [HttpGet("create")]
+        [HttpGet("Create")]
         public IActionResult CreatePost()
         {
             return View();

@@ -23,7 +23,7 @@ namespace CoreBlog.Web.Controllers
                 ViewData["Message"] = "Something went wrong... try again later!";
             }
 
-            return PartialView();
+            return View();
         }
     }
 }

@@ -53,8 +53,8 @@
             <button ng-click="vm.back()" style="text-align:center;" class="btn list-group-item">Cancel</button>
         </div>
         <div class="list-group" ng-show="vm.edit == true">
-            <button ng-disabled="newPostForm.$invalid" style="text-align:center;" ng-click="vm.updatePost()" class="btn btn-success list-group-item">Update!</button>
-            <button ng-click="vm.back()" style="text-align:center;" class="btn list-group-item">Back</button>
+            <a ng-disabled="newPostForm.$invalid" style="text-align:center;" ng-click="vm.updatePost()" class="list-group-item list-group-item-action">Update!</a>
+            <a ng-click="vm.back()" style="text-align:center;" class="list-group-item list-group-item-action">Back</a>
         </div>
     </form>
     <div class="text-danger" ng-show="vm.error">{{vm.error}}</div>

@@ -7,6 +7,11 @@
 }
 
 
+.g-recaptcha {
+    margin-left:auto;
+    margin-right:auto;
+}
+
 .pagination span, .pagination a {
     display:inline-block;
     margin: 2px 2px 2px 0;
