@@ -18,4 +18,4 @@ This project is licensed under the MIT License.
 </p>
 
 #Demo(Single-user version)
-http://coreblogweb20160921095053.azurewebsites.net/
+http://coreblogweb20160930085932.azurewebsites.net/
