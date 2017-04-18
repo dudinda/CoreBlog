@@ -12,10 +12,8 @@ Libraries and frameworks:
   </ul>
 </p>
 
-#License
+# License
 <p>
 This project is licensed under the MIT License.
 </p>
 
-#Demo(Single-user version)
-http://coreblogweb20160930085932.azurewebsites.net/
