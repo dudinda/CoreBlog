@@ -1,5 +1,5 @@
 # CoreBlog
-Blog engine using ASP.NET CORE 1.0. Currently under development.
+Blog engine using ASP.NET CORE 1.0. 
 <p>
 Libraries and frameworks:
 <ul>
